@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Conditions Générales de Vente — Capsule Mémoire</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --navy:#1A2B4A; --or:#C4A46B; --beige:#F0EAE0; --blanc:#FAF8F5; --texte:#2D3748; --muted:#7A8BAA; --bord:#E0D8CC; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--blanc); color: var(--texte); font-family: 'DM Sans', sans-serif; font-weight: 300; }
+    a { color: var(--or); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    nav { background: var(--navy); padding: 0 52px; height: 68px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(196,164,107,.15); }
+    .n-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .n-logo-txt { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 15px; letter-spacing: .22em; text-transform: uppercase; color: #FAF8F5; }
+    .n-logo-txt b { color: var(--or); font-weight: 500; }
+    .n-back { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: rgba(240,234,224,.4); transition: color .2s; }
+    .n-back:hover { color: var(--or); text-decoration: none; }
+    .hero { background: linear-gradient(160deg, var(--navy) 0%, #0D1829 100%); padding: 80px 52px 60px; }
+    .hero-lbl { font-size: 9px; letter-spacing: .35em; text-transform: uppercase; color: var(--or); margin-bottom: 14px; }
+    .hero-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(32px,5vw,56px); color: #FAF8F5; line-height: 1.1; margin-bottom: 12px; }
+    .hero-title em { font-style: italic; color: var(--or); }
+    .hero-date { font-size: 11px; color: rgba(240,234,224,.35); letter-spacing: .1em; }
+    .content { max-width: 820px; margin: 0 auto; padding: 72px 52px 120px; }
+    .section { margin-bottom: 56px; }
+    .s-num { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 56px; color: var(--bord); line-height: 1; margin-bottom: -8px; }
+    .s-title { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px; color: var(--navy); margin-bottom: 16px; line-height: 1.2; }
+    .s-title em { font-style: italic; color: var(--or); }
+    .s-body { font-size: 15px; color: var(--muted); line-height: 1.9; }
+    .s-body p + p { margin-top: 14px; }
+    .s-body strong { color: var(--navy); font-weight: 500; }
+    .s-body ul { margin: 12px 0 12px 20px; }
+    .s-body ul li { margin-bottom: 6px; }
+    .divider { width: 48px; height: 1px; background: linear-gradient(to right, var(--or), transparent); margin: 16px 0 20px; }
+    .notice-box { border-left: 3px solid var(--or); background: rgba(196,164,107,.06); padding: 16px 20px; border-radius: 0 3px 3px 0; margin: 20px 0; font-size: 14px; color: var(--texte); line-height: 1.7; }
+    .notice-box strong { color: var(--navy); }
+    .alert-box { border-left: 3px solid #8B4A4A; background: rgba(139,74,74,.05); padding: 16px 20px; border-radius: 0 3px 3px 0; margin: 20px 0; font-size: 14px; color: var(--texte); line-height: 1.7; }
+    .alert-box strong { color: #8B4A4A; }
+    .prices-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+    .price-card { border: 1px solid var(--bord); border-radius: 3px; padding: 20px 22px; background: white; }
+    .price-card.feat { border-color: var(--or); }
+    .price-name { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 18px; color: var(--navy); margin-bottom: 6px; }
+    .price-amount { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 36px; color: var(--or); margin-bottom: 8px; line-height: 1; }
+    .price-detail { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    footer { background: #080F1B; padding: 48px 52px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; position: relative; }
+    footer::before { content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 1px; background: linear-gradient(to right, transparent, var(--or), transparent); opacity: .25; }
+    .ft-logo { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 15px; letter-spacing: .3em; text-transform: uppercase; color: rgba(240,234,224,.3); }
+    .ft-logo b { color: rgba(196,164,107,.5); }
+    .ft-links { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
+    .ft-links a { font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: rgba(196,164,107,.35); text-decoration: none; }
+    .ft-links a:hover { color: var(--or); }
+    .ft-legal { font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: rgba(240,234,224,.15); }
+    @media(max-width:768px) { nav{padding:0 20px;} .hero{padding:60px 20px 40px;} .content{padding:48px 20px 80px;} .prices-grid{grid-template-columns:1fr;} footer{padding:40px 20px;} }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="n-logo">
+    <svg width="28" height="28" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="16.5" stroke="#FAF8F5" stroke-width="1"/><circle cx="18" cy="18" r="10" stroke="#C4A46B" stroke-width="0.6" stroke-dasharray="1.5 3"/><circle cx="18" cy="18" r="2.5" fill="#C4A46B"/></svg>
+    <span class="n-logo-txt">CAPSULE <b>MÉMOIRE</b></span>
+  </a>
+  <a href="index.html" class="n-back">← Retour au site</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-lbl">Conditions commerciales</div>
+  <h1 class="hero-title">Conditions Générales <em>de Vente</em></h1>
+  <div class="hero-date">Dernière mise à jour : 21 mai 2026</div>
+</div>
+
+<div class="content">
+
+  <div class="section">
+    <div class="s-num">01</div>
+    <h2 class="s-title">Objet &amp; <em>champ d'application</em></h2>
+    <div class="divider"></div>
+    <div class="s-body">
+      <p>Les présentes Conditions Générales de Vente (CGV) régissent l'ensemble des relations contractuelles entre <strong>Capsule Mémoire</strong> (ci-après "le Prestataire") et toute personne physique majeure passant une commande (ci-après "le Client") via le site capsule-memoire.fr ou tout autre moyen de commande proposé.</p>
+      <p>Toute commande implique l'acceptation pleine et entière des présentes CGV. Capsule Mémoire se réserve le droit de les modifier à tout moment ; les CGV applicables sont celles en vigueur à la date de la commande.</p>
+      <p>Ces CGV prévalent sur tout autre document du Client, sauf accord dérogatoire écrit et signé par les deux parties.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="s-num">02</div>
+    <h2 class="s-title">Description <em>du service</em></h2>
+    <div class="divider"></div>
+    <div class="s-body">
+      <p>Capsule Mémoire propose un service de création d'hommages commémoratifs à caractère mémoriel et familial, incluant selon l'offre choisie :</p>
+      <ul>
+        <li>Un message vocal commémoratif créé à partir d'enregistrements réels ou, à défaut, une narration douce explicitement présentée comme telle</li>
+        <li>Des portraits souvenir animés à partir de photographies transmises</li>
+        <li>Une séquence hommage audiovisuelle</li>
+        <li>Un livre de vie illustré (format PDF et/ou imprimé selon l'offre)</li>
+        <li>Un écrin physique comprenant une clé USB gravée et une plaque QR mémorielle</li>
+      </ul>
+      <p><strong>Nature des contenus :</strong> les contenus livrés sont des créations commémoratives assistées par intelligence artificielle. Ils ne constituent pas des documents authentiques, des prises de parole réelles de la personne décédée, ni des preuves d'identité. Cette mention figure dans chaque capsule livrée.</p>
+      <p>Capsule Mémoire n'est pas un service médical, psychologique ou thérapeutique.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="s-num">03</div>
+    <h2 class="s-title">Tarifs &amp; <em>offres</em></h2>
+    <div class="divider"></div>
+    <div class="s-body"><p>Les prix sont indiqués en euros TTC. Capsule Mémoire applique la franchise en base de TVA (article 293B du CGI) — à actualiser en cas de dépassement du seuil.</p></div>
+    <div class="prices-grid">
+      <div class="price-card">
+        <div class="price-name">Capsule Souvenir</div>
+        <div class="price-amount">690 €</div>
+        <div class="price-detail">3 portraits animés · Message vocal commémoratif · Séquence hommage · Livre de Vie PDF · Écrin + Clé USB gravée + Plaque QR · Livraison numérique sous 72h (après réception complète des éléments) · Écrin sous 10 jours</div>
+      </div>
+      <div class="price-card feat">
+        <div class="price-name">Capsule Héritage</div>
+        <div class="price-amount">990 €</div>
+        <div class="price-detail">10 portraits animés · Évocation vocale enrichie · Séquence hommage complète · Livre de Vie PDF + imprimé relié · Écrin + Clé USB gravée + Plaque QR · Livraison numérique sous 5 jours · Écrin sous 10 jours</div>
+      </div>
+    </div>
+    <div class="s-body" style="margin-top:16px;">
+      <p><strong>Options :</strong> Pack Duo (+180€), Plaque additionnelle (+59€). Prix susceptibles d'évoluer ; le tarif en vigueur est celui affiché lors de la commande.</p>
+      <p><strong>Projets sur devis :</strong> les projets de grande envergure (famille multiple, multilingue, archives importantes) font l'objet d'un devis personnalisé.</p>
+    </div>
+    <div class="notice-box"><strong>Important :</strong> les délais de livraison indiqués démarrent à compter de la <strong>réception complète</strong> de l'ensemble des éléments (questionnaire rempli, photos, enregistrements, documents). Tout délai dans la transmission des éléments décale d'autant la date de livraison.</div>
+  </div>
+
+  <div class="section">
+    <div class="s-num">04</div>
+    <h2 class="s-title">Commande &amp; <em>formation du contrat</em></h2>
+    <div class="divider"></div>
+    <div class="s-body">
+      <p>La commande est passée en ligne via le site capsule-memoire.fr. Elle est validée à réception du paiement intégral et de l'acceptation des présentes CGV.</p>
+      <p>Le Client reconnaît :</p>
+      <ul>
+        <li>Être majeur et avoir la capacité juridique de contracter</li>
+        <li>Être un proche légitime de la personne concernée, ou agir avec l'accord de sa famille proche</li>
+        <li>Être autorisé à transmettre les photos, enregistrements et documents fournis</li>
+        <li>Avoir pris connaissance de la nature commémorative et artificielle des contenus</li>
+        <li>S'engager à ne pas utiliser les contenus à des fins de tromperie, d'usurpation d'identité ou de manipulation</li>
+      </ul>
+      <p>Capsule Mémoire adressera au Client un email de confirmation de commande constituant l'accusé de réception prévu à l'article L.221-11 du Code de la consommation.</p>
+      <p>Capsule Mémoire se réserve le droit de refuser toute commande dont le contexte, les intentions déclarées ou les éléments fournis lui semblent inappropriés, frauduleux ou contraires à l'éthique du service.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="s-num">05</div>
+    <h2 class="s-title">Paiement &amp; <em>sécurité</em></h2>
+    <div class="divider"></div>
+    <div class="s-body">
+      <p>Le paiement est effectué en ligne, intégralement à la commande, par carte bancaire via <strong>Stripe, Inc.</strong> (certifié PCI-DSS niveau 1). Capsule Mémoire ne conserve aucune donnée bancaire du Client.</p>
+      <p>En cas de refus de paiement ou de fraude avérée, Capsule Mémoire se réserve le droit d'annuler la commande et d'en informer les autorités compétentes.</p>
+      <p>La production de la capsule ne débute qu'après encaissement effectif du paiement et réception complète de tous les éléments nécessaires.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="s-num">06</div>
+    <h2 class="s-title">Droit de rétractation &amp; <em>remboursement</em></h2>
+    <div class="divider"></div>
+    <div class="s-body">
+      <p>Conformément à l'article L.221-28 du Code de la consommation, le droit de rétractation de 14 jours ne s'applique pas aux <strong>services entièrement exécutés</strong> avant la fin du délai de rétractation, avec l'accord exprès du consommateur.</p>
+      <p>Toutefois, Capsule Mémoire propose une <strong>garantie satisfaction</strong> de 14 jours à compter de la livraison de la prévisualisation :</p>
+      <ul>
+        <li><strong>Avant le démarrage de la production</strong> (avant transmission du questionnaire rempli) : remboursement intégral.</li>
+        <li><strong>Après démarrage, avant livraison</strong> : remboursement de 50% du montant, les frais de production engagés étant retenus.</li>
+        <li><strong>Si la capsule livrée ne satisfait pas</strong> le Client malgré les corrections demandées : remboursement intégral sur justification écrite, dans les 14 jours suivant la livraison finale.</li>
+      </ul>
+      <p>Pour exercer cette garantie : <a href="mailto:contact.capsulememoire@gmail.com">contact.capsulememoire@gmail.com</a></p>
+    </div>
+    <div class="notice-box"><strong>Précision :</strong> la garantie satisfaction ne s'applique pas lorsque la qualité insuffisante résulte d'éléments transmis de façon délibérément incomplète ou erronée par le Client. Les corrections demandées doivent être raisonnables et conformes à la commande initiale.</div>
+  </div>
+
+  <div class="section">
+    <div class="s-num">07</div>
+    <h2 class="s-title">Obligations <em>du Client</em></h2>
+    <div class="divider"></div>
+    <div class="s-body">
+      <p>Le Client s'engage à :</p>
+      <ul>
+        <li>Transmettre des informations sincères et exactes dans le questionnaire</li>
+        <li>Ne transmettre que des fichiers dont il est l'auteur ou dispose des droits nécessaires</li>
+        <li>Répondre aux demandes de compléments dans un délai raisonnable (14 jours maximum)</li>
+        <li>Valider ou refuser la prévisualisation dans un délai de 14 jours après réception</li>
+        <li>Utiliser les contenus livrés exclusivement dans le cadre mémoriel familial défini lors de la commande</li>
+        <li>Ne pas diffuser publiquement les contenus sans accord préalable de Capsule Mémoire</li>
+        <li>Ne pas utiliser les contenus pour induire en erreur, usurper une identité ou faire croire à une communication réelle avec la personne disparue</li>
+      </ul>
+      <p>Le non-respect de ces obligations peut entraîner la suspension de la prestation sans remboursement, et engage la responsabilité civile et pénale du Client.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="s-num">08</div>
+    <h2 class="s-title">Obligations de <em>Capsule Mémoire</em></h2>
+    <div class="divider"></div>
+    <div class="s-body">
+      <p>Capsule Mémoire s'engage à :</p>
+      <ul>
+        <li>Réaliser la capsule conformément à l'offre commandée et aux éléments fournis</li>
+        <li>Soumettre une prévisualisation au Client avant toute livraison finale</li>
+        <li>Intégrer les corrections raisonnables demandées (2 cycles de corrections inclus)</li>
+        <li>Respecter les délais indicatifs, sous réserve de réception complète des éléments</li>
+        <li>Protéger les données et fichiers conformément à la politique de confidentialité</li>
+        <li>Supprimer tous les fichiers dans les 30 jours suivant la livraison</li>
+        <li>Mentionner explicitement dans chaque capsule son caractère commémoratif et artificiel</li>
+      </ul>
+      <p>Capsule Mémoire est soumis à une <strong>obligation de moyens</strong> et non de résultat s'agissant de la fidélité des contenus créés, celle-ci dépendant directement de la qualité et de la quantité des éléments transmis.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="s-num">09</div>
+    <h2 class="s-title">Propriété intellectuelle <em>des livrables</em></h2>
+    <div class="divider"></div>
+    <div class="s-body">
+      <p>À compter de la livraison finale et du règlement intégral, le Client dispose d'une <strong>licence d'utilisation privée, non exclusive et non cessible</strong> sur les contenus de la capsule, pour un usage mémoriel et familial uniquement.</p>
+      <p>Capsule Mémoire conserve ses droits de propriété intellectuelle sur les créations originales (maquettes, mise en page du livre de vie, montage, illustrations). Les photos et enregistrements fournis par le Client restent sa propriété.</p>
+      <p>Toute reproduction, diffusion publique, utilisation commerciale ou cession des contenus est soumise à autorisation écrite préalable de Capsule Mémoire.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="s-num">10</div>
+    <h2 class="s-title">Responsabilité &amp; <em>cas de force majeure</em></h2>
+    <div class="divider"></div>
+    <div class="s-body">
+      <p>Capsule Mémoire ne saurait être tenu responsable :</p>
+      <ul>
+        <li>Des dommages résultant d'une utilisation des contenus contraire aux présentes CGV</li>
+        <li>De la qualité insuffisante des contenus résultant d'éléments transmis de façon incomplète ou de mauvaise qualité</li>
+        <li>Des dommages psychologiques ou émotionnels pouvant résulter de l'usage de la capsule</li>
+        <li>Des conflits familiaux résultant de la commande ou de la livraison de la capsule</li>
+        <li>Des interruptions d'accès à la capsule en ligne liées à des défaillances techniques de tiers (hébergeur, réseau)</li>
+      </ul>
+      <p>En cas de force majeure (événement imprévisible, irrésistible et extérieur, incluant panne informatique majeure, catastrophe naturelle, pandémie) rendant impossible l'exécution du service dans les délais prévus, Capsule Mémoire en informera le Client sans délai et proposera soit un nouveau délai, soit un remboursement intégral.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="s-num">11</div>
+    <h2 class="s-title">Interdictions <em>d'usage</em></h2>
+    <div class="divider"></div>
+    <div class="alert-box">
+      <strong>Les usages suivants sont formellement interdits et engagent la responsabilité civile et pénale du Client :</strong>
+    </div>
+    <div class="s-body">
+      <ul>
+        <li>Présenter les contenus comme étant authentiques ou comme une véritable prise de parole de la personne décédée</li>
+        <li>Utiliser les contenus pour induire en erreur dans un cadre successoral, juridique, financier ou médical</li>
+        <li>Diffuser publiquement les contenus sans le consentement de la famille</li>
+        <li>Utiliser les contenus pour harceler, manipuler ou nuire à un tiers</li>
+        <li>Extraire et réutiliser les données d'identité, la voix ou les images dans un autre contexte que l'hommage mémoriel commandé</li>
+        <li>Commander une capsule concernant une personne vivante sans son consentement explicite et écrit</li>
+      </ul>
+      <p>Capsule Mémoire pourra, sans préavis, annuler la commande, suspendre la livraison ou exiger le retrait des contenus en cas de non-respect constaté ou signalé.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="s-num">12</div>
+    <h2 class="s-title">Droit applicable &amp; <em>litiges</em></h2>
+    <div class="divider"></div>
+    <div class="s-body">
+      <p>Les présentes CGV sont soumises au droit français. En cas de litige, les parties s'efforceront de trouver une solution amiable dans un délai de 30 jours.</p>
+      <p>À défaut, le Client peut saisir le médiateur de la consommation compétent (voir Mentions légales). Les tribunaux compétents sont ceux du ressort du siège de Capsule Mémoire, sous réserve des dispositions d'ordre public protégeant le consommateur.</p>
+      <p>Pour tout litige transfrontalier au sein de l'UE : <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener">ec.europa.eu/consumers/odr</a></p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="ft-logo">CAPSULE <b>MÉMOIRE</b></div>
+  <div class="ft-links">
+    <a href="ethique.html">Engagement éthique</a>
+    <a href="mentions-legales.html">Mentions légales</a>
+    <a href="confidentialite.html">Confidentialité</a>
+    <a href="index.html">Retour au site</a>
+  </div>
+  <p class="ft-legal">© 2025–2026 Capsule Mémoire · Tous droits réservés</p>
+</footer>
+
+</body>
+</html>
