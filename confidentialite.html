@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Politique de confidentialité — Capsule Mémoire</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --navy:#1A2B4A; --or:#C4A46B; --beige:#F0EAE0; --blanc:#FAF8F5; --texte:#2D3748; --muted:#7A8BAA; --bord:#E0D8CC; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--blanc); color: var(--texte); font-family: 'DM Sans', sans-serif; font-weight: 300; }
+    a { color: var(--or); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    nav { background: var(--navy); padding: 0 52px; height: 68px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(196,164,107,.15); }
+    .n-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .n-logo-txt { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 15px; letter-spacing: .22em; text-transform: uppercase; color: #FAF8F5; }
+    .n-logo-txt b { color: var(--or); font-weight: 500; }
+    .n-back { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: rgba(240,234,224,.4); transition: color .2s; }
+    .n-back:hover { color: var(--or); text-decoration: none; }
+    .hero { background: linear-gradient(160deg, var(--navy) 0%, #0D1829 100%); padding: 80px 52px 60px; }
+    .hero-lbl { font-size: 9px; letter-spacing: .35em; text-transform: uppercase; color: var(--or); margin-bottom: 14px; }
+    .hero-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(32px,5vw,56px); color: #FAF8F5; line-height: 1.1; margin-bottom: 12px; }
+    .hero-title em { font-style: italic; color: var(--or); }
+    .hero-date { font-size: 11px; color: rgba(240,234,224,.35); letter-spacing: .1em; }
+    .content { max-width: 820px; margin: 0 auto; padding: 72px 52px 120px; }
+    .section { margin-bottom: 56px; }
+    .s-num { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 56px; color: var(--bord); line-height: 1; margin-bottom: -8px; }
+    .s-title { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 26px; color: var(--navy); margin-bottom: 16px; line-height: 1.2; }
+    .s-title em { font-style: italic; color: var(--or); }
+    .s-body { font-size: 15px; color: var(--muted); line-height: 1.9; }
+    .s-body p + p { margin-top: 14px; }
+    .s-body strong { color: var(--navy); font-weight: 500; }
+    .divider { width: 48px; height: 1px; background: linear-gradient(to right, var(--or), transparent); margin: 16px 0 20px; }
+    .table-wrap { overflow-x: auto; margin: 20px 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th { background: var(--navy); color: var(--or); font-weight: 400; font-size: 9px; letter-spacing: .2em; text-transform: uppercase; padding: 12px 16px; text-align: left; }
+    td { padding: 12px 16px; border-bottom: 1px solid var(--bord); color: var(--texte); vertical-align: top; line-height: 1.5; }
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) td { background: rgba(240,234,224,.3); }
+    .rights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+    .right-item { padding: 20px 22px; border: 1px solid var(--bord); border-radius: 3px; background: white; }
+    .right-name { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 17px; color: var(--navy); margin-bottom: 8px; }
+    .right-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .notice-box { border-left: 3px solid var(--or); background: rgba(196,164,107,.06); padding: 16px 20px; border-radius: 0 3px 3px 0; margin: 20px 0; font-size: 14px; color: var(--texte); line-height: 1.7; }
+    .notice-box strong { color: var(--navy); }
+    footer { background: #080F1B; padding: 48px 52px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; position: relative; }
+    footer::before { content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 1px; background: linear-gradient(to right, transparent, var(--or), transparent); opacity: .25; }
+    .ft-logo { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 15px; letter-spacing: .3em; text-transform: uppercase; color: rgba(240,234,224,.3); }
+    .ft-logo b { color: rgba(196,164,107,.5); }
+    .ft-links { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
+    .ft-links a { font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: rgba(196,164,107,.35); text-decoration: none; }
+    .ft-links a:hover { color: var(--or); }
+    .ft-legal { font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: rgba(240,234,224,.15); }
+    @media(max-width:768px) { nav{padding:0 20px;} .hero{padding:60px 20px 40px;} .content{padding:48px 20px 80px;} .rights-grid{grid-template-columns:1fr;} footer{padding:40px 20px;} }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="n-logo">
+    <svg width="28" height="28" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="16.5" stroke="#FAF8F5" stroke-width="1"/><circle cx="18" cy="18" r="10" stroke="#C4A46B" stroke-width="0.6" stroke-dasharray="1.5 3"/><circle cx="18" cy="18" r="2.5" fill="#C4A46B"/></svg>
+    <span class="n-logo-txt">CAPSULE <b>MÉMOIRE</b></span>
+  </a>
+  <a href="index.html" class="n-back">← Retour au site</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-lbl">Protection des données</div>
+  <h1 class="hero-title">Politique de <em>confidentialité</em></h1>
+  <div class="hero-date">Dernière mise à jour : 21 mai 2026 — Conforme RGPD (UE) 2016/679</div>
+</div>
+
+<div class="content">
+
+  <div class="section">
+    <div class="s-num">01</div>
+    <h2 class="s-title">Responsable <em>du traitement</em></h2>
+    <div class="divider"></div>
+    <div class="s-body">
+      <p><strong>Capsule Mémoire</strong>, entrepreneur individuel ou entité juridique immatriculée en France, est responsable du traitement de vos données personnelles collectées via le site capsule-memoire.fr, le questionnaire en ligne et tout autre point de contact.</p>
+      <p>Contact DPO / responsable : <a href="mailto:contact.capsulememoire@gmail.com">contact.capsulememoire@gmail.com</a></p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="s-num">02</div>
+    <h2 class="s-title">Données <em>collectées</em></h2>
+    <div class="divider"></div>
+    <div class="s-body"><p>Nous collectons uniquement les données strictement nécessaires à la réalisation du service. La collecte repose sur les bases légales suivantes : <strong>exécution du contrat</strong> (art. 6.1.b RGPD), <strong>consentement explicite</strong> (art. 6.1.a) pour les données sensibles, et <strong>intérêt légitime</strong> (art. 6.1.f) pour la prévention des abus.</p></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Catégorie</th><th>Données</th><th>Finalité</th><th>Base légale</th><th>Conservation</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Identification</strong></td><td>Prénom, nom, email, téléphone (optionnel)</td><td>Gestion de la commande, communication</td><td>Contrat</td><td>Durée de la prestation + 30 jours</td></tr>
+          <tr><td><strong>Photos</strong></td><td>Images de la personne concernée</td><td>Création des portraits souvenir animés</td><td>Consentement explicite</td><td>Suppression dans les 30 j. après livraison</td></tr>
+          <tr><td><strong>Enregistrements vocaux</strong></td><td>Fichiers audio/vidéo contenant la voix</td><td>Création de l'évocation vocale commémorative</td><td>Consentement explicite</td><td>Suppression dans les 30 j. après livraison</td></tr>
+          <tr><td><strong>Informations biographiques</strong></td><td>Réponses au questionnaire : histoire, valeurs, souvenirs, caractère</td><td>Création du livre de vie et de la séquence hommage</td><td>Consentement explicite</td><td>Suppression dans les 30 j. après livraison</td></tr>
+          <tr><td><strong>Documents personnels</strong></td><td>Lettres, textes, documents scannés</td><td>Enrichissement du livre de vie</td><td>Consentement explicite</td><td>Suppression dans les 30 j. après livraison</td></tr>
+          <tr><td><strong>Données de paiement</strong></td><td>Informations bancaires lors du paiement</td><td>Traitement de la transaction</td><td>Contrat / obligation légale</td><td>Non conservées par Capsule Mémoire (Stripe)</td></tr>
+          <tr><td><strong>Données de navigation</strong></td><td>Adresse IP, pages visitées, durée de session</td><td>Sécurité, amélioration du service</td><td>Intérêt légitime</td><td>13 mois maximum</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="notice-box"><strong>Données biométriques :</strong> les photos et enregistrements vocaux peuvent constituer des données biométriques au sens de l'article 9 du RGPD. Leur traitement repose sur le consentement explicite et libre du commanditaire, déclaré dans le questionnaire. Ce consentement peut être retiré à tout moment, ce qui entraîne l'arrêt immédiat du traitement et la suppression des fichiers concernés.</div>
+  </div>
+
+  <div class="section">
+    <div class="s-num">03</div>
+    <h2 class="s-title">Sous-traitants <em>&amp; transferts</em></h2>
+    <div class="divider"></div>
+    <div class="s-body"><p>Capsule Mémoire fait appel à des prestataires techniques tiers pour la réalisation du service. Ces sous-traitants n'ont accès qu'aux données strictement nécessaires à leur mission et s'engagent à les traiter conformément au RGPD.</p></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Sous-traitant</th><th>Rôle</th><th>Pays</th><th>Garanties</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Stripe, Inc.</strong></td><td>Paiement en ligne</td><td>États-Unis</td><td>Clauses contractuelles types UE, certifié PCI-DSS L1</td></tr>
+          <tr><td><strong>Formspree, Inc.</strong></td><td>Transmission formulaires</td><td>États-Unis</td><td>Clauses contractuelles types UE, chiffrement TLS</td></tr>
+          <tr><td><strong>Netlify, Inc.</strong></td><td>Hébergement site web</td><td>États-Unis</td><td>Clauses contractuelles types UE, ISO 27001</td></tr>
+          <tr><td><strong>WeTransfer B.V.</strong></td><td>Réception fichiers volumineux</td><td>Pays-Bas (UE)</td><td>Conformité RGPD, chiffrement AES-256</td></tr>
+          <tr><td><strong>Outils IA tiers</strong></td><td>Restauration image, synthèse vocale</td><td>Variable</td><td>Clauses contractuelles types, usage limité à la prestation</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="notice-box"><strong>Engagement :</strong> les fichiers transmis ne sont <strong>jamais</strong> utilisés volontairement par Capsule Mémoire pour entraîner un modèle d'intelligence artificielle. Nous refusons tout fournisseur ne pouvant garantir cette clause.</div>
+  </div>
+
+  <div class="section">
+    <div class="s-num">04</div>
+    <h2 class="s-title">Durée de <em>conservation</em></h2>
+    <div class="divider"></div>
+    <div class="s-body">
+      <p>Toutes les données et fichiers transmis dans le cadre de la commande (photos, enregistrements vocaux, questionnaire, documents) sont <strong>supprimés dans les 30 jours suivant la livraison de la capsule</strong>, sauf demande de suppression anticipée.</p>
+      <p>Les données de facturation (nom, montant, date) sont conservées <strong>10 ans</strong> à compter de la transaction, conformément aux obligations comptables légales (article L.123-22 du Code de commerce).</p>
+      <p>Les données de navigation sont conservées <strong>13 mois maximum</strong>.</p>
+      <p>À l'expiration de ces délais, les données sont supprimées définitivement et irréversiblement.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="s-num">05</div>
+    <h2 class="s-title">Vos <em>droits</em></h2>
+    <div class="divider"></div>
+    <div class="s-body"><p>Conformément au RGPD (articles 15 à 22) et à la loi Informatique et Libertés modifiée, vous disposez des droits suivants :</p></div>
+    <div class="rights-grid">
+      <div class="right-item"><div class="right-name">Droit d'accès</div><div class="right-text">Obtenir confirmation du traitement de vos données et en recevoir une copie (art. 15).</div></div>
+      <div class="right-item"><div class="right-name">Droit de rectification</div><div class="right-text">Demander la correction de données inexactes ou incomplètes (art. 16).</div></div>
+      <div class="right-item"><div class="right-name">Droit à l'effacement</div><div class="right-text">Demander la suppression de vos données ("droit à l'oubli", art. 17).</div></div>
+      <div class="right-item"><div class="right-name">Droit à la limitation</div><div class="right-text">Suspendre le traitement de vos données dans certains cas (art. 18).</div></div>
+      <div class="right-item"><div class="right-name">Droit à la portabilité</div><div class="right-text">Recevoir vos données dans un format structuré et lisible (art. 20).</div></div>
+      <div class="right-item"><div class="right-name">Droit d'opposition</div><div class="right-text">Vous opposer au traitement fondé sur l'intérêt légitime (art. 21).</div></div>
+      <div class="right-item"><div class="right-name">Retrait du consentement</div><div class="right-text">Retirer à tout moment le consentement donné, sans rétroactivité (art. 7).</div></div>
+      <div class="right-item"><div class="right-name">Réclamation CNIL</div><div class="right-text">Déposer une plainte auprès de la CNIL : <a href="https://www.cnil.fr" target="_blank" rel="noopener">cnil.fr</a></div></div>
+    </div>
+    <div class="notice-box" style="margin-top:24px;"><strong>Exercer vos droits :</strong> adressez votre demande à <a href="mailto:contact.capsulememoire@gmail.com">contact.capsulememoire@gmail.com</a> en précisant votre identité. Réponse sous <strong>30 jours maximum</strong> (art. 12 RGPD).</div>
+  </div>
+
+  <div class="section">
+    <div class="s-num">06</div>
+    <h2 class="s-title">Cookies &amp; <em>traceurs</em></h2>
+    <div class="divider"></div>
+    <div class="s-body">
+      <p>Le site capsule-memoire.fr n'utilise pas de cookies à des fins publicitaires ou de profilage commercial.</p>
+      <p>Des cookies techniques strictement nécessaires au fonctionnement du site (sécurité, navigation) peuvent être déposés sans consentement préalable, conformément à l'exemption prévue par la délibération CNIL du 17 septembre 2020.</p>
+      <p>La solution de paiement Stripe dépose ses propres cookies nécessaires à la sécurisation des transactions. Vous pouvez vous y opposer via votre navigateur, ce qui peut empêcher le paiement en ligne.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="s-num">07</div>
+    <h2 class="s-title">Sécurité <em>des données</em></h2>
+    <div class="divider"></div>
+    <div class="s-body">
+      <p>Capsule Mémoire met en œuvre les mesures techniques et organisationnelles appropriées pour protéger vos données contre toute perte, destruction, altération, accès ou divulgation non autorisés :</p>
+      <p><strong>• Chiffrement :</strong> toutes les communications entre votre navigateur et nos services sont chiffrées via TLS 1.2 minimum (HTTPS).</p>
+      <p><strong>• Accès restreint :</strong> seules les personnes habilitées à traiter votre commande ont accès à vos données, dans le strict cadre de leur mission.</p>
+      <p><strong>• Hébergement sécurisé :</strong> les fichiers transmis transitent via des services conformes au RGPD (WeTransfer, Formspree, Netlify).</p>
+      <p><strong>• Suppression définitive :</strong> à l'issue du délai de conservation, les données sont supprimées de façon irréversible.</p>
+      <p>En cas de violation de données à caractère personnel susceptible d'engendrer un risque élevé pour vos droits et libertés, Capsule Mémoire s'engage à vous en informer dans les meilleurs délais, conformément à l'article 34 du RGPD.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="s-num">08</div>
+    <h2 class="s-title">Mineurs &amp; <em>personnes vulnérables</em></h2>
+    <div class="divider"></div>
+    <div class="s-body">
+      <p>Le service Capsule Mémoire est exclusivement destiné aux personnes majeures (18 ans et plus). Aucune donnée de mineurs n'est collectée directement.</p>
+      <p>Lorsque des photos ou informations concernant des mineurs figurent parmi les archives transmises dans le cadre d'une capsule mémorielle, leur traitement est limité à la stricte réalisation de l'hommage commandé et est soumis au consentement parental.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="ft-logo">CAPSULE <b>MÉMOIRE</b></div>
+  <div class="ft-links">
+    <a href="ethique.html">Engagement éthique</a>
+    <a href="mentions-legales.html">Mentions légales</a>
+    <a href="cgv.html">CGV</a>
+    <a href="index.html">Retour au site</a>
+  </div>
+  <p class="ft-legal">© 2025–2026 Capsule Mémoire · Tous droits réservés</p>
+</footer>
+
+</body>
+</html>
