@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="10 questions à poser à un parent avant qu'il ne soit trop tard — Guide gratuit Capsule Mémoire">
+  <meta name="theme-color" content="#0D1829">
+  <title>Guide gratuit — 10 questions à poser à un parent | Capsule Mémoire</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+
+  <!--
+  ═══════════════════════════════════════════════════════════
+  TODO INTÉGRATION EMAIL
+  ═══════════════════════════════════════════════════════════
+  1. Connecter le formulaire à Brevo / Mailchimp / webhook Make / n8n
+     → Remplir WEBHOOK_URL ci-dessous avec l'URL de votre endpoint
+  2. Configurer l'envoi automatique du PDF en pièce jointe ou lien
+  3. Ajouter un double opt-in si requis par votre ESP
+  4. Stocker le consentement (horodatage + IP) dans votre CRM
+  5. Ajouter le lien vers la politique de confidentialité dans le message de confirmation
+  ═══════════════════════════════════════════════════════════
+  -->
+
+  <style>
+    /* ════ TOKENS ════ */
+    :root {
+      --navy:    #0D1829;
+      --navy-m:  #1A2B4A;
+      --beige:   #F0EAE0;
+      --or:      #C4A46B;
+      --or-l:    #D4B98A;
+      --blanc:   #FAF8F5;
+      --texte:   #2D3748;
+      --muted:   #7A8BAA;
+      --bord:    #E0D8CC;
+      --sab:     env(safe-area-inset-bottom, 0px);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body { background: var(--blanc); color: var(--texte); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; -webkit-tap-highlight-color: transparent; }
+
+    /* ════ NAV ════ */
+    nav {
+      position: sticky; top: 0; z-index: 900;
+      background: rgba(13,24,41,.96); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(196,164,107,.12);
+      height: 64px; padding: 0 52px;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    }
+    .n-logo { display: flex; align-items: center; gap: 11px; flex-shrink: 0; }
+    .n-logo-txt { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 14px; letter-spacing: .22em; text-transform: uppercase; color: var(--blanc); white-space: nowrap; }
+    .n-logo-txt b { color: var(--or); font-weight: 500; }
+    .n-back { font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: rgba(240,234,224,.4); transition: color .2s; white-space: nowrap; }
+    .n-back:hover { color: var(--or); }
+
+    /* ════ BUTTONS ════ */
+    .btn-or {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--or); color: var(--navy);
+      font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 11px;
+      letter-spacing: .18em; text-transform: uppercase;
+      padding: 15px 32px; border-radius: 2px; border: none; cursor: pointer;
+      transition: background .2s, transform .15s; white-space: nowrap;
+      min-height: 52px; -webkit-tap-highlight-color: transparent;
+    }
+    .btn-or:hover { background: var(--or-l); }
+    .btn-or:active { transform: scale(.98); }
+    .btn-ghost-light {
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(196,164,107,.4); color: rgba(240,234,224,.6);
+      font-family: 'DM Sans', sans-serif; font-weight: 300; font-size: 11px;
+      letter-spacing: .18em; text-transform: uppercase;
+      padding: 15px 32px; border-radius: 2px; cursor: pointer;
+      transition: border-color .2s, color .2s;
+      min-height: 52px; -webkit-tap-highlight-color: transparent; background: none;
+    }
+    .btn-ghost-light:hover { border-color: var(--or); color: var(--or); }
+    .btn-ghost-dark {
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(196,164,107,.35); color: var(--navy-m);
+      font-family: 'DM Sans', sans-serif; font-weight: 300; font-size: 11px;
+      letter-spacing: .18em; text-transform: uppercase;
+      padding: 15px 32px; border-radius: 2px; cursor: pointer;
+      transition: border-color .2s, color .2s;
+      min-height: 52px; -webkit-tap-highlight-color: transparent; background: none;
+    }
+    .btn-ghost-dark:hover { border-color: var(--or); color: var(--or); }
+
+    /* ════ REVEAL ════ */
+    .rv { opacity: 0; transform: translateY(22px); transition: opacity .75s cubic-bezier(.16,1,.3,1), transform .75s cubic-bezier(.16,1,.3,1); }
+    .rv.in { opacity: 1; transform: none; }
+    .d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+    @media(prefers-reduced-motion:reduce){ .rv{opacity:1;transform:none;transition:none;} }
+
+    /* ════ HERO ════ */
+    #hero {
+      min-height: 90svh; background: linear-gradient(160deg, var(--navy-m) 0%, var(--navy) 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; position: relative; overflow: hidden;
+      padding: 80px 40px 72px;
+    }
+    .h-glow {
+      position: absolute; width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(196,164,107,.09) 0%, transparent 65%);
+      border-radius: 50%; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      animation: gpulse 5s ease-in-out infinite; pointer-events: none;
+    }
+    @keyframes gpulse { 0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1)} 50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)} }
+    .h-eyebrow { font-size: 9px; letter-spacing: .38em; text-transform: uppercase; color: var(--or); margin-bottom: 20px; position: relative; z-index: 1; }
+    .h-badge {
+      display: inline-block; background: rgba(196,164,107,.12); border: 1px solid rgba(196,164,107,.3);
+      color: var(--or); font-size: 9px; letter-spacing: .28em; text-transform: uppercase;
+      padding: 7px 18px; border-radius: 20px; margin-bottom: 24px; position: relative; z-index: 1;
+    }
+    .h-title {
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: clamp(30px, 5.5vw, 64px); line-height: 1.1;
+      color: var(--blanc); position: relative; z-index: 1; margin-bottom: 20px;
+      max-width: 840px;
+    }
+    .h-sub {
+      font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300;
+      font-size: clamp(16px, 2vw, 22px); color: rgba(240,234,224,.52);
+      max-width: 560px; line-height: 1.55; position: relative; z-index: 1; margin-bottom: 40px;
+    }
+    .h-btns { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; position: relative; z-index: 1; margin-bottom: 20px; }
+    .h-reassure { font-size: 11px; color: rgba(240,234,224,.3); letter-spacing: .08em; position: relative; z-index: 1; }
+
+    /* ════ SECTION SHARED ════ */
+    .section { padding: 100px 52px; }
+    .inner { max-width: 1080px; margin: 0 auto; }
+    .sec-lbl { font-size: 9px; letter-spacing: .35em; text-transform: uppercase; color: var(--or); margin-bottom: 14px; }
+    .sec-ttl { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(28px,4vw,48px); color: var(--navy-m); line-height: 1.1; margin-bottom: 0; }
+    .sec-ttl em { font-style: italic; color: var(--or); }
+    .gold-line { width: 40px; height: 1px; background: var(--or); margin-bottom: 20px; }
+
+    /* ════ SECTION ÉMOTIONNELLE ════ */
+    #emotion { background: var(--beige); }
+    .emotion-inner { max-width: 720px; margin: 0 auto; text-align: center; }
+    .emotion-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(26px,3.5vw,44px); color: var(--navy-m); line-height: 1.2; margin-bottom: 24px; }
+    .emotion-body { font-size: 16px; color: var(--muted); line-height: 1.9; margin-bottom: 36px; }
+    .emotion-quote {
+      border-left: 2px solid var(--or); padding: 20px 28px; text-align: left;
+      background: rgba(196,164,107,.06); border-radius: 0 3px 3px 0; margin: 0 auto;
+    }
+    .emotion-quote p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; font-size: clamp(18px,2.5vw,26px); color: var(--navy-m); line-height: 1.5; }
+
+    /* ════ APERÇU GUIDE ════ */
+    #apercu { background: var(--blanc); }
+    .apercu-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 56px; }
+    .apercu-card { background: var(--beige); border-radius: 3px; padding: 36px 32px; border: 1px solid rgba(196,164,107,.1); transition: transform .3s, box-shadow .3s; }
+    .apercu-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(13,24,41,.08); }
+    .apercu-card::before { content: ''; display: block; width: 28px; height: 1px; background: var(--or); margin-bottom: 20px; opacity: .7; }
+    .apercu-card h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 21px; color: var(--navy-m); margin-bottom: 12px; }
+    .apercu-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+    /* ════ QUESTIONS EXEMPLES ════ */
+    #questions { background: var(--beige); }
+    .q-list { margin-top: 52px; display: flex; flex-direction: column; gap: 0; }
+    .q-item { border-bottom: 1px solid rgba(196,164,107,.18); }
+    .q-header { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; cursor: pointer; gap: 14px; min-height: 64px; }
+    .q-num { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 32px; color: rgba(196,164,107,.25); flex-shrink: 0; line-height: 1; min-width: 44px; }
+    .q-txt { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(17px,2vw,21px); color: var(--navy-m); line-height: 1.3; flex: 1; }
+    .q-icon { width: 32px; height: 32px; border: 1px solid rgba(196,164,107,.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .25s, border-color .25s; }
+    .q-item.open .q-icon { background: var(--or); border-color: var(--or); }
+    .q-icon svg { transition: transform .3s; }
+    .q-item.open .q-icon svg { transform: rotate(45deg); }
+    .q-body { max-height: 0; overflow: hidden; transition: max-height .4s cubic-bezier(.16,1,.3,1); }
+    .q-item.open .q-body { max-height: 200px; }
+    .q-relances { padding: 0 0 22px 58px; font-size: 14px; color: var(--muted); line-height: 1.75; font-style: italic; border-left: 2px solid rgba(196,164,107,.3); margin-left: 44px; padding-left: 16px; }
+
+    /* ════ FORMULAIRE ════ */
+    #formulaire { background: var(--blanc); }
+    .form-box {
+      max-width: 540px; margin: 56px auto 0;
+      background: var(--blanc); border: 1px solid rgba(196,164,107,.25);
+      border-radius: 4px; padding: 52px 48px;
+      box-shadow: 0 8px 40px rgba(13,24,41,.07);
+    }
+    .form-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 30px; color: var(--navy-m); margin-bottom: 10px; line-height: 1.2; }
+    .form-sub { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 32px; }
+    .f-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+    .f-label { font-size: 9px; letter-spacing: .28em; text-transform: uppercase; color: var(--muted); }
+    .f-input {
+      background: var(--blanc); border: 1px solid var(--bord); border-radius: 3px;
+      padding: 14px 16px; font-family: 'DM Sans', sans-serif; font-size: 16px;
+      font-weight: 300; color: var(--texte); outline: none;
+      transition: border-color .2s, box-shadow .2s; width: 100%;
+      -webkit-appearance: none; min-height: 52px;
+    }
+    .f-input:focus { border-color: var(--or); box-shadow: 0 0 0 3px rgba(196,164,107,.1); }
+    .f-input.error { border-color: #c0392b; }
+    .f-consent { display: flex; gap: 12px; align-items: flex-start; margin: 20px 0; cursor: pointer; }
+    .f-consent input { width: 18px; height: 18px; accent-color: var(--or); flex-shrink: 0; margin-top: 2px; cursor: pointer; }
+    .f-consent-txt { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .f-submit { width: 100%; font-size: 12px; padding: 17px; margin-top: 8px; }
+    .f-note { font-size: 11px; color: var(--muted); text-align: center; margin-top: 12px; letter-spacing: .05em; }
+    .f-error { font-size: 12px; color: #c0392b; margin-top: 4px; display: none; }
+    .f-error.show { display: block; }
+    .f-success {
+      display: none; text-align: center; padding: 32px;
+      background: rgba(196,164,107,.06); border: 1px solid rgba(196,164,107,.25);
+      border-radius: 3px; margin-top: 16px;
+    }
+    .f-success.show { display: block; }
+    .f-success p { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 22px; color: var(--navy-m); line-height: 1.4; }
+    .f-success small { font-size: 12px; color: var(--muted); margin-top: 10px; display: block; }
+
+    /* ════ SECTION CAPSULE MÉMOIRE ════ */
+    #capsule-link { background: var(--navy-m); padding: 100px 52px; }
+    .capsule-inner { max-width: 720px; margin: 0 auto; text-align: center; }
+    .capsule-inner .sec-ttl { color: var(--blanc); }
+    .capsule-body { font-size: 15px; color: rgba(240,234,224,.55); line-height: 1.9; margin: 24px 0 36px; }
+    .capsule-ethique { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px; color: rgba(196,164,107,.55); line-height: 1.6; margin-top: 24px; }
+
+    /* ════ FOOTER ════ */
+    footer { background: #080F1B; padding: 48px 52px; display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; position: relative; padding-bottom: calc(48px + var(--sab)); }
+    footer::before { content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 1px; background: linear-gradient(to right, transparent, var(--or), transparent); opacity: .25; }
+    .ft-logo { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 15px; letter-spacing: .3em; text-transform: uppercase; color: rgba(240,234,224,.3); }
+    .ft-logo b { color: rgba(196,164,107,.5); }
+    .ft-email { font-size: 13px; color: rgba(196,164,107,.55); }
+    .ft-links { display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; }
+    .ft-links a { font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: rgba(196,164,107,.35); transition: color .2s; }
+    .ft-links a:hover { color: var(--or); }
+    .ft-legal { font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: rgba(240,234,224,.15); }
+
+    /* ════ RESPONSIVE ════ */
+    @media(max-width:768px) {
+      nav { padding: 0 20px; height: 60px; }
+      .n-logo-txt { font-size: 12px; letter-spacing: .16em; }
+      .section { padding: 72px 20px; }
+      #hero { padding: 72px 20px 60px; }
+      .h-btns { flex-direction: column; width: 100%; max-width: 280px; }
+      .h-btns .btn-or, .h-btns .btn-ghost-light { width: 100%; }
+      .apercu-grid { grid-template-columns: 1fr; }
+      .q-relances { margin-left: 0; padding-left: 14px; }
+      .form-box { padding: 36px 24px; margin-top: 40px; }
+      #capsule-link { padding: 72px 20px; }
+      footer { padding: 40px 20px calc(40px + var(--sab)); }
+    }
+    @media(max-width:400px) {
+      .h-title { font-size: 26px; }
+      .q-num { font-size: 26px; min-width: 36px; }
+    }
+    @media(hover:hover) and (pointer:fine) {
+      .apercu-card:hover { transform: translateY(-4px); }
+    }
+    @media(hover:none) { .apercu-card:hover { transform: none; box-shadow: none; } }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="n-logo">
+    <svg width="28" height="28" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+      <circle cx="18" cy="18" r="16.5" stroke="#FAF8F5" stroke-width="1"/>
+      <circle cx="18" cy="18" r="10" stroke="#C4A46B" stroke-width="0.6" stroke-dasharray="1.5 3"/>
+      <circle cx="18" cy="18" r="2.5" fill="#C4A46B"/>
+      <line x1="18" y1="14" x2="18" y2="12" stroke="#C4A46B" stroke-width="1" stroke-linecap="round"/>
+      <line x1="18" y1="22" x2="18" y2="24" stroke="#C4A46B" stroke-width="1" stroke-linecap="round"/>
+      <line x1="14" y1="18" x2="12" y2="18" stroke="#C4A46B" stroke-width="1" stroke-linecap="round"/>
+      <line x1="22" y1="18" x2="24" y2="18" stroke="#C4A46B" stroke-width="1" stroke-linecap="round"/>
+    </svg>
+    <span class="n-logo-txt">CAPSULE <b>MÉMOIRE</b></span>
+  </a>
+  <a href="index.html" class="n-back">← Retour au site</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="h-glow" aria-hidden="true"></div>
+  <div class="h-badge rv">Guide gratuit</div>
+  <h1 class="h-title rv d1">10 questions à poser à un parent<br>avant qu'il ne soit trop tard</h1>
+  <p class="h-sub rv d2">Un guide doux pour préserver une voix, une histoire, des souvenirs — avant qu'ils ne s'effacent.</p>
+  <div class="h-btns rv d3">
+    <a href="#formulaire" class="btn-or">Recevoir le guide gratuit</a>
+    <a href="#apercu" class="btn-ghost-light">Voir ce qu'il contient</a>
+  </div>
+  <p class="h-reassure rv d4">Un PDF gratuit, envoyé par email. Aucun spam.</p>
+</section>
+
+<!-- SECTION ÉMOTIONNELLE -->
+<section id="emotion" class="section">
+  <div class="emotion-inner">
+    <div class="gold-line rv" style="margin:0 auto 20px;"></div>
+    <h2 class="emotion-title rv d1">Il y a des questions que l'on pense toujours avoir le temps de poser.</h2>
+    <p class="emotion-body rv d2">Puis un jour, les souvenirs deviennent flous. Les voix s'effacent. Les anecdotes se perdent entre deux générations. Ce guide vous aide à ouvrir une conversation simple, intime et précieuse avec un parent, un grand-parent ou une personne chère.</p>
+    <div class="emotion-quote rv d3">
+      <p>"L'important n'est pas d'avoir des réponses parfaites.<br>L'important est de garder une trace."</p>
+    </div>
+  </div>
+</section>
+
+<!-- APERÇU DU GUIDE -->
+<section id="apercu" class="section">
+  <div class="inner">
+    <div style="text-align:center;">
+      <div class="sec-lbl rv">Ce que contient le guide</div>
+      <h2 class="sec-ttl rv d1">Un outil simple<br><em>pour des conversations précieuses.</em></h2>
+    </div>
+    <div class="apercu-grid">
+      <div class="apercu-card rv d1">
+        <h3>Des questions prêtes à poser</h3>
+        <p>Enfance, rencontres marquantes, valeurs, histoires familiales, messages à transmettre. Dix questions structurées, dans un ordre naturel.</p>
+      </div>
+      <div class="apercu-card rv d2">
+        <h3>Des relances douces</h3>
+        <p>Pour aider la personne à raconter sans pression, avec naturel. Des suggestions de suites qui ouvrent la conversation plutôt qu'elles ne la ferment.</p>
+      </div>
+      <div class="apercu-card rv d3">
+        <h3>Une checklist souvenir</h3>
+        <p>Photos, enregistrements vocaux, lettres, dates, anecdotes et objets à préserver. Tout ce qui peut devenir un héritage familial durable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXEMPLES DE QUESTIONS -->
+<section id="questions" class="section">
+  <div class="inner" style="max-width:760px;">
+    <div class="sec-lbl rv">Aperçu</div>
+    <h2 class="sec-ttl rv d1">5 questions du guide</h2>
+    <div class="q-list rv d2">
+
+      <div class="q-item">
+        <div class="q-header">
+          <span class="q-num">01</span>
+          <span class="q-txt">Quel est ton plus beau souvenir d'enfance ?</span>
+          <div class="q-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="q-body"><div class="q-relances">Relances : Où étais-tu ? Qui était avec toi ? Qu'est-ce que tu ressentais ? Existe-t-il une photo de cette période ?</div></div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-header">
+          <span class="q-num">02</span>
+          <span class="q-txt">Qui a le plus compté dans ta vie ?</span>
+          <div class="q-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="q-body"><div class="q-relances">Relances : Pourquoi cette personne a-t-elle autant compté ? Qu'est-ce qu'elle t'a transmis ? As-tu une anecdote avec elle ?</div></div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-header">
+          <span class="q-num">03</span>
+          <span class="q-txt">De quoi es-tu le plus fier ou fière ?</span>
+          <div class="q-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="q-body"><div class="q-relances">Relances : Pourquoi cela compte autant pour toi ? Est-ce que les autres savent que tu en es fier ? Qu'aimerais-tu qu'on retienne de cette réussite ?</div></div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-header">
+          <span class="q-num">04</span>
+          <span class="q-txt">Quelle histoire familiale ne doit surtout pas être oubliée ?</span>
+          <div class="q-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="q-body"><div class="q-relances">Relances : Qui te l'a racontée pour la première fois ? Existe-t-il des photos ou documents liés ? Pourquoi faut-il s'en souvenir ?</div></div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-header">
+          <span class="q-num">05</span>
+          <span class="q-txt">Si tu pouvais laisser un message à ta famille, que voudrais-tu leur dire ?</span>
+          <div class="q-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </div>
+        <div class="q-body"><div class="q-relances">Relances : Que veux-tu qu'ils sachent de toi ? Que veux-tu qu'ils n'oublient jamais ? Y a-t-il une phrase que tu aimerais leur laisser ?</div></div>
+      </div>
+
+    </div>
+    <div style="text-align:center;margin-top:40px;" class="rv">
+      <a href="#formulaire" class="btn-or">Recevoir les 10 questions complètes</a>
+      <p style="font-size:11px;color:var(--muted);margin-top:12px;letter-spacing:.05em;">PDF gratuit · Envoyé par email</p>
+    </div>
+  </div>
+</section>
+
+<!-- FORMULAIRE -->
+<section id="formulaire" class="section">
+  <div class="inner" style="max-width:600px;">
+    <div style="text-align:center;">
+      <div class="sec-lbl rv">Guide gratuit</div>
+      <h2 class="sec-ttl rv d1">Recevoir le guide <em>gratuitement</em></h2>
+      <p class="rv d2" style="font-size:15px;color:var(--muted);margin-top:12px;line-height:1.7;">Laissez votre email et recevez le guide PDF directement dans votre boîte mail.</p>
+    </div>
+
+    <div class="form-box rv d3">
+      <h3 class="form-title">Où souhaitez-vous<br>le recevoir ?</h3>
+      <p class="form-sub">Un seul email. Le guide PDF arrive directement. Aucune relance commerciale.</p>
+
+      <!--
+        WEBHOOK / API — connecter ici
+        const WEBHOOK_URL = 'https://your-webhook.com/endpoint';
+        Pour Brevo : POST avec { "email": "...", "prenom": "...", "listIds": [X], "updateEnabled": true }
+        Pour Make/n8n : POST JSON avec les champs ci-dessous
+      -->
+      <form id="guideForm" novalidate>
+        <div class="f-group">
+          <label class="f-label" for="f-prenom">Prénom</label>
+          <input class="f-input" id="f-prenom" type="text" name="prenom" placeholder="Votre prénom" autocomplete="given-name" autocapitalize="words" required>
+          <span class="f-error" id="err-prenom">Veuillez indiquer votre prénom.</span>
+        </div>
+        <div class="f-group">
+          <label class="f-label" for="f-email">Email</label>
+          <input class="f-input" id="f-email" type="email" name="email" placeholder="votre@email.fr" autocomplete="email" inputmode="email" required>
+          <span class="f-error" id="err-email">Veuillez indiquer un email valide.</span>
+        </div>
+        <label class="f-consent">
+          <input type="checkbox" id="f-consent" required>
+          <span class="f-consent-txt">J'accepte de recevoir le guide par email et comprends que mes données ne seront jamais revendues ni transmises à des tiers à des fins commerciales. <a href="confidentialite.html" style="color:var(--or);">Politique de confidentialité.</a></span>
+        </label>
+        <span class="f-error" id="err-consent">Veuillez cocher cette case pour continuer.</span>
+        <button type="submit" class="btn-or f-submit">Recevoir le guide</button>
+        <p class="f-note">Vous pourrez vous désinscrire à tout moment.</p>
+      </form>
+
+      <div class="f-success" id="formSuccess">
+        <p>Merci. Le guide va vous être envoyé par email.</p>
+        <small>Vérifiez votre boîte de réception — et vos spams si besoin.</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIEN CAPSULE MÉMOIRE -->
+<section id="capsule-link">
+  <div class="capsule-inner">
+    <div class="gold-line rv" style="margin:0 auto 20px;"></div>
+    <div class="sec-lbl rv" style="color:var(--or);">Et maintenant ?</div>
+    <h2 class="sec-ttl rv d1" style="color:var(--blanc);">Et si ces souvenirs devenaient<br><em>une capsule familiale ?</em></h2>
+    <p class="capsule-body rv d2">À partir de photos, d'enregistrements vocaux, de textes et d'anecdotes, Capsule Mémoire aide les familles à créer un hommage sensible et durable : photos restaurées, portrait souvenir animé, message vocal commémoratif, vidéo hommage et livre de vie.</p>
+    <a href="index.html" class="btn-ghost-light rv d3">Découvrir Capsule Mémoire</a>
+    <p class="capsule-ethique rv d4">"Nous ne cherchons pas à recréer une personne.<br>Nous préservons ce qui existe déjà : une voix, un visage, une histoire, une présence."</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-logo">CAPSULE <b>MÉMOIRE</b></div>
+  <a href="mailto:contact.capsulememoire@gmail.com">contact.capsulememoire@gmail.com</a>
+  <div class="ft-links">
+    <a href="ethique.html">Engagement éthique</a>
+    <a href="confidentialite.html">Confidentialité</a>
+    <a href="index.html">Retour au site</a>
+  </div>
+  <p class="ft-legal">© 2025–2026 Capsule Mémoire · Tous droits réservés</p>
+</footer>
+
+<script>
+  /* ══ WEBHOOK — remplir ici pour connecter Make / n8n / Brevo ══ */
+  const WEBHOOK_URL = ''; /* ex: 'https://hook.eu1.make.com/xxxx' ou URL Brevo API */
+
+  /* ══ REVEAL AU SCROLL ══ */
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+
+  /* ══ ACCORDÉON QUESTIONS ══ */
+  document.querySelectorAll('.q-header').forEach(h => {
+    h.addEventListener('click', () => {
+      const item = h.closest('.q-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.q-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+    h.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); h.click(); }
+    });
+    h.setAttribute('role', 'button'); h.setAttribute('tabindex', '0');
+  });
+
+  /* ══ SCROLL FLUIDE vers ancre ══ */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  /* ══ FORMULAIRE ══ */
+  const form = document.getElementById('guideForm');
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    let valid = true;
+
+    /* Validation prénom */
+    const prenom = document.getElementById('f-prenom');
+    const errPrenom = document.getElementById('err-prenom');
+    if (!prenom.value.trim()) {
+      prenom.classList.add('error'); errPrenom.classList.add('show'); valid = false;
+    } else { prenom.classList.remove('error'); errPrenom.classList.remove('show'); }
+
+    /* Validation email */
+    const email = document.getElementById('f-email');
+    const errEmail = document.getElementById('err-email');
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+    if (!emailOk) {
+      email.classList.add('error'); errEmail.classList.add('show'); valid = false;
+    } else { email.classList.remove('error'); errEmail.classList.remove('show'); }
+
+    /* Validation consentement */
+    const consent = document.getElementById('f-consent');
+    const errConsent = document.getElementById('err-consent');
+    if (!consent.checked) {
+      errConsent.classList.add('show'); valid = false;
+    } else { errConsent.classList.remove('show'); }
+
+    if (!valid) return;
+
+    /* ══ ENVOI ══ */
+    const btn = form.querySelector('.f-submit');
+    btn.textContent = 'Envoi…'; btn.disabled = true;
+
+    const payload = {
+      prenom: prenom.value.trim(),
+      email: email.value.trim(),
+      consentement: true,
+      source: 'guide-souvenirs',
+      date: new Date().toISOString()
+    };
+
+    try {
+      if (WEBHOOK_URL) {
+        /* Envoi vers webhook Make / n8n / Brevo */
+        const res = await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error('Erreur réseau');
+      }
+      /* Succès */
+      form.style.display = 'none';
+      document.getElementById('formSuccess').classList.add('show');
+    } catch {
+      btn.textContent = 'Recevoir le guide'; btn.disabled = false;
+      alert('Une erreur est survenue. Écrivez directement à contact.capsulememoire@gmail.com');
+    }
+  });
+
+  /* Suppression erreur au remplissage */
+  document.querySelectorAll('.f-input').forEach(inp => {
+    inp.addEventListener('input', () => {
+      inp.classList.remove('error');
+      const errId = 'err-' + inp.id.replace('f-','');
+      document.getElementById(errId)?.classList.remove('show');
+    });
+  });
+</script>
+</body>
+</html>
