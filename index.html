@@ -2,28 +2,19 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#0D1829">
-  <title>Capsule Mémoire — Préserver l'essentiel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Capsule Mémoire, Préserver l'essentiel</title>
   <template id="__bundler_thumbnail">
     <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
       <rect width="120" height="80" fill="#1A2B4A"/>
-      <circle cx="60" cy="40" r="22" stroke="#C4A46B" stroke-width="1.2" fill="none"/>
-      <circle cx="60" cy="40" r="13" stroke="#C4A46B" stroke-width="0.6" fill="none" stroke-dasharray="2 3" opacity="0.6"/>
-      <circle cx="60" cy="40" r="3" fill="#C4A46B"/>
+      <ellipse cx="60" cy="40" rx="32" ry="15" stroke="#C4A46B" stroke-width="1.2" fill="none"/>
+      <ellipse cx="60" cy="40" rx="20" ry="9" stroke="#C4A46B" stroke-width="0.6" fill="none" stroke-dasharray="2 3" opacity="0.6"/>
+      <circle cx="60" cy="40" r="2.5" fill="#C4A46B"/>
     </svg>
   </template>
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
   <script async src="https://js.stripe.com/v3/buy-button.js"></script>
-
   <style>
-    /* ═══════════════════════════════════════════
-       TOKENS & RESET
-    ═══════════════════════════════════════════ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --navy:     #0D1829;
@@ -34,731 +25,241 @@
       --blanc:    #FAF8F5;
       --texte:    #2D3748;
       --muted:    #7A8BAA;
-      /* Safe area for notched phones */
-      --sat: env(safe-area-inset-top, 0px);
-      --sab: env(safe-area-inset-bottom, 0px);
-      --sal: env(safe-area-inset-left, 0px);
-      --sar: env(safe-area-inset-right, 0px);
     }
-    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-    body {
-      background: var(--blanc);
-      color: var(--texte);
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 300;
-      overflow-x: hidden;
-      /* Custom cursor only on desktop */
-      cursor: auto;
-    }
-    a { text-decoration: none; color: inherit; -webkit-tap-highlight-color: transparent; }
-    img { max-width: 100%; height: auto; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--blanc); color: var(--texte); font-family: 'DM Sans', sans-serif; font-weight: 300; cursor: none; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
 
-    /* ═══════════════════════════════════════════
-       CURSEUR — desktop only
-    ═══════════════════════════════════════════ */
-    .cur-ring, .cur-dot { display: none; }
 
-    @media (hover: hover) and (pointer: fine) {
-      body { cursor: none; }
-      .cur-ring {
-        display: block; position: fixed; width: 28px; height: 28px;
-        border: 1.2px solid var(--or); border-radius: 50%;
-        pointer-events: none; z-index: 9999; transform: translate(-50%,-50%);
-        transition: width .25s, height .25s;
-      }
-      .cur-dot {
-        display: block; position: fixed; width: 5px; height: 5px;
-        background: var(--or); border-radius: 50%;
-        pointer-events: none; z-index: 9999; transform: translate(-50%,-50%);
-      }
-      .btn-or, .btn-ghost, .faq-q, .n-links a { cursor: none; }
-    }
+    /* CURSOR */
+    .cur-ring { position: fixed; width: 28px; height: 28px; border: 1.2px solid var(--or); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .25s, height .25s; }
+    .cur-dot  { position: fixed; width: 5px; height: 5px; background: var(--or); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); }
 
-    /* ═══════════════════════════════════════════
-       LOADER
-    ═══════════════════════════════════════════ */
-    #loader {
-      position: fixed; inset: 0; z-index: 9995;
-      background: var(--navy);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 24px;
-      transition: opacity .7s, visibility .7s;
-    }
+    /* LOADER */
+    #loader { position: fixed; inset: 0; z-index: 9995; background: var(--navy); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; transition: opacity .7s, visibility .7s; }
     #loader.out { opacity: 0; visibility: hidden; pointer-events: none; }
     .ld-icon { animation: ldglow 1.8s ease-in-out infinite; }
-    @keyframes ldglow { 0%,100%{filter:drop-shadow(0 0 8px rgba(196,164,107,.3))} 50%{filter:drop-shadow(0 0 20px rgba(196,164,107,.7))} }
-    .ld-bar { width: 100px; height: 1px; background: rgba(196,164,107,.15); border-radius:1px; overflow:hidden; }
-    .ld-bar-fill { height:100%; width:0; background:var(--or); animation: ldfill 1.4s ease forwards; }
+    @keyframes ldglow { 0%,100%{filter:drop-shadow(0 0 8px rgba(196,164,107,.3))} 50%{filter:drop-shadow(0 0 24px rgba(196,164,107,.7))} }
+    .ld-bar { width: 120px; height: 1px; background: rgba(196,164,107,.2); border-radius:1px; overflow:hidden; }
+    .ld-bar-fill { height:100%; width:0; background:var(--or); animation: ldfill 1.6s ease forwards; }
     @keyframes ldfill { to { width:100%; } }
     .ld-txt { font-size:9px; letter-spacing:.32em; text-transform:uppercase; color:rgba(240,234,224,.3); }
 
-    /* ═══════════════════════════════════════════
-       NAV — desktop
-    ═══════════════════════════════════════════ */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 900;
-      height: 72px;
-      padding: 0 52px;
-      display: flex; align-items: center; justify-content: space-between; gap: 24px;
-      transition: background .4s, box-shadow .4s;
-    }
-    nav.on {
-      background: rgba(10,18,34,.96);
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 1px 0 rgba(196,164,107,.1);
-    }
-    .n-logo { display: flex; align-items: center; gap: 11px; flex-shrink: 0; }
-    .n-logo-txt {
-      font-family: 'Cormorant Garamond', serif; font-weight: 300;
-      font-size: 14px; letter-spacing: .22em; text-transform: uppercase;
-      color: var(--blanc); white-space: nowrap;
-    }
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 900; height: 76px; padding: 0 60px; display: flex; align-items: center; justify-content: space-between; gap: 32px; transition: background .4s, box-shadow .4s; }
+    nav.on { background: rgba(10,18,34,.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 1px 0 rgba(196,164,107,.12); }
+    .n-logo { display: flex; align-items: center; gap: 13px; flex-shrink: 0; }
+    .n-logo-txt { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 15px; letter-spacing: .22em; text-transform: uppercase; color: var(--blanc); white-space: nowrap; }
     .n-logo-txt b { color: var(--or); font-weight: 500; letter-spacing: .28em; }
-    .n-links { display: flex; align-items: center; gap: 32px; flex: 1; justify-content: center; }
-    .n-links a {
-      font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
-      color: rgba(240,234,224,.45); transition: color .2s; white-space: nowrap;
-    }
+    .n-links { display: flex; align-items: center; gap: 36px; flex: 1; justify-content: center; }
+    .n-links a { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: rgba(240,234,224,.45); transition: color .2s; white-space: nowrap; }
     .n-links a:hover { color: var(--or); }
     .n-cta { flex-shrink: 0; }
+    .btn-or { display: inline-block; background: var(--or); color: var(--navy); font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; padding: 12px 26px; border-radius: 2px; border: none; cursor: none; transition: background .2s, transform .15s; white-space: nowrap; }
+    .btn-or:hover { background: var(--or-l); }
+    .btn-ghost { display: inline-block; border: 1px solid rgba(196,164,107,.45); color: rgba(240,234,224,.65); font-family: 'DM Sans', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; padding: 12px 28px; border-radius: 2px; cursor: none; transition: border-color .2s, color .2s; white-space: nowrap; }
+    .btn-ghost:hover { border-color: var(--or); color: var(--or); }
 
-    /* Burger — hidden on desktop */
-    .n-burger { display: none; }
-
-    /* ═══════════════════════════════════════════
-       BUTTONS
-    ═══════════════════════════════════════════ */
-    .btn-or {
-      display: inline-flex; align-items: center; justify-content: center;
-      background: var(--or); color: var(--navy);
-      font-family: 'DM Sans', sans-serif; font-weight: 500;
-      font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
-      padding: 14px 28px; border-radius: 2px; border: none;
-      transition: background .2s, transform .15s;
-      white-space: nowrap; min-height: 48px;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .btn-or:hover, .btn-or:active { background: var(--or-l); }
-    .btn-ghost {
-      display: inline-flex; align-items: center; justify-content: center;
-      border: 1px solid rgba(196,164,107,.45); color: rgba(240,234,224,.65);
-      font-family: 'DM Sans', sans-serif; font-weight: 300;
-      font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
-      padding: 14px 28px; border-radius: 2px;
-      transition: border-color .2s, color .2s;
-      white-space: nowrap; min-height: 48px;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .btn-ghost:hover, .btn-ghost:active { border-color: var(--or); color: var(--or); }
-
-    /* ═══════════════════════════════════════════
-       STICKY BOTTOM CTA — mobile only
-    ═══════════════════════════════════════════ */
-    .sticky-cta {
-      display: none;
-      position: fixed; bottom: 0; left: 0; right: 0;
-      z-index: 800;
-      background: rgba(10,18,34,.97);
-      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-      border-top: 1px solid rgba(196,164,107,.15);
-      padding: 12px 20px;
-      padding-bottom: calc(12px + var(--sab));
-    }
-    .sticky-cta a {
-      display: block; text-align: center;
-      background: var(--or); color: var(--navy);
-      font-family: 'DM Sans', sans-serif; font-weight: 500;
-      font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
-      padding: 16px 24px; border-radius: 2px;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .sticky-cta.hidden { transform: translateY(100%); transition: transform .3s; }
-
-    /* ═══════════════════════════════════════════
-       MOBILE MENU OVERLAY
-    ═══════════════════════════════════════════ */
-    .mob-menu {
-      position: fixed; inset: 0; z-index: 950;
-      background: var(--navy);
-      display: flex; flex-direction: column;
-      padding: 0 32px 40px;
-      transform: translateX(100%);
-      transition: transform .35s cubic-bezier(.16,1,.3,1);
-    }
-    .mob-menu.open { transform: translateX(0); }
-    .mob-menu-header {
-      height: 72px; display: flex; align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid rgba(196,164,107,.1);
-    }
-    .mob-menu-close {
-      width: 44px; height: 44px; display: flex; align-items: center;
-      justify-content: center; background: none; border: none; cursor: pointer;
-      color: rgba(240,234,224,.6);
-      -webkit-tap-highlight-color: transparent;
-    }
-    .mob-menu-links {
-      display: flex; flex-direction: column; gap: 0;
-      flex: 1; padding-top: 16px;
-    }
-    .mob-menu-links a {
-      padding: 20px 0;
-      border-bottom: 1px solid rgba(196,164,107,.08);
-      font-family: 'Cormorant Garamond', serif; font-weight: 300;
-      font-size: 28px; letter-spacing: .04em; color: rgba(240,234,224,.75);
-      transition: color .2s;
-    }
-    .mob-menu-links a:hover, .mob-menu-links a:active { color: var(--or); }
-    .mob-menu-cta { margin-top: 32px; }
-    .mob-menu-cta a {
-      display: block; text-align: center;
-      background: var(--or); color: var(--navy);
-      font-family: 'DM Sans', sans-serif; font-weight: 500;
-      font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
-      padding: 18px 24px; border-radius: 2px;
-    }
-    .mob-menu-tag {
-      font-family: 'Cormorant Garamond', serif; font-style: italic;
-      font-size: 13px; color: rgba(196,164,107,.35);
-      text-align: center; margin-top: 20px; letter-spacing: .04em;
-    }
-
-    /* ═══════════════════════════════════════════
-       REVEAL ANIMATIONS
-    ═══════════════════════════════════════════ */
-    .rv {
-      opacity: 0; transform: translateY(24px);
-      transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);
-    }
+    /* REVEAL */
+    .rv { opacity: 0; transform: translateY(28px); transition: opacity .85s cubic-bezier(.16,1,.3,1), transform .85s cubic-bezier(.16,1,.3,1); }
     .rv.in { opacity: 1; transform: none; }
-    .d1{transition-delay:.08s} .d2{transition-delay:.18s}
-    .d3{transition-delay:.28s} .d4{transition-delay:.38s}
+    .d1{transition-delay:.1s} .d2{transition-delay:.22s} .d3{transition-delay:.34s} .d4{transition-delay:.46s} .d5{transition-delay:.58s}
 
-    /* Respect prefers-reduced-motion */
-    @media (prefers-reduced-motion: reduce) {
-      .rv { opacity: 1; transform: none; transition: none; }
-      .ld-icon { animation: none; }
-      @keyframes hpulse { from{} to{} }
-      @keyframes scpulse { from{} to{} }
-    }
-
-    /* Hero reveals: no Y shift (loader covers) */
+    /* HERO */
+    #hero { min-height: 100vh; background: linear-gradient(160deg, var(--navy-mid) 0%, var(--navy) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; padding: 120px 40px 100px; gap: 0; }
+    .h-glow1 { position:absolute; width:800px; height:800px; background:radial-gradient(circle,rgba(196,164,107,.1) 0%,transparent 62%); border-radius:50%; top:50%; left:50%; transform:translate(-50%,-50%); animation:hpulse 5s ease-in-out infinite; pointer-events:none; }
+    .h-glow2 { position:absolute; width:400px; height:400px; background:radial-gradient(circle,rgba(196,164,107,.08) 0%,transparent 65%); border-radius:50%; top:50%; left:50%; transform:translate(-50%,-50%); animation:hpulse 3.5s ease-in-out infinite reverse; pointer-events:none; }
+    @keyframes hpulse { 0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1)} 50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)} }
+    .h-eyebrow { font-size: 9px; letter-spacing: .38em; text-transform: uppercase; color: var(--or); margin-bottom: 24px; position:relative; z-index:1; }
+    .h-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(60px, 9vw, 108px); line-height: 1; color: var(--blanc); position:relative; z-index:1; margin-bottom: 24px; }
+    .h-title em { font-style: italic; color: var(--or); }
+    .h-sub { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300; font-size: clamp(17px, 2vw, 24px); color: rgba(240,234,224,.52); max-width: 520px; line-height: 1.5; margin-bottom: 40px; position:relative; z-index:1; margin-bottom: 20px; }
+    .h-tagline { font-size: 9px; letter-spacing: .38em; text-transform: uppercase; color: rgba(196,164,107,.45); position:relative; z-index:1; margin-bottom: 52px; }
+    .h-btns { display:flex; gap:16px; align-items:center; position:relative; z-index:1; flex-wrap:wrap; justify-content:center; margin-bottom: 80px; }
+    /* Hero reveals, no translateY since loader covers initial render */
     #hero .rv { transform: none; }
     #hero .rv.in { opacity: 1; }
+    .h-scroll { position:absolute; bottom:32px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:10px; font-size:8px; letter-spacing:.28em; text-transform:uppercase; color:rgba(240,234,224,.22); animation:scpulse 2s ease-in-out infinite; }
+    @keyframes scpulse { 0%,100%{opacity:.22} 50%{opacity:.6} }
 
-    /* ═══════════════════════════════════════════
-       HERO
-    ═══════════════════════════════════════════ */
-    #hero {
-      min-height: 100svh; /* svh for mobile browsers */
-      background: linear-gradient(160deg, var(--navy-mid) 0%, var(--navy) 100%);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center; position: relative; overflow: hidden;
-      padding: 100px 32px 80px;
-    }
-    .h-glow1 {
-      position: absolute; width: 700px; height: 700px;
-      background: radial-gradient(circle,rgba(196,164,107,.1) 0%,transparent 62%);
-      border-radius: 50%; top: 50%; left: 50%;
-      transform: translate(-50%,-50%);
-      animation: hpulse 5s ease-in-out infinite; pointer-events: none;
-    }
-    .h-glow2 {
-      position: absolute; width: 350px; height: 350px;
-      background: radial-gradient(circle,rgba(196,164,107,.08) 0%,transparent 65%);
-      border-radius: 50%; top: 50%; left: 50%;
-      transform: translate(-50%,-50%);
-      animation: hpulse 3.5s ease-in-out infinite reverse; pointer-events: none;
-    }
-    @keyframes hpulse { 0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1)} 50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)} }
-    .h-eyebrow { font-size: 9px; letter-spacing: .38em; text-transform: uppercase; color: var(--or); margin-bottom: 20px; position: relative; z-index: 1; }
-    .h-title {
-      font-family: 'Cormorant Garamond', serif; font-weight: 300;
-      font-size: clamp(52px, 9vw, 108px); line-height: 1;
-      color: var(--blanc); position: relative; z-index: 1; margin-bottom: 20px;
-    }
-    .h-title em { font-style: italic; color: var(--or); }
-    .h-sub {
-      font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300;
-      font-size: clamp(16px, 2vw, 24px); color: rgba(240,234,224,.52);
-      max-width: 480px; line-height: 1.55; margin-bottom: 16px;
-      position: relative; z-index: 1;
-    }
-    .h-tagline {
-      font-size: 9px; letter-spacing: .38em; text-transform: uppercase;
-      color: rgba(196,164,107,.45); position: relative; z-index: 1; margin-bottom: 40px;
-    }
-    .h-btns {
-      display: flex; gap: 14px; align-items: center;
-      position: relative; z-index: 1; flex-wrap: wrap; justify-content: center;
-      margin-bottom: 64px;
-    }
-    .h-scroll {
-      position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 8px;
-      font-size: 8px; letter-spacing: .28em; text-transform: uppercase;
-      color: rgba(240,234,224,.2); animation: scpulse 2s ease-in-out infinite;
-    }
-    @keyframes scpulse { 0%,100%{opacity:.2} 50%{opacity:.55} }
-
-    /* ═══════════════════════════════════════════
-       SHARED SECTION STYLES
-    ═══════════════════════════════════════════ */
-    section { padding: 100px 52px; }
-    .inner { max-width: 1200px; margin: 0 auto; }
-    .hdr { margin-bottom: 56px; }
-    .sec-lbl { font-size: 9px; letter-spacing: .35em; text-transform: uppercase; color: var(--or); margin-bottom: 14px; }
-    .sec-ttl { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:clamp(30px,4vw,52px); color:var(--navy-mid); line-height:1.1; }
-    .sec-ttl em { font-style:italic; color:var(--or); font-weight:300; }
-
-    /* ═══════════════════════════════════════════
-       PHILOSOPHIE
-    ═══════════════════════════════════════════ */
-    #philosophie { background: var(--beige); }
-    #philosophie .inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    /* PHILOSOPHIE */
+    #philosophie { background: var(--beige); padding: 120px 56px; }
+    #philosophie .inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:96px; align-items:center; }
     .philo-body { font-size: 15px; color: var(--muted); line-height: 1.85; }
-    .philo-body p + p { margin-top: 18px; }
-    .philo-right { position: relative; padding-left: 48px; }
+    .philo-body p + p { margin-top: 20px; }
+    .philo-right { position:relative; padding-left: 52px; }
     .philo-right::before { content:''; position:absolute; left:0; top:0; bottom:0; width:1px; background:linear-gradient(to bottom,transparent,var(--or),transparent); }
-    .philo-cit { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:clamp(24px,3vw,40px); color:var(--navy-mid); line-height:1.25; margin-bottom:20px; }
+    .philo-cit { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:clamp(26px,3vw,40px); color:var(--navy-mid); line-height:1.25; margin-bottom:24px; }
     .philo-cit span { color:var(--or); }
     .philo-sig { font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); }
 
-    /* ═══════════════════════════════════════════
-       PRESTATIONS
-    ═══════════════════════════════════════════ */
-    #prestations { background: var(--blanc); }
-    #prestations .inner { max-width: 1200px; }
-    .cards-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
-    .card { background:var(--beige); border-radius:2px; padding:40px 32px; position:relative; overflow:hidden; transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; border:1px solid rgba(196,164,107,.1); }
+    /* PRESTATIONS */
+    #prestations { background: var(--blanc); padding: 120px 56px; }
+    #prestations .inner { max-width:1200px; margin:0 auto; }
+    .hdr { margin-bottom:64px; }
+    .sec-lbl { font-size:9px; letter-spacing:.35em; text-transform:uppercase; color:var(--or); margin-bottom:16px; }
+    .sec-ttl { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:clamp(34px,4vw,52px); color:var(--navy-mid); line-height:1.1; margin-bottom:0; }
+    .sec-ttl em { font-style:italic; color:var(--or); font-weight:300; }
+    .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+    .card { background:var(--beige); border-radius:2px; padding:48px 40px 40px; position:relative; overflow:hidden; transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; border:1px solid rgba(196,164,107,.1); }
     .card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(to right,var(--or),var(--or-l)); transform:scaleX(0); transform-origin:left; transition:transform .45s cubic-bezier(.16,1,.3,1); }
     .card:hover::before { transform:scaleX(1); }
-    .card:hover { transform:translateY(-4px); box-shadow:0 20px 48px rgba(13,24,41,.1); }
-    .card-ico { margin-bottom:24px; }
-    .card-ttl { font-family:'Cormorant Garamond',serif; font-weight:500; font-size:22px; color:var(--navy-mid); margin-bottom:10px; letter-spacing:.02em; }
-    .card-desc { font-size:13px; color:var(--muted); line-height:1.8; margin-bottom:24px; }
-    .badge { display:inline-block; border:1px solid rgba(196,164,107,.35); color:var(--or); font-size:9px; letter-spacing:.22em; text-transform:uppercase; padding:6px 12px; border-radius:1px; }
-    /* Livre d'or — full width */
-    .card-livredOr {
-      grid-column: 1 / -1;
-      display: grid; grid-template-columns: auto 1fr auto;
-      align-items: center; gap: 28px; padding: 32px 36px;
-    }
+    .card:hover { transform:translateY(-6px); box-shadow:0 24px 56px rgba(13,24,41,.1); }
+    .card-ico { margin-bottom:28px; }
+    .card-ttl { font-family:'Cormorant Garamond',serif; font-weight:500; font-size:24px; color:var(--navy-mid); margin-bottom:12px; letter-spacing:.02em; }
+    .card-desc { font-size:13px; color:var(--muted); line-height:1.8; margin-bottom:28px; }
+    .badge { display:inline-block; border:1px solid rgba(196,164,107,.35); color:var(--or); font-size:9px; letter-spacing:.22em; text-transform:uppercase; padding:6px 13px; border-radius:1px; }
 
-    /* ═══════════════════════════════════════════
-       PROCESSUS
-    ═══════════════════════════════════════════ */
-    #processus { background: var(--navy-mid); }
-    #processus .sec-ttl { color: var(--blanc); }
-    #processus .sec-lbl { color: var(--or); }
-    .proc-track { position:relative; display:grid; grid-template-columns:repeat(5,1fr); gap:24px; margin-top:64px; }
-    .proc-track::before { content:''; position:absolute; top:20px; left:10%; right:10%; height:1px; background:linear-gradient(to right,var(--or),rgba(196,164,107,.2)); }
-    .proc-num { width:42px; height:42px; border:1px solid var(--or); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Cormorant Garamond',serif; font-weight:300; font-size:18px; color:var(--or); background:var(--navy-mid); position:relative; z-index:1; flex-shrink:0; margin-bottom:24px; }
-    .proc-ttl { font-family:'Cormorant Garamond',serif; font-weight:500; font-size:17px; color:var(--blanc); margin-bottom:8px; }
+    /* PROCESSUS */
+    #processus { background: var(--navy-mid); padding: 120px 56px; }
+    #processus .inner { max-width:1200px; margin:0 auto; }
+    #processus .sec-ttl { color:var(--blanc); }
+    #processus .sec-lbl { color:var(--or); }
+    .proc-track { position:relative; display:grid; grid-template-columns:repeat(4,1fr); gap:40px; margin-top:72px; }
+    .proc-track::before { content:''; position:absolute; top:20px; left:calc(12.5%); right:calc(12.5%); height:1px; background:linear-gradient(to right,var(--or),rgba(196,164,107,.2)); }
+    .proc-step { position:relative; padding-top:0; }
+    .proc-num-wrap { display:flex; align-items:center; margin-bottom:28px; }
+    .proc-num { width:42px; height:42px; border:1px solid var(--or); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Cormorant Garamond',serif; font-weight:300; font-size:18px; color:var(--or); background:var(--navy-mid); position:relative; z-index:1; flex-shrink:0; }
+    .proc-ttl { font-family:'Cormorant Garamond',serif; font-weight:500; font-size:18px; color:var(--blanc); margin-bottom:10px; }
     .proc-desc { font-size:13px; color:rgba(240,234,224,.5); line-height:1.75; }
 
-    /* ═══════════════════════════════════════════
-       TÉMOIGNAGES
-    ═══════════════════════════════════════════ */
-    #temoignages { background: var(--beige); }
-    .temo-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
-    .temo-card { background:var(--blanc); border-radius:2px; padding:36px; border:1px solid rgba(196,164,107,.1); }
-    .temo-mark { font-family:'Cormorant Garamond',serif; font-size:64px; color:var(--or); line-height:.6; display:block; margin-bottom:18px; opacity:.5; }
-    .temo-txt { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:16px; color:var(--navy-mid); line-height:1.6; margin-bottom:20px; }
+    /* TÉMOIGNAGES */
+    #temoignages { background: var(--beige); padding: 120px 56px; }
+    #temoignages .inner { max-width:1200px; margin:0 auto; }
+    .temo-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+    .temo-card { background:var(--blanc); border-radius:2px; padding:40px; border:1px solid rgba(196,164,107,.1); }
+    .temo-mark { font-family:'Cormorant Garamond',serif; font-size:72px; color:var(--or); line-height:.6; display:block; margin-bottom:20px; opacity:.55; }
+    .temo-txt { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:17px; color:var(--navy-mid); line-height:1.6; margin-bottom:24px; }
     .temo-sig { font-size:11px; letter-spacing:.12em; color:var(--muted); }
     .temo-sig b { color:var(--navy-mid); font-weight:400; }
 
-    /* ═══════════════════════════════════════════
-       GARANTIES
-    ═══════════════════════════════════════════ */
-    #garanties { background: var(--blanc); padding: 72px 52px; }
-    .guar-grid { display:grid; grid-template-columns:repeat(4,1fr); border:1px solid rgba(196,164,107,.12); border-radius:3px; overflow:hidden; margin-top:48px; }
-    .guar-item { padding:36px 28px; border-right:1px solid rgba(196,164,107,.12); }
+    /* GARANTIES */
+    #garanties { background: var(--blanc); padding: 80px 56px; }
+    #garanties .inner { max-width:1200px; margin:0 auto; }
+    .guar-grid { display:grid; grid-template-columns:repeat(4,1fr); border:1px solid rgba(196,164,107,.12); border-radius:3px; overflow:hidden; margin-top:56px; }
+    .guar-item { padding:40px 36px; border-right:1px solid rgba(196,164,107,.12); }
     .guar-item:last-child { border-right:none; }
-    .guar-ico { margin-bottom:16px; }
-    .guar-ttl { font-family:'Cormorant Garamond',serif; font-weight:500; font-size:17px; color:var(--navy-mid); margin-bottom:8px; }
+    .guar-ico { margin-bottom:20px; }
+    .guar-ttl { font-family:'Cormorant Garamond',serif; font-weight:500; font-size:18px; color:var(--navy-mid); margin-bottom:10px; }
     .guar-desc { font-size:13px; color:var(--muted); line-height:1.7; }
 
-    /* ═══════════════════════════════════════════
-       TARIFS
-    ═══════════════════════════════════════════ */
-    #tarifs { background: var(--beige); }
-    #tarifs .inner { max-width: 1100px; }
-    .tarif-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:56px; }
-    .t-card { background:var(--blanc); border-radius:3px; padding:44px 36px; border:1px solid rgba(196,164,107,.12); position:relative; display:flex; flex-direction:column; }
-    .t-card.feat { border:1.5px solid var(--or); box-shadow:0 16px 48px rgba(196,164,107,.1); }
-    .t-badge { position:absolute; top:20px; right:20px; background:var(--or); color:var(--navy); font-size:8px; letter-spacing:.22em; text-transform:uppercase; padding:5px 10px; border-radius:1px; font-weight:500; }
-    .t-name { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:21px; color:var(--navy-mid); margin-bottom:6px; letter-spacing:.04em; }
-    .t-price { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:68px; color:var(--or); line-height:1; margin:16px 0 6px; letter-spacing:-.02em; }
-    .t-price sup { font-size:26px; vertical-align:super; }
-    .t-sub { font-size:11px; color:var(--muted); letter-spacing:.08em; margin-bottom:28px; }
-    .t-detail { display:flex; flex-direction:column; gap:10px; margin-bottom:28px; }
-    .t-detail-block { border-top:1px solid rgba(196,164,107,.12); padding-top:10px; }
-    .t-detail-lbl { font-size:8px; letter-spacing:.22em; text-transform:uppercase; color:var(--or); margin-bottom:5px; }
-    .t-detail-val { font-size:13px; color:var(--texte); line-height:1.5; }
-    .t-note { font-size:10px; color:var(--muted); letter-spacing:.08em; text-align:center; margin-top:12px; }
-    /* Addons */
-    .addons-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:16px; }
-    .addon-card { background:var(--blanc); border:1px solid rgba(196,164,107,.15); border-radius:3px; padding:24px 20px; }
-    .addon-price { font-family:'Cormorant Garamond',serif; font-size:26px; color:var(--or); margin-bottom:5px; }
-    .addon-name { font-family:'Cormorant Garamond',serif; font-weight:500; font-size:16px; color:var(--navy-mid); margin-bottom:6px; }
-    .addon-desc { font-size:12px; color:var(--muted); line-height:1.6; }
-    /* Projets exceptionnels */
-    .proj-cta {
-      margin-top:28px; background:var(--navy-mid); border-radius:3px;
-      padding:36px 40px; display:flex; align-items:center;
-      justify-content:space-between; gap:32px; flex-wrap:wrap;
-    }
+    /* TARIFS */
+    #tarifs { background: var(--beige); padding: 120px 56px; }
+    #tarifs .inner { max-width:1100px; margin:0 auto; }
+    .tarif-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:64px; }
+    .t-card { background:var(--blanc); border-radius:3px; padding:48px 40px; border:1px solid rgba(196,164,107,.12); position:relative; display:flex; flex-direction:column; }
+    .t-card.feat { border:1.5px solid var(--or); box-shadow:0 16px 56px rgba(196,164,107,.12); }
+    .t-badge { position:absolute; top:24px; right:24px; background:var(--or); color:var(--navy); font-size:8px; letter-spacing:.22em; text-transform:uppercase; padding:5px 11px; border-radius:1px; font-weight:500; }
+    .t-name { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:22px; color:var(--navy-mid); margin-bottom:8px; letter-spacing:.05em; }
+    .t-price { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:72px; color:var(--or); line-height:1; margin:20px 0 8px; letter-spacing:-.02em; }
+    .t-price sup { font-size:28px; vertical-align:super; }
+    .t-sub { font-size:12px; color:var(--muted); letter-spacing:.08em; margin-bottom:32px; }
+    .t-list { display:flex; flex-direction:column; gap:12px; margin-bottom:36px; }
+    .t-li { display:flex; gap:12px; align-items:flex-start; font-size:13px; color:var(--texte); line-height:1.5; }
+    .t-li::before { content:'✦'; color:var(--or); font-size:9px; margin-top:3px; flex-shrink:0; }
+    .t-note { font-size:10px; color:var(--muted); letter-spacing:.1em; text-align:center; margin-top:14px; }
 
-    /* ═══════════════════════════════════════════
-       ENGAGEMENT ÉTHIQUE
-    ═══════════════════════════════════════════ */
-    #ethique { background: var(--navy-mid); padding: 100px 52px; position:relative; overflow:hidden; }
-    .ethique-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
-    #ethique .sec-ttl { color:var(--blanc); }
-    #ethique .sec-lbl { color:var(--or); }
-    .ethique-body { font-size:15px; color:rgba(240,234,224,.55); line-height:1.9; margin-bottom:28px; }
-    .ethique-body p + p { margin-top:14px; }
-    .ethique-link {
-      display:inline-flex; align-items:center; gap:8px;
-      font-size:11px; letter-spacing:.2em; text-transform:uppercase;
-      color:var(--or); border-bottom:1px solid rgba(196,164,107,.3);
-      padding-bottom:3px;
-    }
-    .ethique-items { display:flex; flex-direction:column; gap:14px; }
-    .ethique-item {
-      display:flex; gap:14px; align-items:flex-start;
-      padding:20px 22px; border:1px solid rgba(196,164,107,.12);
-      border-radius:2px; background:rgba(255,255,255,.02);
-    }
-    .ethique-dot { width:8px; height:8px; background:var(--or); border-radius:50%; flex-shrink:0; margin-top:5px; opacity:.7; }
-    .ethique-item-ttl { font-family:'Cormorant Garamond',serif; font-weight:500; font-size:16px; color:var(--blanc); margin-bottom:5px; }
-    .ethique-item-desc { font-size:13px; color:rgba(240,234,224,.45); line-height:1.6; }
+    /* DEMO AVANT/APRÈS */
+    .demo-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px; margin-top:56px; }
+    .demo-card { background:#fff; border-radius:16px; overflow:hidden; box-shadow:0 2px 20px rgba(13,24,41,.07); }
+    .demo-card-header { background:var(--navy); padding:14px 20px; display:flex; justify-content:space-between; align-items:center; }
+    .demo-card-header span { font-size:13px; font-weight:500; color:var(--beige); }
+    .demo-tag { font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--or); padding:3px 9px; border:1px solid rgba(196,164,107,.4); border-radius:20px; }
+    .slider-wrap { position:relative; overflow:hidden; aspect-ratio:3/4; cursor:col-resize; user-select:none; -webkit-user-select:none; }
+    .slider-wrap img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; pointer-events:none; }
+    .sl-after { clip-path:inset(0 50% 0 0); }
+    .sl-line { position:absolute; top:0; left:50%; transform:translateX(-50%); width:2px; height:100%; background:var(--or); z-index:10; pointer-events:none; }
+    .sl-btn { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:38px; height:38px; border-radius:50%; background:var(--or); color:var(--navy); display:flex; align-items:center; justify-content:center; z-index:11; pointer-events:none; box-shadow:0 2px 12px rgba(0,0,0,.25); }
+    .sl-btn svg { width:16px; height:16px; }
+    .sl-tag-b,.sl-tag-a { position:absolute; top:12px; z-index:12; font-size:10px; letter-spacing:.15em; text-transform:uppercase; padding:3px 9px; border-radius:20px; pointer-events:none; font-weight:500; }
+    .sl-tag-b { left:12px; background:rgba(13,24,41,.65); color:rgba(240,234,224,.85); }
+    .sl-tag-a { right:12px; background:rgba(196,164,107,.9); color:var(--navy); }
+    .demo-desc { padding:14px 20px 18px; font-size:13px; color:var(--muted); line-height:1.6; }
 
-    /* ═══════════════════════════════════════════
-       FAQ
-    ═══════════════════════════════════════════ */
-    #faq { background: var(--blanc); }
-    #faq .inner { max-width: 720px; }
-    .faq-list { margin-top:48px; }
+    /* FAQ */
+    #faq { background: var(--blanc); padding: 120px 56px; }
+    #faq .inner { max-width:760px; margin:0 auto; }
+    .faq-list { margin-top:56px; }
     .faq-item { border-bottom:1px solid rgba(196,164,107,.18); }
-    .faq-q {
-      display:flex; justify-content:space-between; align-items:center;
-      padding:20px 0; cursor:pointer; gap:14px;
-      min-height: 64px; /* touch target */
-    }
-    .faq-q-txt { font-family:'Cormorant Garamond',serif; font-weight:400; font-size:19px; color:var(--navy-mid); line-height:1.3; }
-    .faq-icon { width:32px; height:32px; border:1px solid rgba(196,164,107,.3); border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background .25s, border-color .25s; }
+    .faq-q { display:flex; justify-content:space-between; align-items:center; padding:24px 0; cursor:none; gap:16px; }
+    .faq-q-txt { font-family:'Cormorant Garamond',serif; font-weight:400; font-size:20px; color:var(--navy-mid); line-height:1.3; }
+    .faq-icon { width:28px; height:28px; border:1px solid rgba(196,164,107,.3); border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background .25s, border-color .25s; }
     .faq-item.open .faq-icon { background:var(--or); border-color:var(--or); }
     .faq-icon svg { transition:transform .3s; }
     .faq-item.open .faq-icon svg { transform:rotate(45deg); }
-    .faq-a { max-height:0; overflow:hidden; transition:max-height .45s cubic-bezier(.16,1,.3,1); }
-    .faq-item.open .faq-a { max-height:340px; }
-    .faq-a-inner { padding:0 0 20px; font-size:14px; color:var(--muted); line-height:1.85; border-left:2px solid var(--or); padding-left:18px; }
-    .faq-line { display:block; height:2px; background:linear-gradient(to right,var(--or),transparent); transform:scaleX(0); transform-origin:left; transition:transform .45s cubic-bezier(.16,1,.3,1); }
+    .faq-a { max-height:0; overflow:hidden; transition:max-height .45s cubic-bezier(.16,1,.3,1), padding .35s; }
+    .faq-item.open .faq-a { max-height:200px; }
+    .faq-a-inner { padding:0 0 24px; font-size:14px; color:var(--muted); line-height:1.85; border-left:2px solid var(--or); padding-left:20px; }
+    .faq-line { display:block; height:2px; background:linear-gradient(to right,var(--or),transparent); transform:scaleX(0); transform-origin:left; transition:transform .45s cubic-bezier(.16,1,.3,1); margin-bottom:0; }
     .faq-item.open .faq-line { transform:scaleX(1); }
 
-    /* ═══════════════════════════════════════════
-       CONTACT
-    ═══════════════════════════════════════════ */
-    #contact { background: var(--beige); }
-    #contact .inner { max-width: 600px; }
+    /* FOOTER */
+    footer { background:#080F1B; padding:64px 56px; display:flex; flex-direction:column; align-items:center; gap:24px; text-align:center; position:relative; }
+    footer::before { content:''; position:absolute; top:0; left:10%; right:10%; height:1px; background:linear-gradient(to right,transparent,var(--or),transparent); opacity:.35; }
+    .ft-logo { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:17px; letter-spacing:.32em; text-transform:uppercase; color:rgba(240,234,224,.35); }
+    .ft-logo b { color:rgba(196,164,107,.55); }
+    .ft-tag { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:14px; color:rgba(196,164,107,.4); letter-spacing:.04em; }
+    .ft-div { width:100%; max-width:400px; height:1px; background:rgba(196,164,107,.12); }
+    .ft-email { font-size:13px; color:rgba(196,164,107,.6); }
+    .ft-legal { font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:rgba(240,234,224,.18); }
+
+
+    /* ── MOBILE MENU ── */
+    .n-burger { display:none; background:none; border:none; cursor:pointer; color:var(--blanc); padding:8px; -webkit-tap-highlight-color:transparent; }
+    .mob-menu { position:fixed; inset:0; z-index:950; background:var(--navy); display:flex; flex-direction:column; padding:0 32px 40px; transform:translateX(100%); transition:transform .35s cubic-bezier(.16,1,.3,1); }
+    .mob-menu.open { transform:translateX(0); }
+    .mob-menu-header { height:72px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid rgba(196,164,107,.1); }
+    .mob-menu-close { width:44px; height:44px; display:flex; align-items:center; justify-content:center; background:none; border:none; cursor:pointer; color:rgba(240,234,224,.6); -webkit-tap-highlight-color:transparent; }
+    .mob-menu-links { display:flex; flex-direction:column; gap:0; flex:1; padding-top:16px; }
+    .mob-menu-links a { padding:20px 0; border-bottom:1px solid rgba(196,164,107,.08); font-family:'Cormorant Garamond',serif; font-weight:300; font-size:28px; letter-spacing:.04em; color:rgba(240,234,224,.75); transition:color .2s; }
+    .mob-menu-links a:hover, .mob-menu-links a:active { color:var(--or); }
+    .mob-menu-cta { margin-top:28px; }
+    .mob-menu-cta a { display:block; background:var(--or); color:var(--navy); font-family:'DM Sans',sans-serif; font-weight:500; font-size:11px; letter-spacing:.2em; text-transform:uppercase; padding:18px 0; border-radius:2px; text-align:center; }
+    .mob-menu-tag { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:rgba(196,164,107,.35); text-align:center; margin-top:16px; }
+    /* ── STICKY CTA (mobile) ── */
+    .sticky-cta { display:none; position:fixed; bottom:0; left:0; right:0; z-index:800; background:rgba(10,18,34,.97); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-top:1px solid rgba(196,164,107,.15); padding:12px 20px; padding-bottom:calc(12px + env(safe-area-inset-bottom,0px)); }
+    .sticky-cta a { display:block; background:var(--or); color:var(--navy); font-family:'DM Sans',sans-serif; font-weight:500; font-size:11px; letter-spacing:.2em; text-transform:uppercase; padding:16px 0; border-radius:2px; text-align:center; }
+    .sticky-cta.hidden { display:none !important; }
+    /* ── CONTACT FORM ── */
     .contact-form { margin-top:48px; display:flex; flex-direction:column; gap:18px; }
     .cf-row { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
     .cf-group { display:flex; flex-direction:column; gap:7px; }
     .cf-label { font-size:9px; letter-spacing:.28em; text-transform:uppercase; color:var(--muted); }
-    .cf-input, .cf-select, .cf-textarea {
-      background:var(--blanc); border:1px solid rgba(196,164,107,.25); border-radius:2px;
-      padding:14px 16px; font-family:'DM Sans',sans-serif; font-size:16px; /* 16px prevents iOS zoom */
-      font-weight:300; color:var(--texte); outline:none; transition:border-color .25s;
-      width:100%; -webkit-appearance:none; appearance:none;
-    }
-    .cf-input:focus, .cf-select:focus, .cf-textarea:focus { border-color:var(--or); }
-    .cf-textarea { resize:vertical; min-height:110px; line-height:1.7; }
-    .cf-select { background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23C4A46B' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; cursor:pointer; }
-    .cf-submit { align-self:flex-start; }
+    .cf-input,.cf-textarea { background:var(--blanc); border:1px solid rgba(196,164,107,.25); border-radius:2px; padding:14px 16px; font-family:'DM Sans',sans-serif; font-size:16px; font-weight:300; color:var(--texte); outline:none; transition:border-color .2s,box-shadow .2s; width:100%; -webkit-appearance:none; }
+    .cf-input:focus,.cf-textarea:focus { border-color:var(--or); box-shadow:0 0 0 3px rgba(196,164,107,.1); }
+    .cf-textarea { min-height:130px; resize:vertical; line-height:1.65; }
+    .cf-submit { text-align:center; }
+    #contact { background:var(--blanc); padding:120px 56px; }
 
-    /* ═══════════════════════════════════════════
-       FOOTER
-    ═══════════════════════════════════════════ */
-    footer {
-      background:#080F1B; padding:56px 52px;
-      display:flex; flex-direction:column; align-items:center; gap:20px; text-align:center;
-      position:relative;
-      padding-bottom: calc(56px + var(--sab));
+    /* RESPONSIVE */
+    @media(max-width:960px){
+      nav{padding:0 20px; height:64px;} .n-links{display:none;} .n-cta{display:none;} .n-burger{display:flex;} .sticky-cta{display:block;} section{padding:80px 24px;}
+      #contact{padding:64px 20px;}
+      .cf-row{grid-template-columns:1fr;}
+      #philosophie{padding:80px 24px;} #philosophie .inner{grid-template-columns:1fr;gap:48px;}
+      .cards,.temo-grid,.guar-grid,.proc-track{grid-template-columns:1fr;}
+      .tarif-grid{grid-template-columns:1fr;}
+      .tarif-grid{gap:20px;}
+      .t-card{padding:36px 28px;}
+      .t-price{font-size:56px;}
+      .proc-track::before{display:none;} .guar-item{border-right:none;border-bottom:1px solid rgba(196,164,107,.1);}
+      #prestations,#processus,#temoignages,#garanties,#tarifs,#faq{padding:80px 24px;}
+      footer{padding:48px 24px;}
+      section[style*="beige"]{padding:64px 20px !important;}
+      section[style*="blanc"]{padding:64px 20px !important;}
+      #parcours > .inner > div[style*="grid"],#limites > .inner > div[style*="grid"]{grid-template-columns:1fr !important;gap:20px !important;}
+      section[style*="beige"] > div[style*="grid"]{grid-template-columns:1fr !important;gap:40px !important;}
     }
-    footer::before { content:''; position:absolute; top:0; left:10%; right:10%; height:1px; background:linear-gradient(to right,transparent,var(--or),transparent); opacity:.3; }
-    .ft-logo { font-family:'Cormorant Garamond',serif; font-weight:300; font-size:16px; letter-spacing:.32em; text-transform:uppercase; color:rgba(240,234,224,.3); }
-    .ft-logo b { color:rgba(196,164,107,.5); }
-    .ft-tag { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:14px; color:rgba(196,164,107,.35); }
-    .ft-div { width:100%; max-width:360px; height:1px; background:rgba(196,164,107,.1); }
-    .ft-email { font-size:13px; color:rgba(196,164,107,.55); }
-    .ft-legal { font-size:9px; letter-spacing:.15em; text-transform:uppercase; color:rgba(240,234,224,.18); }
-
-    /* ═══════════════════════════════════════════
-       RESPONSIVE — TABLET (≤1024px)
-    ═══════════════════════════════════════════ */
-    @media(max-width:1024px){
-      .cards-grid { grid-template-columns: repeat(2,1fr); }
-      .card-livredOr { grid-column: 1 / -1; }
-      .proc-track { grid-template-columns: repeat(2,1fr); }
-      .proc-track::before { display:none; }
-      .guar-grid { grid-template-columns: repeat(2,1fr); }
-      .guar-item:nth-child(2) { border-right:none; }
-      .guar-item:nth-child(3), .guar-item:nth-child(4) { border-top: 1px solid rgba(196,164,107,.12); }
-      .guar-item:nth-child(4) { border-right: none; }
-    }
-
-    /* ═══════════════════════════════════════════
-       RESPONSIVE — MOBILE (≤768px)
-    ═══════════════════════════════════════════ */
-    @media(max-width:768px){
-      /* NAV */
-      nav { height: 64px; padding: 0 20px; }
-      .n-links { display: none; }
-      .n-cta { display: none; }
-      .n-burger {
-        display: flex; align-items: center; justify-content: center;
-        width: 44px; height: 44px; background: none; border: none;
-        color: rgba(240,234,224,.7);
-        -webkit-tap-highlight-color: transparent; cursor: pointer;
-      }
-
-      /* STICKY CTA */
-      .sticky-cta { display: block; }
-
-      /* HERO */
-      #hero { padding: 80px 24px 72px; min-height: 100svh; }
-      .h-eyebrow { margin-bottom: 16px; }
-      .h-title { font-size: clamp(44px, 12vw, 72px); margin-bottom: 16px; }
-      .h-sub { font-size: clamp(16px, 4vw, 20px); margin-bottom: 14px; max-width: 100%; }
-      .h-tagline { margin-bottom: 32px; }
-      .h-btns { flex-direction: column; width: 100%; max-width: 280px; gap: 12px; margin-bottom: 48px; }
-      .h-btns .btn-or, .h-btns .btn-ghost { width: 100%; }
-      .h-scroll { display: none; }
-
-      /* SECTIONS */
-      section { padding: 72px 20px; }
-      #garanties { padding: 64px 20px; }
-      #ethique { padding: 72px 20px; }
-      #faq { padding: 72px 20px; }
-
-      /* PHILOSOPHIE */
-      #philosophie .inner { grid-template-columns: 1fr; gap: 40px; }
-      .philo-right { padding-left: 24px; }
-      .philo-right::before { left: 0; }
-      .philo-cit { font-size: clamp(22px, 5vw, 32px); }
-
-      /* PARCOURS & LIMITES */
-      #parcours, #limites { padding: 72px 20px; }
-      #parcours .inner > div[style*="grid-template-columns:1fr 1fr"],
-      #limites .inner > div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr; }
-
-      /* PRESTATIONS */
-      .cards-grid { grid-template-columns: 1fr; }
-      .card { padding: 32px 24px; }
-      .card-livredOr {
-        grid-column: 1;
-        display: flex; flex-direction: column;
-        align-items: flex-start; gap: 16px; padding: 28px 24px;
-      }
-      .card-livredOr .btn-ghost { width: 100%; justify-content: center; }
-
-      /* PROCESSUS */
-      #processus .inner { }
-      .proc-track { grid-template-columns: 1fr; gap: 0; }
-      .proc-step { display: flex; gap: 20px; align-items: flex-start; padding: 24px 0; border-bottom: 1px solid rgba(196,164,107,.08); }
-      .proc-step:last-child { border-bottom: none; }
-      .proc-num { margin-bottom: 0; flex-shrink: 0; }
-      .proc-step-body { flex: 1; }
-
-      /* TÉMOIGNAGES — scroll snap */
-      .temo-grid {
-        grid-template-columns: 1fr;
-        /* Mobile: scrollable with snap */
-        display: flex; overflow-x: auto; gap: 12px;
-        scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
-        padding-bottom: 12px; margin: 0 -20px; padding-left: 20px; padding-right: 20px;
-        scrollbar-width: none;
-      }
-      .temo-grid::-webkit-scrollbar { display: none; }
-      .temo-card { min-width: 80vw; scroll-snap-align: start; flex-shrink: 0; padding: 28px; }
-
-      /* GARANTIES */
-      .guar-grid { grid-template-columns: 1fr; border: none; gap: 1px; background: rgba(196,164,107,.1); }
-      .guar-item { border-right: none !important; border-top: none !important; border-bottom: none; background: var(--blanc); padding: 28px 20px; }
-
-      /* TARIFS */
-      .tarif-grid { grid-template-columns: 1fr; gap: 14px; }
-      .t-card { padding: 32px 24px; }
-      .t-price { font-size: 56px; }
-      .addons-grid { grid-template-columns: 1fr; }
-      .proj-cta { flex-direction: column; align-items: flex-start; padding: 28px 24px; }
-      .proj-cta a { width: 100%; text-align: center; }
-
-      /* ENGAGEMENT ÉTHIQUE */
-      .ethique-inner { grid-template-columns: 1fr; gap: 40px; }
-
-      /* FAQ */
-      .faq-q-txt { font-size: 17px; }
-
-      /* CONTACT */
-      .cf-row { grid-template-columns: 1fr; }
-      .cf-submit { width: 100%; }
-      .cf-submit .btn-or { width: 100%; justify-content: center; }
-
-      /* FOOTER */
-      footer { padding: 44px 20px calc(44px + var(--sab)); }
-
-      /* STRIPE BUTTONS */
-      stripe-buy-button { width: 100%; }
-    }
-
-    /* ═══════════════════════════════════════════
-       RESPONSIVE — SMALL MOBILE (≤400px)
-    ═══════════════════════════════════════════ */
-    @media(max-width:400px){
-      nav { padding: 0 16px; }
-      .n-logo-txt { font-size: 12px; letter-spacing: .16em; }
-      #hero { padding: 72px 16px 64px; }
-      .h-title { font-size: clamp(38px, 13vw, 60px); }
-      section { padding: 56px 16px; }
-      .temo-card { min-width: 88vw; }
-      .t-card { padding: 28px 18px; }
-      .t-price { font-size: 48px; }
-    }
-
-    /* Active states for touch */
-    @media (hover: none) {
-      .card:hover { transform: none; box-shadow: none; }
-      .card:active { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,24,41,.1); }
-      .btn-or:active { background: var(--or-l); transform: scale(.98); }
-      .btn-ghost:active { border-color: var(--or); color: var(--or); }
-    }
-  
-    /* ── DEMO AVANT/APRÈS ── */
-    .demo-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 28px;
-      margin-top: 56px;
-    }
-    .demo-card {
-      background: #fff;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 2px 20px rgba(13,24,41,0.07);
-    }
-    .demo-card-header {
-      background: var(--navy);
-      padding: 14px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .demo-card-header span {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--beige);
-      font-family: var(--sans);
-    }
-    .demo-tag {
-      font-size: 10px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--or);
-      padding: 3px 9px;
-      border: 1px solid rgba(196,164,107,0.4);
-      border-radius: 20px;
-    }
-    .slider-wrap {
-      position: relative;
-      overflow: hidden;
-      aspect-ratio: 3/4;
-      cursor: col-resize;
-      user-select: none;
-      -webkit-user-select: none;
-    }
-    .slider-wrap img {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      pointer-events: none;
-    }
-    .sl-after {
-      clip-path: inset(0 50% 0 0);
-    }
-    .sl-line {
-      position: absolute;
-      top: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 2px; height: 100%;
-      background: var(--or);
-      z-index: 10;
-      pointer-events: none;
-    }
-    .sl-btn {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 38px; height: 38px;
-      border-radius: 50%;
-      background: var(--or);
-      color: var(--navy);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 11;
-      pointer-events: none;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
-    }
-    .sl-btn svg { width: 16px; height: 16px; }
-    .sl-tag-b, .sl-tag-a {
-      position: absolute;
-      top: 12px;
-      z-index: 12;
-      font-size: 10px;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      padding: 3px 9px;
-      border-radius: 20px;
-      pointer-events: none;
-      font-weight: 500;
-    }
-    .sl-tag-b {
-      left: 12px;
-      background: rgba(13,24,41,0.65);
-      color: rgba(240,234,224,0.85);
-    }
-    .sl-tag-a {
-      right: 12px;
-      background: rgba(196,164,107,0.9);
-      color: var(--navy);
-    }
-    .demo-desc {
-      padding: 14px 20px 18px;
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-    @media (max-width: 600px) {
-      .demo-grid { grid-template-columns: 1fr; gap: 20px; }
-    }
-
-    </style>
+  </style>
 </head>
 <body>
 
-<!-- ── CURSOR (desktop) ── -->
 <div class="cur-ring" id="cR"></div>
-<div class="cur-dot" id="cD"></div>
+<div class="cur-dot"  id="cD"></div>
 
-<!-- ── LOADER ── -->
 <div id="loader">
   <div class="ld-icon">
-    <svg width="56" height="56" viewBox="0 0 36 36" fill="none">
+    <svg width="64" height="64" viewBox="0 0 36 36" fill="none">
       <circle cx="18" cy="18" r="16.5" stroke="#FAF8F5" stroke-width="1"/>
       <circle cx="18" cy="18" r="10" stroke="#C4A46B" stroke-width="0.6" stroke-dasharray="1.5 3"/>
       <circle cx="18" cy="18" r="2.5" fill="#C4A46B"/>
@@ -776,19 +277,12 @@
   <div class="ld-txt">Capsule Mémoire</div>
 </div>
 
-<!-- ── MENU MOBILE ── -->
+<!-- NAV -->
+<!-- MENU MOBILE -->
 <div class="mob-menu" id="mobMenu" role="dialog" aria-modal="true" aria-label="Menu de navigation">
   <div class="mob-menu-header">
     <div class="n-logo">
-      <svg width="30" height="30" viewBox="0 0 36 36" fill="none">
-        <circle cx="18" cy="18" r="16.5" stroke="#FAF8F5" stroke-width="1"/>
-        <circle cx="18" cy="18" r="10" stroke="#C4A46B" stroke-width="0.6" stroke-dasharray="1.5 3"/>
-        <circle cx="18" cy="18" r="2.5" fill="#C4A46B"/>
-        <line x1="18" y1="14" x2="18" y2="12" stroke="#C4A46B" stroke-width="1" stroke-linecap="round"/>
-        <line x1="18" y1="22" x2="18" y2="24" stroke="#C4A46B" stroke-width="1" stroke-linecap="round"/>
-        <line x1="14" y1="18" x2="12" y2="18" stroke="#C4A46B" stroke-width="1" stroke-linecap="round"/>
-        <line x1="22" y1="18" x2="24" y2="18" stroke="#C4A46B" stroke-width="1" stroke-linecap="round"/>
-      </svg>
+      <svg width="30" height="30" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="16.5" stroke="#FAF8F5" stroke-width="1"/><circle cx="18" cy="18" r="10" stroke="#C4A46B" stroke-width="0.6" stroke-dasharray="1.5 3"/><circle cx="18" cy="18" r="2.5" fill="#C4A46B"/></svg>
       <span class="n-logo-txt">CAPSULE <b>MÉMOIRE</b></span>
     </div>
     <button class="mob-menu-close" id="mobClose" aria-label="Fermer le menu">
@@ -797,27 +291,28 @@
   </div>
   <nav class="mob-menu-links">
     <a href="#prestations" onclick="closeMobMenu()">Prestations</a>
+    <a href="#parcours" onclick="closeMobMenu()">Pour qui ?</a>
     <a href="#processus" onclick="closeMobMenu()">Comment ça marche</a>
-    <a href="#temoignages" onclick="closeMobMenu()">Témoignages</a>
     <a href="#tarifs" onclick="closeMobMenu()">Tarifs</a>
     <a href="#faq" onclick="closeMobMenu()">FAQ</a>
     <a href="#contact" onclick="closeMobMenu()">Contact</a>
+    <a href="guide-souvenirs.html" onclick="closeMobMenu()" style="color:var(--or);">Guide gratuit</a>
   </nav>
   <div class="mob-menu-cta">
-    <a href="#tarifs" onclick="closeMobMenu()">Créer une capsule</a>
+    <a href="#tarifs" onclick="closeMobMenu()">Créer ma capsule</a>
   </div>
   <p class="mob-menu-tag">"Un souvenir qui dure toute une vie."</p>
 </div>
 
-<!-- ── STICKY BOTTOM CTA ── -->
-<div class="sticky-cta" id="stickyCta">
-  <a href="#tarifs">Créer une capsule — dès 290€</a>
+<!-- STICKY CTA MOBILE -->
+<div class="sticky-cta hidden" id="stickyCta">
+  <a href="#tarifs">Créer ma capsule — dès 290€</a>
 </div>
 
-<!-- ── NAV ── -->
 <nav id="nav">
   <a href="#hero" class="n-logo">
-    <svg width="32" height="32" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+    <!-- Logo : éclat doré dans cercle,  nouveau signe -->
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="18" cy="18" r="16.5" stroke="#FAF8F5" stroke-width="1"/>
       <circle cx="18" cy="18" r="10" stroke="#C4A46B" stroke-width="0.6" stroke-dasharray="1.5 3"/>
       <circle cx="18" cy="18" r="2.5" fill="#C4A46B"/>
@@ -839,52 +334,54 @@
     <a href="#tarifs">Tarifs</a>
     <a href="#faq">FAQ</a>
     <a href="#contact">Contact</a>
+    <a href="guide-souvenirs.html" style="color:var(--or);border-bottom:1px solid rgba(196,164,107,.3);">Guide gratuit</a>
   </div>
   <div class="n-cta">
-    <a href="#tarifs" class="btn-or mag">Créer une capsule</a>
+    <a href="#tarifs" class="btn-or mag">Créer ma capsule</a>
   </div>
   <button class="n-burger" id="burgerBtn" aria-label="Ouvrir le menu" aria-expanded="false">
     <svg width="22" height="16" viewBox="0 0 22 16" fill="none"><line x1="0" y1="1" x2="22" y2="1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="0" y1="8" x2="22" y2="8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="0" y1="15" x2="22" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
   </button>
 </nav>
 
-<!-- ── HERO ── -->
+<!-- HERO -->
 <section id="hero">
-  <div class="h-glow1" aria-hidden="true"></div>
-  <div class="h-glow2" aria-hidden="true"></div>
+  <div class="h-glow1"></div><div class="h-glow2"></div>
   <div class="h-eyebrow rv">Héritage mémoriel · France</div>
   <h1 class="h-title rv d1">Préserver<br><em>l'essentiel.</em></h1>
-  <p class="h-sub rv d2">Sa voix, son visage, son histoire. Préservés, transmis à travers le temps.</p>
+  <p class="h-sub rv d2">Sa voix, son visage, son histoire. Préservés et transmis à ceux qui viennent, avec soin et dignité.</p>
   <p class="h-tagline rv d3">Un souvenir qui dure toute une vie</p>
   <div class="h-btns rv d4">
-    <a href="#tarifs" class="btn-or mag">Créer une capsule</a>
-    <a href="#philosophie" class="btn-ghost">Découvrir les formules</a>
+    <a href="#tarifs" class="btn-or mag">Commencer ma Capsule</a>
+    <a href="#philosophie" class="btn-ghost">Découvrir</a>
   </div>
-  <div class="h-scroll" aria-hidden="true">
-    <svg width="1" height="24" viewBox="0 0 1 24"><line x1=".5" y1="0" x2=".5" y2="24" stroke="#C4A46B" stroke-width="1"/></svg>
+  <div class="h-scroll">
+    <svg width="1" height="28" viewBox="0 0 1 28"><line x1=".5" y1="0" x2=".5" y2="28" stroke="#C4A46B" stroke-width="1"/></svg>
     Défiler
   </div>
 </section>
 
-<!-- ── PHILOSOPHIE ── -->
+<!-- PHILOSOPHIE -->
 <section id="philosophie">
   <div class="inner">
     <div>
       <div class="sec-lbl rv">Notre vision</div>
-      <div class="rv d1" style="font-size:15px;color:var(--muted);line-height:1.85;">
+      <div class="philo-body rv d1">
         <p>Une photo encadrée s'efface. Un souvenir oral disparaît avec ceux qui l'ont vécu. Mais une capsule traverse le temps.</p>
-        <p style="margin-top:18px;">Capsule Mémoire crée un héritage mémoriel complet : message vocal commémoratif, séquence hommage, livre de vie imprimé et une plaque QR mémorielle, pour que les générations futures rencontrent celui qu'elles n'ont pas connu.</p>
-        <p style="margin-top:28px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:var(--navy-mid);line-height:1.6;">Un héritage physique et numérique, pensé pour durer des décennies.</p>
+        <p>Capsule Mémoire compose un hommage mémoriel complet : photos restaurées, portraits souvenir animés, évocation vocale commémorative, vidéo hommage, livre de vie illustré et plaque QR mémorielle, un héritage pensé pour durer des décennies.</p>
+        <p style="margin-top:16px;font-size:13px;color:var(--muted);line-height:1.75;">Capsule Mémoire ne prétend pas recréer une personne disparue ni permettre une communication avec elle. Chaque capsule est un hommage commémoratif créé à partir des souvenirs transmis par la famille.</p>
+        <p style="margin-top:32px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:var(--navy-mid);line-height:1.6;">On ne recrée pas une personne. On préserve ce qui existe déjà.</p>
       </div>
     </div>
     <div class="philo-right rv d2">
-      <blockquote class="philo-cit">"Préserver l'essentiel<br>de ceux que vous aimez<br><span>à travers le temps."</span></blockquote>
+      <blockquote class="philo-cit">"Préserver l'essentiel<br>de ceux que vous aimez —<br><span>une voix, un visage,<br>une histoire.</span>"</blockquote>
       <p class="philo-sig">La conviction fondatrice de Capsule Mémoire</p>
     </div>
   </div>
 </section>
 
-<!-- ── PARCOURS ── -->
+
+<!-- PARCOURS -->
 <section id="parcours" style="background:var(--blanc);padding:100px 52px;">
   <div class="inner">
     <div class="hdr">
@@ -920,30 +417,30 @@
   </div>
 </section>
 
-<!-- ── PRESTATIONS ── -->
+<!-- PRESTATIONS -->
 <section id="prestations">
   <div class="inner">
     <div class="hdr">
       <div class="sec-lbl rv">Ce que vous recevez</div>
       <h2 class="sec-ttl rv d1">Un héritage complet,<br><em>numérique et physique.</em></h2>
     </div>
-    <div class="cards-grid">
+    <div class="cards" style="grid-template-columns:repeat(4,1fr);">
       <div class="card rv">
         <div class="card-ico">
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <svg width="42" height="42" viewBox="0 0 40 40" fill="none">
             <ellipse cx="20" cy="16" rx="7" ry="10" stroke="#1A2B4A" stroke-width="1.4"/>
             <path d="M11 19c0 5 4 9 9 9s9-4 9-9" stroke="#1A2B4A" stroke-width="1.4" stroke-linecap="round"/>
             <line x1="20" y1="28" x2="20" y2="34" stroke="#1A2B4A" stroke-width="1.4" stroke-linecap="round"/>
             <line x1="16" y1="14" x2="24" y2="14" stroke="#C4A46B" stroke-width="1" stroke-linecap="round" opacity=".8"/>
           </svg>
         </div>
-        <h3 class="card-ttl">La Voix &amp; la Vidéo</h3>
-        <p class="card-desc">Un message vocal commémoratif créé à partir de vos enregistrements. Ses photos s'animent en portraits souvenir. Une séquence hommage unique, émouvante, créée à partir de ses archives réelles.</p>
-        <span class="badge">Inclus dans la Capsule</span>
+        <h3 class="card-ttl">L'Évocation Vocale</h3>
+        <p class="card-desc">À partir d'un enregistrement vocal exploitable, une évocation vocale commémorative. Sans enregistrement, une voix de narration douce, clairement présentée comme non authentique. Jamais une voix inventée.</p>
+        <span class="badge">Selon disponibilité audio</span>
       </div>
       <div class="card rv d1">
         <div class="card-ico">
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <svg width="42" height="42" viewBox="0 0 40 40" fill="none">
             <path d="M20 8v26" stroke="#C4A46B" stroke-width=".9" stroke-linecap="round"/>
             <path d="M7 10h13v22H7a1 1 0 01-1-1V11a1 1 0 011-1z" stroke="#1A2B4A" stroke-width="1.4"/>
             <path d="M20 10h13a1 1 0 011 1v20a1 1 0 01-1 1H20V10z" stroke="#1A2B4A" stroke-width="1.4"/>
@@ -953,11 +450,11 @@
         </div>
         <h3 class="card-ttl">Le Livre de Vie</h3>
         <p class="card-desc">Son histoire racontée, mise en page et illustrée. Un objet précieux à offrir à toute la famille, en version numérique et imprimée.</p>
-        <span class="badge">Inclus Offre Complète</span>
+        <span class="badge">Capsule Héritage</span>
       </div>
       <div class="card rv d2">
         <div class="card-ico">
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <svg width="42" height="42" viewBox="0 0 40 40" fill="none">
             <rect x="6" y="8" width="28" height="24" rx="2" stroke="#1A2B4A" stroke-width="1.4"/>
             <rect x="11" y="13" width="7" height="7" rx="0.5" stroke="#C4A46B" stroke-width="1"/>
             <rect x="22" y="13" width="7" height="7" rx="0.5" stroke="#C4A46B" stroke-width="1"/>
@@ -965,26 +462,26 @@
             <rect x="22" y="23" width="7" height="4" rx="0.5" stroke="#C4A46B" stroke-width="1"/>
           </svg>
         </div>
-        <h3 class="card-ttl">La Plaque QR</h3>
-        <p class="card-desc">Une plaque discrète et élégante apposée sur la stèle. Un simple scan suffit pour accéder à la capsule, sa voix, son visage, son histoire.</p>
-        <span class="badge">Fixation non invasive</span>
+        <h3 class="card-ttl">La Plaque QR Mémorielle</h3>
+        <p class="card-desc">Plaque aluminium élégante. Un simple scan suffit pour accéder à la capsule privée. Lien privé maintenu par Capsule Mémoire. S'appose discrètement, sans percer ni modifier le monument.</p>
+        <span class="badge">Capsule Héritage</span>
       </div>
       <div class="card rv d3">
         <div class="card-ico">
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <svg width="42" height="42" viewBox="0 0 40 40" fill="none">
             <rect x="7" y="10" width="26" height="22" rx="2" stroke="#1A2B4A" stroke-width="1.4"/>
             <path d="M13 10V7a7 7 0 0114 0v3" stroke="#1A2B4A" stroke-width="1.4" stroke-linecap="round"/>
             <rect x="14" y="18" width="12" height="8" rx="1" stroke="#C4A46B" stroke-width="1"/>
             <line x1="20" y1="21" x2="20" y2="23" stroke="#C4A46B" stroke-width="1.2" stroke-linecap="round"/>
           </svg>
         </div>
-        <h3 class="card-ttl">L'Écrin Physique</h3>
-        <p class="card-desc">Boîte rigide bleu nuit, clé USB gravée au prénom, plaque QR. Un trésor familial à transmettre, qui fait oublier qu'il est aussi technologique.</p>
-        <span class="badge">Expédié sous 10 jours</span>
+        <h3 class="card-ttl">L'Écrin Héritage</h3>
+        <p class="card-desc">Écrin noir premium préparé à la main : Livre de Vie imprimé, clé USB Capsule Mémoire, plaque QR mémorielle, carte d'accès, lettre d'accompagnement, papier de soie. Rien n'est lancé sans validation finale.</p>
+        <span class="badge">Expédié sous 7–12 jours ouvrés</span>
       </div>
-      <!-- Livre d'Or -->
-      <div class="card card-livredOr rv">
-        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" style="flex-shrink:0">
+      <!-- LIVRE D'OR -->
+      <div class="card rv" style="grid-column: 1 / -1; display:grid; grid-template-columns: auto 1fr auto; align-items:center; gap:32px; padding:36px 40px;">
+        <svg width="42" height="42" viewBox="0 0 40 40" fill="none">
           <rect x="6" y="6" width="22" height="28" rx="1.5" stroke="#1A2B4A" stroke-width="1.4"/>
           <path d="M28 6h2a2 2 0 012 2v24a2 2 0 01-2 2h-2" stroke="#1A2B4A" stroke-width="1.4"/>
           <line x1="11" y1="14" x2="23" y2="14" stroke="#C4A46B" stroke-width="1" stroke-linecap="round" opacity=".8"/>
@@ -992,67 +489,77 @@
           <line x1="11" y1="22" x2="19" y2="22" stroke="#C4A46B" stroke-width="1" stroke-linecap="round" opacity=".4"/>
           <path d="M14 28l2 2 4-4" stroke="#C4A46B" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <div style="flex:1">
+        <div>
           <h3 class="card-ttl" style="margin-bottom:6px;">Le Livre d'Or</h3>
           <p class="card-desc" style="margin-bottom:0;">Un livre d'or graphique et illustré, conçu par une graphiste professionnelle, pour recueillir les témoignages de la famille lors des obsèques ou d'une cérémonie. Format premium, couverture personnalisée, impression soignée.</p>
         </div>
-        <a href="/cdn-cgi/l/email-protection#482b27263c292b3c662b29383b3d242d252d2527213a2d082f25292124662b2725" class="btn-ghost" style="display:inline-flex;align-items:center;gap:8px;border-color:rgba(26,43,74,.25);color:var(--navy-mid);">
-          Sur devis
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
+        <a href="mailto:contact.capsulememoire@gmail.com">contact.capsulememoire@gmail.com</a>
       </div>
-    </div>
   </div>
 </section>
 
-<!-- ── PROCESSUS ── -->
+<!-- PROCESSUS -->
 <section id="processus">
   <div class="inner">
     <div class="hdr">
       <div class="sec-lbl rv">Comment ça marche</div>
-      <h2 class="sec-ttl rv d1">De la commande<br><em>à la plaque mémorielle.</em></h2>
+      <h2 class="sec-ttl rv d1">De la commande<br><em>à la livraison.</em></h2>
     </div>
     <div class="proc-track">
       <div class="proc-step rv">
-        <div class="proc-num">01</div>
-        <div class="proc-step-body">
-          <h3 class="proc-ttl">Commande &amp; questionnaire</h3>
-          <p class="proc-desc">Vous choisissez votre offre, procédez au paiement, puis remplissez notre questionnaire en ligne à votre rythme.</p>
-        </div>
+        <div class="proc-num-wrap"><div class="proc-num">01</div></div>
+        <h3 class="proc-ttl">Commande & paiement</h3>
+        <p class="proc-desc">Choisissez votre offre, payez en ligne via Stripe. Vous recevez un lien vers le questionnaire mémoriel, à remplir à votre rythme, aussi longtemps que nécessaire.</p>
       </div>
       <div class="proc-step rv d1">
-        <div class="proc-num">02</div>
-        <div class="proc-step-body">
-          <h3 class="proc-ttl">Création artisanale</h3>
-          <p class="proc-desc">Nos équipes façonnent votre capsule avec soin — chaque évocation vocale, portrait et récit est travaillé et vérifié humainement.</p>
-        </div>
+        <div class="proc-num-wrap"><div class="proc-num">02</div></div>
+        <h3 class="proc-ttl">Prévisualisation &amp; validation</h3>
+        <p class="proc-desc">Première livraison numérique par lien privé. Vous validez, demandez des ajustements. Rien n'est définitif sans votre accord. L'impression du Livre de Vie et la gravure de la plaque QR ne sont lancées qu'après validation.</p>
       </div>
       <div class="proc-step rv d2">
-        <div class="proc-num">03</div>
-        <div class="proc-step-body">
-          <h3 class="proc-ttl">Prévisualisation &amp; validation</h3>
-          <p class="proc-desc">Vous recevez une prévisualisation complète. Nous n'envoyons rien en livraison finale sans votre accord explicite.</p>
-        </div>
+        <div class="proc-num-wrap"><div class="proc-num">03</div></div>
+        <h3 class="proc-ttl">Livraison numérique privée</h3>
+        <p class="proc-desc">Votre capsule finale par lien privé maintenu par Capsule Mémoire. Délais : 72h (Capsule Photo), 5 jours (Capsule Souvenir), 5 jours (Capsule Héritage), après réception complète des éléments.</p>
       </div>
       <div class="proc-step rv d3">
-        <div class="proc-num">04</div>
-        <div class="proc-step-body">
-          <h3 class="proc-ttl">Livraison numérique sécurisée</h3>
-          <p class="proc-desc">Lien privé sécurisé livré sous 72h (Capsule Souvenir) ou 5 jours (Capsule Héritage) après réception complète de vos éléments.</p>
-        </div>
-      </div>
-      <div class="proc-step rv d4">
-        <div class="proc-num">05</div>
-        <div class="proc-step-body">
-          <h3 class="proc-ttl">Écrin &amp; plaque QR mémorielle</h3>
-          <p class="proc-desc">L'écrin est expédié sous 10 jours. La plaque QR s'appose discrètement sur la stèle — accessible via lien privé maintenu par Capsule Mémoire.</p>
-        </div>
+        <div class="proc-num-wrap"><div class="proc-num">04</div></div>
+        <h3 class="proc-ttl">Écrin expédié (Héritage)</h3>
+        <p class="proc-desc">Écrin noir préparé à la main et expédié sous 7 à 12 jours ouvrés après validation finale. Les délais peuvent être ajustés si les archives nécessitent un travail particulier.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── DÉMONSTRATION AVANT/APRÈS ── -->
+
+<!-- LIMITES -->
+<section id="limites" style="background:var(--beige);padding:100px 52px;">
+  <div class="inner" style="max-width:1000px;">
+    <div class="hdr">
+      <div class="sec-lbl rv">Transparence</div>
+      <h2 class="sec-ttl rv d1">Ce que nous faisons,<br><em>et ce que nous ne faisons pas.</em></h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;" class="rv d1">
+      <div style="background:var(--blanc);border-radius:3px;padding:36px;border:1px solid rgba(196,164,107,.15);">
+        <div style="font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--or);margin-bottom:14px;">Validation humaine</div>
+        <p style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:19px;color:var(--navy-mid);margin-bottom:14px;line-height:1.25;">Chaque capsule est relue, contrôlée et validée humainement avant livraison.</p>
+        <p style="font-size:14px;color:var(--muted);line-height:1.8;">Nous vérifions la cohérence du récit, la dignité du rendu, la qualité des images, la clarté du message vocal et la conformité avec notre charte éthique. Vous recevez une prévisualisation complète avant toute livraison finale.</p>
+      </div>
+      <div style="background:var(--blanc);border-radius:3px;padding:36px;border:1px solid rgba(196,164,107,.15);">
+        <div style="font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--or);margin-bottom:14px;">Limites du service</div>
+        <p style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:19px;color:var(--navy-mid);margin-bottom:14px;line-height:1.25;">La fidélité dépend des éléments transmis.</p>
+        <ul style="font-size:13px;color:var(--muted);line-height:1.85;padding-left:16px;">
+          <li>Une photo très floue ne donnera pas forcément un portrait net</li>
+          <li>Un enregistrement de mauvaise qualité limite le rendu vocal</li>
+          <li>Notre objectif n'est pas de recréer une personne, mais de composer un hommage digne</li>
+          <li>Lorsque les sources sont insuffisantes, nous privilégions une approche sobre et respectueuse</li>
+        </ul>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-top:14px;">Si les archives nécessitent un travail plus approfondi, un délai complémentaire peut être proposé afin de garantir un rendu digne.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RÉSULTATS -->
 <section id="demo" style="background:var(--blanc);padding:100px 0;">
   <div class="inner">
     <div class="hdr">
@@ -1078,7 +585,7 @@
           <div class="sl-tag-b">Avant</div>
           <div class="sl-tag-a">Après</div>
         </div>
-        <p class="demo-desc">Photo de jardin années 80 — grain retiré, netteté restaurée, couleurs préservées.</p>
+        <p class="demo-desc">Photo de jardin années 80, grain retiré, netteté restaurée, couleurs préservées.</p>
       </div>
 
       <div class="demo-card rv d1">
@@ -1114,7 +621,7 @@
           <div class="sl-tag-b">Avant</div>
           <div class="sl-tag-a">Après</div>
         </div>
-        <p class="demo-desc">Portrait ancien très abîmé — restauration complète et colorisation réaliste d'époque.</p>
+        <p class="demo-desc">Portrait ancien très abîmé, restauration complète et colorisation réaliste d'époque.</p>
       </div>
 
       <div class="demo-card rv d3">
@@ -1132,20 +639,20 @@
           <div class="sl-tag-b">Avant</div>
           <div class="sl-tag-a">Après</div>
         </div>
-        <p class="demo-desc">Photo scolaire années 50 — colorisation naturelle, traits fidèlement préservés.</p>
+        <p class="demo-desc">Photo scolaire années 50, colorisation naturelle, traits fidèlement préservés.</p>
       </div>
 
     </div>
   </div>
 </section>
 
-<!-- ── TÉMOIGNAGES ── -->
+
+<!-- TÉMOIGNAGES -->
 <section id="temoignages">
   <div class="inner">
     <div class="hdr">
       <div class="sec-lbl rv">Témoignages</div>
-      <h2 class="sec-ttl rv d1">Ce que les familles <em>nous ont confié.</em></h2>
-      <p class="rv d2" style="font-size:11px;color:var(--muted);margin-top:10px;letter-spacing:.06em;">Prénoms modifiés · Témoignages anonymisés</p>
+      <h2 class="sec-ttl rv d1">Ils nous ont <em>confié l'essentiel.</em></h2>
     </div>
     <div class="temo-grid">
       <div class="temo-card rv">
@@ -1155,19 +662,20 @@
       </div>
       <div class="temo-card rv d1">
         <span class="temo-mark">"</span>
-        <p class="temo-txt">Nous avons offert le livre de vie à toute la famille. Tout le monde a pleuré, mais de gratitude.</p>
+        <p class="temo-txt">Nous avons offert le livre de vie à toute la famille lors du repas d'enterrement. Tout le monde a pleuré, mais de gratitude.</p>
         <p class="temo-sig"><b>Thomas &amp; Lucie</b> · Perte de leur mère</p>
       </div>
       <div class="temo-card rv d2">
         <span class="temo-mark">"</span>
-        <p class="temo-txt">La plaque sur la tombe de mon père… mes enfants ont entendu sa voix pour la première fois. Ils ne l'avaient jamais connu.</p>
+        <p class="temo-txt">La plaque sur la tombe de mon père… mes enfants ont scanné le code lors de la Toussaint. Ils ont entendu sa voix pour la première fois. Ils ne l'avaient jamais connu.</p>
         <p class="temo-sig"><b>Isabelle, 48 ans</b> · Perte de son père</p>
       </div>
     </div>
+    <p class="rv" style="text-align:center;font-size:11px;color:var(--muted);margin-top:28px;letter-spacing:.08em;">Ces témoignages sont des exemples illustratifs. Capsule Mémoire n'est pas un service médical ou thérapeutique.</p>
   </div>
 </section>
 
-<!-- ── GARANTIES ── -->
+<!-- GARANTIES -->
 <section id="garanties">
   <div class="inner">
     <div class="hdr">
@@ -1176,204 +684,219 @@
     </div>
     <div class="guar-grid rv d1">
       <div class="guar-item">
-        <div class="guar-ico"><svg width="34" height="34" viewBox="0 0 36 36" fill="none"><path d="M18 4 L30 9 L30 18 C30 25 24 30 18 32 C12 30 6 25 6 18 L6 9 Z" stroke="#C4A46B" stroke-width="1.3" fill="none"/><path d="M13 18l3 3 7-7" stroke="#C4A46B" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="guar-ico"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M18 4 L30 9 L30 18 C30 25 24 30 18 32 C12 30 6 25 6 18 L6 9 Z" stroke="#C4A46B" stroke-width="1.3" fill="none"/><path d="M13 18l3 3 7-7" stroke="#C4A46B" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <h4 class="guar-ttl">Confidentialité totale</h4>
         <p class="guar-desc">Vos données ne sont jamais partagées. Hébergement France. Suppression à votre demande.</p>
       </div>
       <div class="guar-item">
-        <div class="guar-ico"><svg width="34" height="34" viewBox="0 0 36 36" fill="none"><path d="M28 20 C26 26 20 30 14 28 C8 26 5 20 7 14 C9 8 15 5 21 7" stroke="#C4A46B" stroke-width="1.3" stroke-linecap="round" fill="none"/><path d="M22 4l6 4-4 6" stroke="#C4A46B" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+        <div class="guar-ico"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M28 20 C26 26 20 30 14 28 C8 26 5 20 7 14 C9 8 15 5 21 7" stroke="#C4A46B" stroke-width="1.3" stroke-linecap="round" fill="none"/><path d="M22 4l6 4-4 6" stroke="#C4A46B" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
         <h4 class="guar-ttl">Satisfait ou remboursé</h4>
-        <p class="guar-desc">14 jours sans condition. Si la capsule ne vous correspond pas, remboursement intégral.</p>
+        <p class="guar-desc">14 jours sans condition. Si la capsule ne vous correspond pas, nous vous remboursons intégralement.</p>
       </div>
       <div class="guar-item">
-        <div class="guar-ico"><svg width="34" height="34" viewBox="0 0 36 36" fill="none"><path d="M10 12h16M10 18h10M10 24h12" stroke="#C4A46B" stroke-width="1.3" stroke-linecap="round"/><rect x="5" y="6" width="26" height="24" rx="2" stroke="#C4A46B" stroke-width="1.3"/></svg></div>
+        <div class="guar-ico"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M10 12h16M10 18h10M10 24h12" stroke="#C4A46B" stroke-width="1.3" stroke-linecap="round"/><rect x="5" y="6" width="26" height="24" rx="2" stroke="#C4A46B" stroke-width="1.3"/></svg></div>
         <h4 class="guar-ttl">Accompagnement humain</h4>
         <p class="guar-desc">Par message, à chaque étape. Un conseiller dédié suit votre commande du début à la livraison.</p>
       </div>
       <div class="guar-item">
-        <div class="guar-ico"><svg width="34" height="34" viewBox="0 0 36 36" fill="none"><path d="M18 6 L18 30 M18 6 L12 12 M18 6 L24 12" stroke="#C4A46B" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="18" cy="26" r="4" stroke="#C4A46B" stroke-width="1.3" fill="none"/></svg></div>
+        <div class="guar-ico"><svg width="36" height="36" viewBox="0 0 36 36" fill="none"><path d="M18 6 L18 30 M18 6 L12 12 M18 6 L24 12" stroke="#C4A46B" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="18" cy="26" r="4" stroke="#C4A46B" stroke-width="1.3" fill="none"/></svg></div>
         <h4 class="guar-ttl">Livraison express</h4>
-        <p class="guar-desc">Option 72h disponible pour les situations urgentes.</p>
+        <p class="guar-desc">Option 72h disponible pour les situations urgentes. Voix + portrait animé livrés en priorité.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── TARIFS ── -->
+<!-- TARIFS -->
 <section id="tarifs">
   <div class="inner">
     <div class="hdr" style="text-align:center">
       <div class="sec-lbl rv">Tarifs</div>
       <h2 class="sec-ttl rv d1">Choisissez <em>votre capsule.</em></h2>
-      <p class="rv d2" style="font-size:15px;color:var(--muted);margin-top:14px;max-width:520px;margin-left:auto;margin-right:auto;line-height:1.7;">Chaque offre est livrée dans son écrin de prestige. L'objet est la signature de Capsule Mémoire.</p>
+      <p class="rv d2" style="font-size:15px;color:var(--muted);margin-top:16px;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.7;">Trois offres, de l'essentiel numérique à l'héritage complet. Chaque capsule est un hommage commémoratif, jamais une reconstitution.</p>
     </div>
     <div class="tarif-grid">
 
-      <!-- OFFRE 0 : CAPSULE PHOTO -->
+      <!-- OFFRE 1, CAPSULE PHOTO -->
       <div class="t-card rv">
-        <p class="t-name">La Capsule Photo</p>
+        <p class="t-name">Capsule Photo</p>
         <div class="t-price"><sup>€</sup>290</div>
-        <p class="t-sub">Livraison numérique sous 72h après réception des éléments</p>
-        <div class="t-detail">
-          <div class="t-detail-block"><div class="t-detail-lbl">Le Numérique</div><div class="t-detail-val">3 photos restaurées · 1 portrait souvenir animé · Mini-page souvenir PDF</div></div>
-          <div class="t-detail-block"><div class="t-detail-lbl">Sans écrin</div><div class="t-detail-val">Livraison digitale uniquement — aucun envoi physique</div></div>
+        <p class="t-sub">Livraison numérique sous 72h</p>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;">
+          <div style="border-top:1px solid rgba(196,164,107,.12);padding-top:12px;">
+            <div style="font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--or);margin-bottom:6px;">Contenu</div>
+            <div class="t-list">
+              <div class="t-li">3 photos restaurées</div>
+              <div class="t-li">1 portrait souvenir animé</div>
+              <div class="t-li">Page hommage PDF</div>
+            </div>
+          </div>
+          <div style="border-top:1px solid rgba(196,164,107,.12);padding-top:12px;">
+            <div style="font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--or);margin-bottom:6px;">Format</div>
+            <div style="font-size:13px;color:var(--texte);line-height:1.5;">Livraison numérique uniquement, sans voix, sans écrin</div>
+          </div>
+          <div style="border-top:1px solid rgba(196,164,107,.12);padding-top:12px;">
+            <div style="font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--or);margin-bottom:6px;">Option +190 €</div>
+            <div style="font-size:13px;color:var(--texte);line-height:1.5;">Évocation vocale commémorative, uniquement si enregistrement vocal exploitable disponible</div>
+          </div>
         </div>
         <stripe-buy-button
           buy-button-id="buy_btn_1TZScMFGbNzIgsMg4W5Z6GHi"
-          publishable-key="pk_live_51TChBEFGbNzIgsMgvdOEwlvVpl0SqE964QA8FzxWZr7g7F6CO7mo3EozIpA1Z4o5BcFBjNencdGQVsz1m7WGhyTL00djLEuJRg">
-        </stripe-buy-button>
-        <a href="#" style="display:none" style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:auto;font-size:11px;border-color:rgba(26,43,74,.2);color:var(--navy-mid);">Parler de votre projet <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <p class="t-note" style="margin-top:10px;">Idéal pour découvrir le service</p>
+          publishable-key="pk_live_51TChBEFGbNzIgsMgvdOEwlvVpl0SqE964QA8FzxWZr7g7F6CO7mo3EozIpA1Z4o5BcFBjNencdGQVsz1m7WGhyTL00djLEuJRg"
+        ></stripe-buy-button>
+        <p class="t-note">Paiement sécurisé · Prévisualisation avant livraison</p>
       </div>
 
-      <!-- OFFRE 1 -->
-      <div class="t-card rv">
-        <p class="t-name">La Capsule Souvenir</p>
+      <!-- OFFRE 2, CAPSULE SOUVENIR -->
+      <div class="t-card rv d1">
+        <p class="t-name">Capsule Souvenir</p>
         <div class="t-price"><sup>€</sup>690</div>
-        <p class="t-sub">Première livraison numérique sous 72h après réception complète des éléments · Écrin 10 jours</p>
-        <div class="t-detail">
-          <div class="t-detail-block">
-            <div class="t-detail-lbl">L'Écrin</div>
-            <div class="t-detail-val">Coffret rigide bleu nuit, intérieur mousse velours</div>
+        <p class="t-sub">Livraison numérique sous 5 jours</p>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;">
+          <div style="border-top:1px solid rgba(196,164,107,.12);padding-top:12px;">
+            <div style="font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--or);margin-bottom:6px;">Contenu</div>
+            <div class="t-list">
+              <div class="t-li">Jusqu'à 5 photos restaurées</div>
+              <div class="t-li">Portraits souvenir animés</div>
+              <div class="t-li">Évocation vocale commémorative*</div>
+              <div class="t-li">Vidéo hommage</div>
+              <div class="t-li">Page privée de consultation</div>
+              <div class="t-li">PDF souvenir enrichi</div>
+            </div>
           </div>
-          <div class="t-detail-block">
-            <div class="t-detail-lbl">Le Physique</div>
-            <div class="t-detail-val">Clé USB bois gravée + Plaque QR métal doré</div>
-          </div>
-          <div class="t-detail-block">
-            <div class="t-detail-lbl">Le Numérique</div>
-            <div class="t-detail-val">3 photos animées, voix reconstituée, Livre de Vie PDF</div>
+          <div style="border-top:1px solid rgba(196,164,107,.12);padding-top:12px;">
+            <div style="font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--or);margin-bottom:6px;">Format</div>
+            <div style="font-size:13px;color:var(--texte);line-height:1.5;">Livraison numérique uniquement, sans écrin physique</div>
           </div>
         </div>
         <stripe-buy-button
           buy-button-id="buy_btn_1TRALgFGbNzIgsMgBJDXvdvZ"
-          publishable-key="pk_live_51TChBEFGbNzIgsMgvdOEwlvVpl0SqE964QA8FzxWZr7g7F6CO7mo3EozIpA1Z4o5BcFBjNencdGQVsz1m7WGhyTL00djLEuJRg">
-        </stripe-buy-button>
-        <p class="t-note">Paiement sécurisé · Confidentialité garantie</p>
+          publishable-key="pk_live_51TChBEFGbNzIgsMgvdOEwlvVpl0SqE964QA8FzxWZr7g7F6CO7mo3EozIpA1Z4o5BcFBjNencdGQVsz1m7WGhyTL00djLEuJRg"
+        ></stripe-buy-button>
+        <p class="t-note">Paiement sécurisé · Prévisualisation incluse</p>
       </div>
-      <!-- OFFRE 2 -->
-      <div class="t-card feat rv d1">
-        <div class="t-badge">Le plus choisi</div>
-        <p class="t-name">La Capsule Héritage</p>
+
+      <!-- OFFRE 3, CAPSULE HÉRITAGE -->
+      <div class="t-card feat rv d2">
+        <div class="t-badge">Hommage complet</div>
+        <p class="t-name">Capsule Héritage</p>
         <div class="t-price"><sup>€</sup>990</div>
-        <p class="t-sub">Première livraison numérique sous 5 jours après réception complète des éléments · Écrin 10 jours</p>
-        <div class="t-detail">
-          <div class="t-detail-block">
-            <div class="t-detail-lbl">L'Écrin</div>
-            <div class="t-detail-val">Écrin, Clé USB bois gravée, Plaque QR métal doré</div>
+        <p class="t-sub">Numérique 5 jours · Écrin 7–12 jours ouvr.</p>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;">
+          <div style="border-top:1px solid rgba(196,164,107,.12);padding-top:12px;">
+            <div style="font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--or);margin-bottom:6px;">Numérique</div>
+            <div class="t-list">
+              <div class="t-li">Jusqu'à 10 photos restaurées</div>
+              <div class="t-li">Portraits souvenir animés</div>
+              <div class="t-li">Évocation vocale commémorative*</div>
+              <div class="t-li">Vidéo hommage</div>
+              <div class="t-li">Page privée de consultation</div>
+              <div class="t-li">Livre de Vie rédigé et mis en page</div>
+            </div>
           </div>
-          <div class="t-detail-block">
-            <div class="t-detail-lbl">Le Physique</div>
-            <div class="t-detail-val">Livre de Vie imprimé et relié, inséré dans l'écrin</div>
-          </div>
-          <div class="t-detail-block">
-            <div class="t-detail-lbl">Le Numérique</div>
-            <div class="t-detail-val">Jusqu'à 10 photos animées, récits vocaux enrichis</div>
+          <div style="border-top:1px solid rgba(196,164,107,.12);padding-top:12px;">
+            <div style="font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--or);margin-bottom:6px;">Écrin physique</div>
+            <div class="t-list">
+              <div class="t-li">Livre de Vie imprimé</div>
+              <div class="t-li">Plaque QR mémorielle aluminium</div>
+              <div class="t-li">Clé USB Capsule Mémoire</div>
+              <div class="t-li">Carte d'accès + lettre</div>
+              <div class="t-li">Écrin noir premium</div>
+            </div>
           </div>
         </div>
         <stripe-buy-button
           buy-button-id="buy_btn_1TRAO1FGbNzIgsMgknwo7UgC"
-          publishable-key="pk_live_51TChBEFGbNzIgsMgvdOEwlvVpl0SqE964QA8FzxWZr7g7F6CO7mo3EozIpA1Z4o5BcFBjNencdGQVsz1m7WGhyTL00djLEuJRg">
-        </stripe-buy-button>
-        <p class="t-note">Paiement sécurisé · Confidentialité garantie</p>
+          publishable-key="pk_live_51TChBEFGbNzIgsMgvdOEwlvVpl0SqE964QA8FzxWZr7g7F6CO7mo3EozIpA1Z4o5BcFBjNencdGQVsz1m7WGhyTL00djLEuJRg"
+        ></stripe-buy-button>
+        <p class="t-note">Impression et gravure lancées après validation client</p>
       </div>
-    </div>
 
-    <!-- OPTIONS -->
-    <div style="margin-top:40px;">
-      <div class="sec-lbl rv" style="text-align:center;margin-bottom:6px;">Options supplémentaires</div>
-      <p class="rv" style="text-align:center;font-size:13px;color:var(--muted);margin-bottom:24px;">À ajouter lors du questionnaire après commande.</p>
-      <div class="addons-grid">
-        <div class="addon-card rv">
-          <div class="addon-price">+180<span style="font-size:14px;">€</span></div>
-          <div class="addon-name">Pack Duo</div>
-          <p class="addon-desc">Un deuxième écrin complet (boîte, clé USB, livre imprimé) pour un autre membre de la famille.</p>
+    </div>
+    <p class="rv" style="text-align:center;font-size:12px;color:var(--muted);margin-top:16px;line-height:1.7;">* Si enregistrement vocal exploitable disponible. Sans enregistrement, voix de narration douce clairement présentée comme non authentique.</p>
+
+    <!-- ADD-ONS -->
+    <div style="margin-top:48px;">
+      <div class="sec-lbl rv" style="text-align:center;margin-bottom:8px;">Options, à ajouter lors du questionnaire</div>
+      <p class="rv" style="text-align:center;font-size:13px;color:var(--muted);margin-bottom:32px;">Pour augmenter votre panier et enrichir l'hommage.</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+
+        <div class="rv" style="background:var(--blanc);border:1px solid rgba(196,164,107,.15);border-radius:3px;padding:28px 24px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--or);margin-bottom:6px;">+180<span style="font-size:14px;">€</span></div>
+          <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;color:var(--navy-mid);margin-bottom:8px;">Pack Duo</div>
+          <p style="font-size:13px;color:var(--muted);line-height:1.6;">Un deuxième écrin complet (boîte, clé USB, livre imprimé) pour un autre membre de la famille.</p>
         </div>
-        <div class="addon-card rv d1">
-          <div class="addon-price">+59<span style="font-size:14px;">€</span></div>
-          <div class="addon-name">Plaque Additionnelle</div>
-          <p class="addon-desc">Une deuxième plaque QR identique pour un second lieu de mémoire : jardin ou maison de famille.</p>
+
+        <div class="rv d1" style="background:var(--blanc);border:1px solid rgba(196,164,107,.15);border-radius:3px;padding:28px 24px;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--or);margin-bottom:6px;">+59<span style="font-size:14px;">€</span></div>
+          <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;color:var(--navy-mid);margin-bottom:8px;">Plaque Additionnelle</div>
+          <p style="font-size:13px;color:var(--muted);line-height:1.6;">Une deuxième plaque QR identique pour un second lieu de mémoire : jardin ou maison de famille.</p>
         </div>
+
       </div>
     </div>
 
     <!-- PROJETS EXCEPTIONNELS -->
-    <div class="proj-cta rv">
+    <div class="rv" style="margin-top:32px;background:var(--navy-mid);border-radius:3px;padding:40px 44px;display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap;">
       <div>
-        <div style="font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--or);margin-bottom:8px;">Projets Exceptionnels</div>
-        <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:22px;color:var(--blanc);line-height:1.2;margin-bottom:8px;">Un projet hors normes ? <em style="color:var(--or);">Sur devis.</em></div>
-        <p style="font-size:13px;color:rgba(240,234,224,.5);line-height:1.7;max-width:380px;">Plusieurs membres, multilangue, archives importantes… Contactez-nous pour un devis personnalisé.</p>
+        <div style="font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--or);margin-bottom:10px;">Projets Exceptionnels</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:24px;color:var(--blanc);line-height:1.2;margin-bottom:10px;">Un projet hors normes ?<br><em style="color:var(--or);">Sur devis.</em></div>
+        <p style="font-size:13px;color:rgba(240,234,224,.5);line-height:1.7;max-width:420px;">Plusieurs membres de la famille, multilangue, archives importantes à traiter, livre de vie de grande envergure… Contactez-nous pour un devis personnalisé.</p>
       </div>
-      <a href="#contact" class="btn-or">Nous contacter</a>
+      <a href="mailto:contact.capsulememoire@gmail.com">contact.capsulememoire@gmail.com</a>
     </div>
+
   </div>
 </section>
 
-<!-- ── ENGAGEMENT ÉTHIQUE ── -->
-<section id="ethique">
-  <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(196,164,107,.2),transparent);"></div>
-  <div class="ethique-inner">
+<!-- ENGAGEMENT ÉTHIQUE -->
+<section id="ethique" style="background:var(--navy-mid);padding:100px 56px;position:relative;overflow:hidden;">
+  <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(196,164,107,.25),transparent);"></div>
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 80% 50%,rgba(196,164,107,.04) 0%,transparent 70%);pointer-events:none;"></div>
+  <div class="inner" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:center;">
     <div>
       <div class="sec-lbl rv" style="color:var(--or);">Notre engagement</div>
-      <h2 class="sec-ttl rv d1" style="color:var(--blanc);margin-bottom:24px;">Ce que vous nous <em>confiez</em><br>est sacré.</h2>
-      <div class="ethique-body rv d2">
+      <h2 class="sec-ttl rv d1" style="color:var(--blanc);margin-bottom:28px;">Ce que vous nous <em>confiez</em><br>est sacré.</h2>
+      <div class="rv d2" style="font-size:15px;color:rgba(240,234,224,.55);line-height:1.9;">
         <p>Vos photos, votre voix, vos souvenirs : nous en sommes les gardiens temporaires, pas les propriétaires.</p>
-        <p>L'intelligence artificielle que nous utilisons sert à restaurer et transmettre ce qui existe déjà. Jamais à inventer. Jamais à tromper.</p>
+        <p style="margin-top:16px;">L'intelligence artificielle que nous utilisons sert à restaurer et transmettre ce qui existe déjà. Jamais à inventer. Jamais à tromper.</p>
       </div>
-      <a href="ethique.html" class="ethique-link rv d3">Lire notre engagement complet
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+      <a href="ethique.html" class="rv d3" style="display:inline-flex;align-items:center;gap:10px;margin-top:36px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--or);border-bottom:1px solid rgba(196,164,107,.3);padding-bottom:4px;transition:border-color .2s;" onmouseover="this.style.borderColor='#C4A46B'" onmouseout="this.style.borderColor='rgba(196,164,107,.3)'">Lire notre engagement complet →</a>
     </div>
-    <div class="ethique-items rv d2">
-      <div class="ethique-item">
-        <div class="ethique-dot"></div>
-        <div><div class="ethique-item-ttl">Consentement de la famille</div><p class="ethique-item-desc">Chaque capsule est créée avec le consentement explicite d'un proche. Toujours.</p></div>
+    <div class="rv d2" style="display:flex;flex-direction:column;gap:16px;">
+      <div style="display:flex;gap:16px;align-items:flex-start;padding:22px 24px;border:1px solid rgba(196,164,107,.12);border-radius:2px;background:rgba(255,255,255,.02);">
+        <div style="width:8px;height:8px;background:var(--or);border-radius:50%;flex-shrink:0;margin-top:5px;opacity:.7;"></div>
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;color:var(--blanc);margin-bottom:6px;">Consentement de la famille</div>
+          <p style="font-size:13px;color:rgba(240,234,224,.45);line-height:1.6;">Chaque capsule est créée avec le consentement explicite d'un proche. Toujours.</p>
+        </div>
       </div>
-      <div class="ethique-item">
-        <div class="ethique-dot"></div>
-        <div><div class="ethique-item-ttl">Suppression après livraison</div><p class="ethique-item-desc">Vos données sont supprimées dans les 30 jours suivant la livraison. Sans exception.</p></div>
+      <div style="display:flex;gap:16px;align-items:flex-start;padding:22px 24px;border:1px solid rgba(196,164,107,.12);border-radius:2px;background:rgba(255,255,255,.02);">
+        <div style="width:8px;height:8px;background:var(--or);border-radius:50%;flex-shrink:0;margin-top:5px;opacity:.7;"></div>
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;color:var(--blanc);margin-bottom:6px;">Suppression après livraison</div>
+          <p style="font-size:13px;color:rgba(240,234,224,.45);line-height:1.6;">Vos données sont supprimées dans les 30 jours suivant la livraison. Sans exception.</p>
+        </div>
       </div>
-      <div class="ethique-item">
-        <div class="ethique-dot"></div>
-        <div><div class="ethique-item-ttl">Transparence sur l'IA</div><p class="ethique-item-desc">Chaque capsule livrée mentionne clairement l'usage de l'intelligence artificielle.</p></div>
+      <div style="display:flex;gap:16px;align-items:flex-start;padding:22px 24px;border:1px solid rgba(196,164,107,.12);border-radius:2px;background:rgba(255,255,255,.02);">
+        <div style="width:8px;height:8px;background:var(--or);border-radius:50%;flex-shrink:0;margin-top:5px;opacity:.7;"></div>
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;color:var(--blanc);margin-bottom:6px;">Transparence sur l'IA</div>
+          <p style="font-size:13px;color:rgba(240,234,224,.45);line-height:1.6;">Chaque capsule livrée mentionne clairement l'usage de l'intelligence artificielle.</p>
+        </div>
       </div>
-      <div class="ethique-item">
-        <div class="ethique-dot"></div>
-        <div><div class="ethique-item-ttl">Zéro deepfake malveillant</div><p class="ethique-item-desc">Nous refusons toute demande dont l'intention nous semble douteuse. Sans discussion.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── LIMITES DU SERVICE ── -->
-<section id="limites" style="background:var(--beige);padding:100px 52px;">
-  <div class="inner" style="max-width:1000px;">
-    <div class="hdr">
-      <div class="sec-lbl rv">Transparence</div>
-      <h2 class="sec-ttl rv d1">Ce que nous faisons,<br><em>et ce que nous ne faisons pas.</em></h2>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;" class="rv d1">
-      <div style="background:var(--blanc);border-radius:3px;padding:36px;border:1px solid rgba(196,164,107,.15);">
-        <div style="font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--or);margin-bottom:14px;">Validation humaine</div>
-        <p style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:19px;color:var(--navy-mid);margin-bottom:14px;line-height:1.25;">Chaque capsule est relue, contrôlée et validée humainement avant livraison.</p>
-        <p style="font-size:14px;color:var(--muted);line-height:1.8;">Nous vérifions la cohérence du récit, la dignité du rendu, la qualité des images, la clarté du message vocal et la conformité avec notre charte éthique. Vous recevez une prévisualisation complète avant toute livraison finale.</p>
-      </div>
-      <div style="background:var(--blanc);border-radius:3px;padding:36px;border:1px solid rgba(196,164,107,.15);">
-        <div style="font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--or);margin-bottom:14px;">Limites du service</div>
-        <p style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:19px;color:var(--navy-mid);margin-bottom:14px;line-height:1.25;">La fidélité dépend des éléments transmis.</p>
-        <ul style="font-size:13px;color:var(--muted);line-height:1.85;padding-left:16px;">
-          <li>Une photo très floue ne donnera pas forcément un portrait net</li>
-          <li>Un enregistrement de mauvaise qualité limite le rendu vocal</li>
-          <li>Notre objectif n'est pas de recréer une personne, mais de composer un hommage digne</li>
-          <li>Lorsque les sources sont insuffisantes, nous privilégions une approche sobre et respectueuse</li>
-        </ul>
-        <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-top:14px;">Si les archives nécessitent un travail plus approfondi, un délai complémentaire peut être proposé afin de garantir un rendu digne.</p>
+      <div style="display:flex;gap:16px;align-items:flex-start;padding:22px 24px;border:1px solid rgba(196,164,107,.12);border-radius:2px;background:rgba(255,255,255,.02);">
+        <div style="width:8px;height:8px;background:var(--or);border-radius:50%;flex-shrink:0;margin-top:5px;opacity:.7;"></div>
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;color:var(--blanc);margin-bottom:6px;">Zéro deepfake malveillant</div>
+          <p style="font-size:13px;color:rgba(240,234,224,.45);line-height:1.6;">Nous refusons toute demande dont l'intention nous semble douteuse. Sans discussion.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── FAQ ── -->
+<!-- FAQ -->
 <section id="faq">
   <div class="inner">
     <div class="hdr">
@@ -1383,67 +906,39 @@
     <div class="faq-list">
       <div class="faq-item">
         <span class="faq-line"></span>
-        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><span class="faq-q-txt">Comment fonctionne la plaque QR sur la stèle ?</span><div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
-        <div class="faq-a"><div class="faq-a-inner">La plaque s'appose sur la stèle avec un adhésif 3M VHB, sans perçage ni modification du monument. Un simple scan de smartphone suffit pour accéder à la capsule via un lien privé sécurisé, maintenu par Capsule Mémoire. En cas d'évolution technique, nous prévoyons une solution de redirection ou d'export pour préserver l'accès familial.</div></div>
+        <div class="faq-q"><span class="faq-q-txt">Comment fonctionne la plaque QR mémorielle ?</span><div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-a"><div class="faq-a-inner">La plaque aluminium s'appose avec un adhésif double-face sans percer ni modifier le monument. Un simple scan de smartphone ouvre la capsule privée. Le lien est maintenu par Capsule Mémoire, accessible depuis n'importe quel smartphone.</div></div>
       </div>
       <div class="faq-item">
         <span class="faq-line"></span>
-        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><span class="faq-q-txt">Est-ce que le résultat ressemblera vraiment à mon proche ?</span><div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
-        <div class="faq-a"><div class="faq-a-inner">Nous travaillons uniquement à partir de vos photos, enregistrements et souvenirs réels. Plus les éléments fournis sont nombreux et de bonne qualité, plus le rendu pourra être fidèle. Avant toute livraison, vous recevez une prévisualisation pour validation — nous n'envoyons rien sans votre accord explicite.</div></div>
+        <div class="faq-q"><span class="faq-q-txt">Est-ce que le résultat ressemblera vraiment à mon proche ?</span><div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-a"><div class="faq-a-inner">Nous travaillons à partir de vos photos et enregistrements réels pour composer un hommage fidèle à sa présence. Plus vous nous partagez d'éléments, plus la capsule lui ressemble. Nous ne livrons jamais sans votre validation.</div></div>
       </div>
       <div class="faq-item">
         <span class="faq-line"></span>
-        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><span class="faq-q-txt">Et si je n'ai que peu d'enregistrements ?</span><div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
-        <div class="faq-a"><div class="faq-a-inner">Quelques secondes suffisent. Sans enregistrement, nous reconstituons une voix fidèle à votre description. Une seule photo de qualité suffit pour le portrait animé.</div></div>
+        <div class="faq-q"><span class="faq-q-txt">Et si je n'ai que peu d'enregistrements ?</span><div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-a"><div class="faq-a-inner">Si vous avez un enregistrement vocal, même quelques secondes, nous pouvons créer une évocation vocale commémorative. Sans enregistrement exploitable, nous proposons une voix de narration douce, clairement présentée comme non authentique, jamais attribuée à la personne disparue. Une seule photo de qualité suffit pour le portrait animé.</div></div>
       </div>
       <div class="faq-item">
         <span class="faq-line"></span>
-        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><span class="faq-q-txt">Mes données et mes souvenirs sont-ils protégés ?</span><div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-q"><span class="faq-q-txt">Mes données et mes souvenirs sont-ils protégés ?</span><div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
         <div class="faq-a"><div class="faq-a-inner">Absolument. Tout est chiffré et supprimé de nos serveurs dans les 30 jours après livraison. Vos souvenirs n'appartiennent qu'à vous. Conformité RGPD totale.</div></div>
       </div>
       <div class="faq-item">
         <span class="faq-line"></span>
-        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><span class="faq-q-txt">Peut-on commander pour une personne encore en vie ?</span><div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
-        <div class="faq-a"><div class="faq-a-inner">Oui, et c'est l'une de nos plus belles démarches. Lorsque la capsule est créée du vivant de la personne concernée, son consentement écrit est obligatoire. C'est un cadeau de transmission extraordinaire, préparé ensemble, dans un cadre choisi et apaisé.</div></div>
+        <div class="faq-q"><span class="faq-q-txt">Peut-on commander pour une personne encore en vie ?</span><div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-a"><div class="faq-a-inner">Oui, et c'est même l'un de nos projets les plus beaux. Des personnes âgées ou malades commandent leur propre capsule pour laisser une trace à leurs enfants et petits-enfants. Dans ce cas, le consentement explicite de la personne concernée est obligatoire. Un cadeau extraordinaire à préparer ensemble.</div></div>
       </div>
       <div class="faq-item">
         <span class="faq-line"></span>
-        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><span class="faq-q-txt">Comment se passe le paiement ?</span><div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
-        <div class="faq-a"><div class="faq-a-inner">En ligne, 100% sécurisé, par carte via Stripe. Vous recevez un reçu immédiatement. Les délais démarrent à compter de la réception complète de vos éléments — questionnaire, photos et enregistrements.</div></div>
-      </div>
-      <div class="faq-item">
-        <span class="faq-line"></span>
-        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><span class="faq-q-txt">Est-ce que vous faites parler les morts ?</span><div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
-        <div class="faq-a"><div class="faq-a-inner">Non. Nous ne prétendons jamais recréer une personne ni permettre une communication avec elle. Nous créons un hommage commémoratif à partir d'archives familiales réelles. Les messages créés sont des hommages — jamais une prise de parole authentique. Cette mention figure dans chaque capsule livrée.</div></div>
-      </div>
-      <div class="faq-item">
-        <span class="faq-line"></span>
-        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><span class="faq-q-txt">Puis-je commander sans accord de la famille ?</span><div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
-        <div class="faq-a"><div class="faq-a-inner">Non. Le commanditaire doit être un proche légitime ou agir avec l'accord de la famille. En cas de désaccord familial porté à notre connaissance, la production peut être suspendue. Nous nous réservons le droit de refuser toute commande dont le contexte nous semble inapproprié.</div></div>
-      </div>
-      <div class="faq-item">
-        <span class="faq-line"></span>
-        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><span class="faq-q-txt">La capsule est-elle un document officiel ou authentique ?</span><div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
-        <div class="faq-a"><div class="faq-a-inner">Non. La capsule est un hommage commémoratif assisté par intelligence artificielle, à partir des archives de la famille. Elle ne constitue pas un document réel ou une prise de parole authentique. Capsule Mémoire n'est pas un service médical, psychologique ou thérapeutique.</div></div>
-      </div>
-      <div class="faq-item">
-        <span class="faq-line"></span>
-        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><span class="faq-q-txt">Est-ce que la voix est authentique ?</span><div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
-        <div class="faq-a"><div class="faq-a-inner">Non. L'évocation vocale est un contenu généré ou assisté par IA à partir des éléments fournis. Elle est présentée comme telle dans la capsule. Si aucun enregistrement n'est disponible, nous proposons une voix de narration douce, clairement identifiée comme non authentique.</div></div>
-      </div>
-      <div class="faq-item">
-        <span class="faq-line"></span>
-        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><span class="faq-q-txt">Que se passe-t-il si le résultat ne me convient pas ?</span><div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
-        <div class="faq-a"><div class="faq-a-inner">Une prévisualisation est prévue avant livraison finale. Une série de corrections raisonnables est incluse afin d'ajuster le ton, le rythme, certains visuels ou la présentation. Si malgré ces corrections le résultat ne vous convient pas, vous bénéficiez de notre garantie satisfaction de 14 jours.</div></div>
-      </div>
-      <div class="faq-item">
-        <span class="faq-line"></span>
-        <div class="faq-q" role="button" tabindex="0" aria-expanded="false"><span class="faq-q-txt">Les fichiers transmis sont-ils supprimés après livraison ?</span><div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
-        <div class="faq-a"><div class="faq-a-inner">Oui. Photos, enregistrements vocaux, documents et réponses au questionnaire sont supprimés dans un délai maximum de 30 jours après livraison. Cette suppression est définitive et irréversible.</div></div>
+        <div class="faq-q"><span class="faq-q-txt">Comment se passe le paiement ?</span><div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-a"><div class="faq-a-inner">En ligne, 100% sécurisé via Stripe (certifié PCI-DSS). La production ne commence qu'après réception complète de vos éléments via WeTransfer. Capsule Mémoire ne conserve aucune donnée bancaire.</div></div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- CONTACT -->
 <section id="contact">
   <div class="inner">
     <div class="hdr">
@@ -1484,118 +979,107 @@
   </div>
 </section>
 
-<!-- ── FOOTER ── -->
+<!-- GUIDE GRATUIT -->
+<section style="background:var(--beige);padding:80px 52px;">
+  <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;">
+    <div class="rv">
+      <div style="font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--or);margin-bottom:14px;">Ressource gratuite</div>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(28px,3.5vw,44px);color:var(--navy-mid);line-height:1.15;margin-bottom:20px;">10 questions à poser<br><em style="color:var(--or);">avant qu'il soit trop tard</em></h2>
+      <p style="font-size:15px;color:var(--muted);line-height:1.85;margin-bottom:32px;">Un guide doux pour ouvrir une conversation précieuse avec un parent ou un proche. Des questions simples, des relances, une checklist souvenir. Gratuit, envoyé par email.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="guide-souvenirs.html" style="display:inline-flex;align-items:center;gap:10px;background:var(--navy-mid);color:var(--or);font-family:'DM Sans',sans-serif;font-weight:500;font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:16px 32px;border-radius:2px;text-decoration:none;transition:background .2s;" onmouseover="this.style.background='#0D1829'" onmouseout="this.style.background='#1A2B4A'">
+          Recevoir le guide
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="guide-10-questions.html" style="display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(196,164,107,.4);color:var(--or);font-family:'DM Sans',sans-serif;font-weight:300;font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:16px 24px;border-radius:2px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='#C4A46B'" onmouseout="this.style.borderColor='rgba(196,164,107,.4)'">
+          Voir le PDF
+        </a>
+      </div>
+    </div>
+    <div class="rv d2" style="display:flex;flex-direction:column;gap:16px;">
+      <div style="background:var(--blanc);border:1px solid rgba(196,164,107,.15);border-radius:3px;padding:22px 24px;display:flex;gap:16px;align-items:flex-start;">
+        <div style="width:28px;height:1px;background:var(--or);margin-top:12px;flex-shrink:0;"></div>
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;color:var(--navy-mid);margin-bottom:6px;">10 questions structurées</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.65;">Enfance, rencontres, valeurs, histoires familiales, messages à transmettre.</div>
+        </div>
+      </div>
+      <div style="background:var(--blanc);border:1px solid rgba(196,164,107,.15);border-radius:3px;padding:22px 24px;display:flex;gap:16px;align-items:flex-start;">
+        <div style="width:28px;height:1px;background:var(--or);margin-top:12px;flex-shrink:0;"></div>
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;color:var(--navy-mid);margin-bottom:6px;">Des relances douces</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.65;">Pour aider à raconter sans pression, avec naturel.</div>
+        </div>
+      </div>
+      <div style="background:var(--blanc);border:1px solid rgba(196,164,107,.15);border-radius:3px;padding:22px 24px;display:flex;gap:16px;align-items:flex-start;">
+        <div style="width:28px;height:1px;background:var(--or);margin-top:12px;flex-shrink:0;"></div>
+        <div>
+          <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;color:var(--navy-mid);margin-bottom:6px;">Une checklist souvenir</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.65;">Photos, enregistrements, lettres, objets à préserver.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
   <div class="ft-logo">CAPSULE <b>MÉMOIRE</b></div>
   <p class="ft-tag">"Un souvenir qui dure toute une vie."</p>
   <div class="ft-div"></div>
-  <a href="/cdn-cgi/l/email-protection#1b7874756f7a786f35787a6b686e777e767e767472697e5b7c767a727735787476" class="ft-email"><span class="__cf_email__" data-cfemail="54373b3a203537207a373524272138313931393b3d2631143339353d387a373b39">[email&#160;protected]</span></a>
-  <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;">
-    <a href="ethique.html" style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(196,164,107,.35);">Engagement éthique</a>
-    <a href="mentions-legales.html" style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(196,164,107,.35);">Mentions légales</a>
-    <a href="confidentialite.html" style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(196,164,107,.35);">Confidentialité</a>
-    <a href="cgv.html" style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:rgba(196,164,107,.35);">CGV</a>
+  <a href="mailto:contact.capsulememoire@gmail.com">contact.capsulememoire@gmail.com</a>
+  <div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:center;">
+    <a href="ethique.html" style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(196,164,107,.4);transition:color .2s;" onmouseover="this.style.color='#C4A46B'" onmouseout="this.style.color='rgba(196,164,107,.4)'">Engagement éthique</a>
+    <a href="cgv.html" style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(196,164,107,.4);transition:color .2s;" onmouseover="this.style.color='#C4A46B'" onmouseout="this.style.color='rgba(196,164,107,.4)'">CGV</a>
+    <a href="confidentialite.html" style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(196,164,107,.4);transition:color .2s;" onmouseover="this.style.color='#C4A46B'" onmouseout="this.style.color='rgba(196,164,107,.4)'">Confidentialité</a>
+    <a href="mentions-legales.html" style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(196,164,107,.4);transition:color .2s;" onmouseover="this.style.color='#C4A46B'" onmouseout="this.style.color='rgba(196,164,107,.4)'">Mentions légales</a>
+    <a href="guide-10-questions.html" style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(196,164,107,.4);transition:color .2s;" onmouseover="this.style.color='#C4A46B'" onmouseout="this.style.color='rgba(196,164,107,.4)'">Guide gratuit</a>
   </div>
-  <p class="ft-legal">© 2025 Capsule Mémoire · RGPD · Contenus créés avec assistance IA</p>
+  <p class="ft-legal">© 2025–2026 Capsule Mémoire · Traitement confidentiel · RGPD · Contenus créés avec assistance IA</p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-/* ── CURSOR (desktop hover only) ── */
+<script>
+/* CURSOR */
 const cR = document.getElementById('cR'), cD = document.getElementById('cD');
-if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-  let mx=-99,my=-99,rx=-99,ry=-99;
-  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
-  (function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;cR.style.left=rx+'px';cR.style.top=ry+'px';cD.style.left=mx+'px';cD.style.top=my+'px';requestAnimationFrame(loop);})();
-}
+let mx=-99,my=-99,rx=-99,ry=-99;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;cR.style.left=rx+'px';cR.style.top=ry+'px';cD.style.left=mx+'px';cD.style.top=my+'px';requestAnimationFrame(loop);})();
 
-/* ── LOADER ── */
+/* LOADER */
 window.addEventListener('load',()=>{
   setTimeout(()=>{
     document.getElementById('loader').classList.add('out');
     document.querySelectorAll('#hero .rv').forEach(el=>el.classList.add('in'));
-  }, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1400);
+  },1800);
 });
 
-/* ── NAV SCROLL ── */
-const nav = document.getElementById('nav');
-const hero = document.getElementById('hero');
-const stickyCta = document.getElementById('stickyCta');
-window.addEventListener('scroll',()=>{
-  const sy = window.scrollY;
-  nav.classList.toggle('on', sy > 60);
-  /* Sticky CTA: show after hero */
-  if (stickyCta) {
-    const heroH = hero ? hero.offsetHeight : 500;
-    stickyCta.classList.toggle('hidden', sy < heroH - 100);
-  }
-},{passive:true});
-/* Show sticky CTA on mobile */
-if (stickyCta) stickyCta.classList.add('hidden');
+/* NAV SCROLL */
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('on',scrollY>60),{passive:true});
 
-/* ── HAMBURGER MENU ── */
-const mobMenu = document.getElementById('mobMenu');
-const burgerBtn = document.getElementById('burgerBtn');
-const mobClose = document.getElementById('mobClose');
-
-function openMobMenu(){
-  mobMenu.classList.add('open');
-  burgerBtn.setAttribute('aria-expanded','true');
-  document.body.style.overflow = 'hidden';
-}
-function closeMobMenu(){
-  mobMenu.classList.remove('open');
-  burgerBtn.setAttribute('aria-expanded','false');
-  document.body.style.overflow = '';
-}
-if(burgerBtn) burgerBtn.addEventListener('click', openMobMenu);
-if(mobClose)  mobClose.addEventListener('click', closeMobMenu);
-/* Close on backdrop */
-mobMenu?.addEventListener('click', e => { if(e.target === mobMenu) closeMobMenu(); });
-/* Close on Escape */
-document.addEventListener('keydown', e => { if(e.key === 'Escape') closeMobMenu(); });
-
-/* ── SCROLL REVEAL ── */
-const obs = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
-},{threshold:.08});
+/* REVEAL */
+const obs=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.1});
 document.querySelectorAll('.rv:not(#hero .rv)').forEach(el=>obs.observe(el));
 
-/* ── MAGNETIC BUTTONS (desktop only) ── */
-if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
-  document.querySelectorAll('.mag').forEach(b=>{
-    b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.2}px,${(e.clientY-r.top-r.height/2)*.28}px)`;});
-    b.addEventListener('mouseleave',()=>{b.style.transition='transform .5s cubic-bezier(.16,1,.3,1)';b.style.transform='';setTimeout(()=>b.style.transition='',500);});
-    b.addEventListener('mouseenter',()=>{b.style.transition='transform .15s ease';});
-  });
-}
+/* MAGNETIC */
+document.querySelectorAll('.mag').forEach(b=>{
+  b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.22}px,${(e.clientY-r.top-r.height/2)*.3}px)`;});
+  b.addEventListener('mouseleave',()=>{b.style.transition='transform .5s cubic-bezier(.16,1,.3,1),background .2s';b.style.transform='translate(0,0)';setTimeout(()=>b.style.transition='',500);});
+  b.addEventListener('mouseenter',()=>{b.style.transition='transform .15s ease,background .2s';});
+});
 
-/* ── FAQ ── */
+/* FAQ */
 document.querySelectorAll('.faq-q').forEach(q=>{
-  function toggle(){
-    const item = q.closest('.faq-item');
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i=>{ i.classList.remove('open'); i.querySelector('.faq-q').setAttribute('aria-expanded','false'); });
-    if(!isOpen){ item.classList.add('open'); q.setAttribute('aria-expanded','true'); }
-  }
-  q.addEventListener('click', toggle);
-  q.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggle(); } });
+  q.addEventListener('click',()=>{
+    const item=q.closest('.faq-item');
+    const isOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+    if(!isOpen) item.classList.add('open');
+  });
 });
 
-/* ── CONTACT FORM ── */
-const contactForm = document.getElementById('contactForm');
-contactForm?.addEventListener('submit', async e=>{
-  e.preventDefault();
-  const btn = contactForm.querySelector('button[type="submit"]');
-  const orig = btn.textContent;
-  btn.textContent = 'Envoi…'; btn.disabled = true;
-  try {
-    const res = await fetch(contactForm.action,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(Object.fromEntries(new FormData(contactForm)))});
-    if(res.ok){ contactForm.style.display='none'; document.getElementById('cfSuccess').style.display='block'; }
-    else throw new Error();
-  } catch { btn.textContent = orig; btn.disabled = false; alert('Erreur. Merci de nous contacter par email.'); }
-});
 
-  // ── SLIDERS AVANT/APRÈS ──
+// ── SLIDERS AVANT/APRÈS ──
   function initSlider(id) {
     const wrap = document.getElementById(id);
     if (!wrap) return;
@@ -1617,6 +1101,60 @@ contactForm?.addEventListener('submit', async e=>{
     window.addEventListener('touchend', () => active = false);
   }
   ['s1','s2','s3','s4'].forEach(initSlider);
+
+/* HAMBURGER MENU */
+const mobMenu = document.getElementById('mobMenu');
+const burgerBtn = document.getElementById('burgerBtn');
+const mobClose = document.getElementById('mobClose');
+function openMobMenu(){
+  if(mobMenu) mobMenu.classList.add('open');
+  if(burgerBtn) burgerBtn.setAttribute('aria-expanded','true');
+  document.body.style.overflow='hidden';
+}
+function closeMobMenu(){
+  if(mobMenu) mobMenu.classList.remove('open');
+  if(burgerBtn) burgerBtn.setAttribute('aria-expanded','false');
+  document.body.style.overflow='';
+}
+if(burgerBtn) burgerBtn.addEventListener('click', openMobMenu);
+if(mobClose) mobClose.addEventListener('click', closeMobMenu);
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeMobMenu(); });
+
+/* STICKY CTA */
+const stickyCta = document.getElementById('stickyCta');
+const heroEl = document.getElementById('hero');
+window.addEventListener('scroll',()=>{
+  if(stickyCta && heroEl){
+    const heroH = heroEl.offsetHeight;
+    stickyCta.classList.toggle('hidden', window.scrollY < heroH - 100);
+  }
+},{passive:true});
+
+/* CONTACT FORM */
+const contactForm = document.getElementById('contactForm');
+const cfSuccess = document.getElementById('cfSuccess');
+if(contactForm){
+  contactForm.addEventListener('submit', async function(e){
+    e.preventDefault();
+    const btn = contactForm.querySelector('button[type="submit"]');
+    btn.textContent = 'Envoi en cours…';
+    btn.disabled = true;
+    try {
+      const data = new FormData(contactForm);
+      const res = await fetch('https://formspree.io/f/mykowvda',{
+        method:'POST', body: data, headers:{'Accept':'application/json'}
+      });
+      if(res.ok){
+        contactForm.style.display='none';
+        if(cfSuccess) cfSuccess.style.display='block';
+      } else { throw new Error('error'); }
+    } catch(err){
+      btn.textContent = 'Envoyer le message';
+      btn.disabled = false;
+      alert('Erreur. Écrivez directement à contact.capsulememoire@gmail.com');
+    }
+  });
+}
 
 </script>
 </body>
