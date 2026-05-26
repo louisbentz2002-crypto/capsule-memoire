@@ -527,12 +527,12 @@
     try {
       if (WEBHOOK_URL) {
         /* Envoi vers webhook Make / n8n / Brevo */
-        const res = await fetch(WEBHOOK_URL, {
+        await fetch(WEBHOOK_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-        if (!res.ok) throw new Error('Erreur réseau');
       }
       /* Succès */
       form.style.display = 'none';
