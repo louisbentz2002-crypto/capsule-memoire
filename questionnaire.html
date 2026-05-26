@@ -84,7 +84,6 @@
     .q label .opt { font-weight: 300; font-size: 12px; color: var(--muted); }
     .q label .req { color: var(--or); }
 
-    /* !! Critical: 16px prevents iOS Safari from zooming on input focus */
     input[type="text"],
     input[type="email"],
     input[type="tel"],
@@ -92,11 +91,10 @@
     textarea, select {
       width: 100%; background: white; border: 1px solid var(--bord); border-radius: 4px;
       padding: 14px 16px; font-family: 'DM Sans', sans-serif;
-      font-size: 16px; /* NEVER below 16px on mobile */
+      font-size: 16px;
       font-weight: 300; color: var(--texte); outline: none;
       transition: border-color .2s, box-shadow .2s;
       -webkit-appearance: none; appearance: none;
-      /* Ensure proper touch target height */
       min-height: 50px;
     }
     input:focus, textarea:focus, select:focus {
@@ -104,7 +102,7 @@
       box-shadow: 0 0 0 3px rgba(196,164,107,.12);
     }
     input::placeholder, textarea::placeholder { color: rgba(107,122,153,.5); }
-    textarea { min-height: 120px; resize: vertical; line-height: 1.65; min-height: 110px; }
+    textarea { min-height: 120px; resize: vertical; line-height: 1.65; }
     textarea.lg { min-height: 160px; }
     select {
       background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23C4A46B' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
@@ -130,7 +128,6 @@
       border: 1px solid var(--bord); border-radius: 4px; cursor: pointer;
       transition: border-color .18s, background .18s; background: white;
       font-size: 15px; color: var(--texte);
-      /* Minimum 48px touch target */
       min-height: 52px;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
@@ -139,7 +136,6 @@
     .r-item:active, .c-item:active { background: rgba(196,164,107,.05); }
     .r-item.sel, .c-item.sel { border-color: var(--or); background: rgba(196,164,107,.06); }
 
-    /* Custom radio/check visuals (hide native) */
     .r-item input[type="radio"],
     .c-item input[type="checkbox"] { position: absolute; opacity: 0; width: 0; height: 0; }
 
@@ -166,7 +162,6 @@
     .c-square svg { opacity: 0; transition: opacity .18s; }
     .c-item.sel .c-square svg { opacity: 1; }
 
-    /* Compact row items (caractère etc.) */
     .radio-group.row .r-item,
     .check-group.row .c-item {
       flex: 1; min-width: 120px; justify-content: center; flex-direction: column;
@@ -183,7 +178,6 @@
       padding: 24px 16px; text-align: center;
       background: rgba(240,234,224,.25); cursor: pointer;
       transition: all .2s; position: relative;
-      /* Big tap target */
       min-height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
     }
     .upload-zone:hover, .upload-zone:active { border-color: var(--or); background: rgba(196,164,107,.06); }
@@ -200,6 +194,8 @@
     ═══════════════════════════════════════════ */
     .notice { background: rgba(196,164,107,.07); border-left: 2px solid var(--or); padding: 14px 16px; border-radius: 0 4px 4px 0; margin-bottom: 20px; font-size: 14px; color: var(--texte); line-height: 1.65; }
     .notice strong { color: var(--navy); font-weight: 500; }
+    .notice-wtransfer { background: rgba(240,234,224,.6); border-left: 2px solid rgba(196,164,107,.45); padding: 12px 16px; border-radius: 0 4px 4px 0; margin-bottom: 16px; font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .notice-wtransfer strong { color: var(--navy); font-weight: 500; }
 
     /* ═══════════════════════════════════════════
        SECTION LABEL
@@ -214,7 +210,6 @@
       margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--beige);
       gap: 12px;
     }
-    /* Sticky nav on mobile */
     @media(max-width:640px){
       .btn-nav {
         position: fixed; bottom: 0; left: 0; right: 0; z-index: 90;
@@ -269,6 +264,10 @@
     .confirm-icon { width: 64px; height: 64px; border-radius: 50%; background: rgba(196,164,107,.1); border: 1px solid rgba(196,164,107,.25); display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; }
     .confirm-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(28px,7vw,40px); color: var(--navy); line-height: 1.2; margin-bottom: 12px; }
     .confirm-text { font-size: 15px; color: var(--muted); line-height: 1.8; margin-bottom: 28px; }
+    .dossier-box { background: var(--navy); border-radius: 6px; padding: 20px; margin-bottom: 24px; text-align: center; }
+    .dossier-box-label { font-size: 9px; letter-spacing: .28em; text-transform: uppercase; color: rgba(196,164,107,.7); margin-bottom: 8px; }
+    .dossier-box-id { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--or); font-weight: 500; letter-spacing: .1em; }
+    .dossier-box-hint { font-size: 12px; color: rgba(240,234,224,.5); margin-top: 6px; line-height: 1.5; }
     .wetransfer-block { border: 1px solid var(--bord); border-radius: 6px; overflow: hidden; margin-bottom: 24px; text-align: left; }
     .wetransfer-header { background: var(--navy); padding: 16px 20px; display: flex; align-items: center; gap: 12px; }
     .wetransfer-header-txt { font-size: 14px; color: var(--blanc); font-weight: 400; line-height: 1.4; }
@@ -280,6 +279,7 @@
     .wt-num { width: 24px; height: 24px; border: 1px solid var(--or); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--or); flex-shrink: 0; margin-top: 1px; }
     .wt-txt { font-size: 13px; color: var(--texte); line-height: 1.6; flex: 1; }
     .wt-email { background: var(--beige); border-radius: 4px; padding: 10px 14px; font-family: 'Cormorant Garamond', serif; font-size: 15px; color: var(--navy); text-align: center; margin: 6px 0; word-break: break-all; }
+    .wt-dossier-inline { display: inline-block; background: rgba(196,164,107,.12); border: 1px solid rgba(196,164,107,.3); border-radius: 3px; padding: 2px 8px; font-family: 'Cormorant Garamond', serif; font-size: 15px; color: var(--navy); font-weight: 500; letter-spacing: .05em; }
     .wt-divider { height: 1px; background: var(--beige); margin: 16px 0; }
     .files-title { font-size: 9px; letter-spacing: .22em; text-transform: uppercase; color: var(--or); margin-bottom: 12px; }
     .file-type { display: flex; gap: 12px; padding: 12px 14px; background: rgba(240,234,224,.4); border-radius: 4px; align-items: flex-start; margin-bottom: 8px; }
@@ -302,6 +302,8 @@
        VALIDATION ERROR
     ═══════════════════════════════════════════ */
     .field-error { border-color: #c0392b !important; box-shadow: 0 0 0 3px rgba(192,57,43,.1) !important; }
+    .field-error-group { outline: 2px solid #c0392b; border-radius: 4px; }
+    .consent-error { border-color: #c0392b !important; }
     .error-msg { font-size: 12px; color: #c0392b; margin-top: 5px; display: none; }
     .error-msg.show { display: block; }
 
@@ -320,9 +322,6 @@
       .check-group.row { flex-direction: column; }
     }
 
-    /* ═══════════════════════════════════════════
-       SAFE AREA FOOTER PADDING
-    ═══════════════════════════════════════════ */
     .confirm { padding-bottom: calc(40px + var(--sab)); }
   </style>
 </head>
@@ -381,7 +380,7 @@
     <div class="welcome-steps">
       <div class="welcome-step"><div class="welcome-step-num">1</div><div>7 étapes · environ 15 minutes · à votre rythme</div></div>
       <div class="welcome-step"><div class="welcome-step-num">2</div><div>Toutes vos réponses restent strictement confidentielles</div></div>
-      <div class="welcome-step"><div class="welcome-step-num">3</div><div>Vous pourrez envoyer vos photos et fichiers à la fin</div></div>
+      <div class="welcome-step"><div class="welcome-step-num">3</div><div>Vous pourrez envoyer vos photos et fichiers à la fin via WeTransfer</div></div>
     </div>
     <button type="button" class="btn-start" onclick="go(1)">Commencer →</button>
   </div>
@@ -397,37 +396,37 @@
     <div class="q">
       <label>Offre choisie <span class="req">*</span></label>
       <div class="radio-group" id="offreGrp">
+        <label class="r-item" onclick="toggleR(this,'offreGrp','offre','Capsule Photo — 290€')">
+          <input type="radio" name="offre" value="Capsule Photo — 290€" onchange="onOffre()" required>
+          <div class="r-circle"></div>
+          <span><strong>Capsule Photo — 290 €</strong><br><span style="font-size:13px;color:var(--muted);">3 photos restaurées, 1 portrait souvenir animé, page hommage PDF — livraison numérique, sans voix, sans écrin</span></span>
+        </label>
         <label class="r-item" onclick="toggleR(this,'offreGrp','offre','Capsule Souvenir — 690€')">
           <input type="radio" name="offre" value="Capsule Souvenir — 690€" onchange="onOffre()">
           <div class="r-circle"></div>
-          <span><strong>Capsule Souvenir — 690€</strong><br><span style="font-size:13px;color:var(--muted);">3 portraits souvenir, évocation vocale, séquence hommage</span></span>
+          <span><strong>Capsule Souvenir — 690 €</strong><br><span style="font-size:13px;color:var(--muted);">5 portraits souvenir animés, évocation vocale commémorative*, vidéo hommage, PDF souvenir — numérique uniquement</span></span>
         </label>
         <label class="r-item" onclick="toggleR(this,'offreGrp','offre','Capsule Héritage — 990€')">
           <input type="radio" name="offre" value="Capsule Héritage — 990€" onchange="onOffre()">
           <div class="r-circle"></div>
-          <span><strong>Capsule Héritage — 990€</strong><br><span style="font-size:13px;color:var(--muted);">10 portraits souvenir, évocation vocale, séquence hommage, livre de vie</span></span>
+          <span><strong>Capsule Héritage — 990 €</strong><br><span style="font-size:13px;color:var(--muted);">10 portraits animés, évocation vocale commémorative*, vidéo hommage, Livre de Vie, écrin noir premium, plaque QR mémorielle, clé USB</span></span>
         </label>
       </div>
+      <p style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6;">* Si enregistrement vocal exploitable disponible. Sans enregistrement, voix de narration douce clairement présentée comme non authentique.</p>
     </div>
 
-    <div class="q">
-      <label>Options ajoutées <span class="opt">(optionnel)</span></label>
-      <div class="check-group">
-        <label class="c-item" onclick="toggleC(this)">
-          <input type="checkbox" name="options[]" value="Livre imprimé — 150€">
-          <div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <span>Livre de Vie imprimé — 150€</span>
-        </label>
-        <label class="c-item" onclick="toggleC(this)">
-          <input type="checkbox" name="options[]" value="Clé USB + boîte — 150€">
-          <div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <span>Clé USB + boîte souvenir — 150€</span>
-        </label>
-        <label class="c-item" onclick="toggleC(this)">
-          <input type="checkbox" name="options[]" value="Deuxième version — 150€">
-          <div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <span>Deuxième version — 150€</span>
-        </label>
+    <!-- Option vocale conditionnelle (Capsule Photo uniquement) -->
+    <div class="cond" id="optionVocaleBlock">
+      <div class="q">
+        <label>Option évocation vocale — Capsule Photo <span class="opt">(+190 €)</span></label>
+        <div class="notice" style="font-size:13px;margin-bottom:10px;">Uniquement si vous disposez d'un enregistrement vocal exploitable. Sans enregistrement, cette option ne peut pas être proposée.</div>
+        <div class="check-group">
+          <label class="c-item" onclick="toggleC(this, event)">
+            <input type="checkbox" name="option_voix_photo" value="Option évocation vocale commémorative — +190€">
+            <div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <span>Ajouter l'évocation vocale commémorative (+190 €)</span>
+          </label>
+        </div>
       </div>
     </div>
 
@@ -440,7 +439,7 @@
       <input id="f-email" type="email" name="client_email" autocomplete="email" inputmode="email" required>
     </div>
     <div class="q">
-      <label for="f-lien">Votre lien avec le défunt <span class="req">*</span></label>
+      <label for="f-lien">Votre lien avec la personne concernée <span class="req">*</span></label>
       <select id="f-lien" name="lien" required>
         <option value="">Choisissez…</option>
         <option>Enfant</option><option>Conjoint / Conjointe</option><option>Parent</option>
@@ -477,6 +476,7 @@
         <input id="f-deces" type="date" name="deces" inputmode="numeric">
       </div>
     </div>
+    <p class="error-msg" id="date-error">La date de naissance doit être antérieure à la date de décès.</p>
 
     <div class="q">
       <label for="f-prof">Sa profession <span class="opt">(optionnel)</span></label>
@@ -491,14 +491,26 @@
     <div class="q">
       <label>Son caractère <span class="opt">(plusieurs choix)</span></label>
       <div class="check-group row">
-        <label class="c-item" onclick="toggleC(this)"><input type="checkbox" name="caractere[]" value="Chaleureux"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Chaleureux</span></label>
-        <label class="c-item" onclick="toggleC(this)"><input type="checkbox" name="caractere[]" value="Drôle"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Drôle</span></label>
-        <label class="c-item" onclick="toggleC(this)"><input type="checkbox" name="caractere[]" value="Doux"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Doux</span></label>
-        <label class="c-item" onclick="toggleC(this)"><input type="checkbox" name="caractere[]" value="Fort"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Fort</span></label>
-        <label class="c-item" onclick="toggleC(this)"><input type="checkbox" name="caractere[]" value="Généreux"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Généreux</span></label>
-        <label class="c-item" onclick="toggleC(this)"><input type="checkbox" name="caractere[]" value="Sage"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Sage</span></label>
-        <label class="c-item" onclick="toggleC(this)"><input type="checkbox" name="caractere[]" value="Passionné"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Passionné</span></label>
-        <label class="c-item" onclick="toggleC(this)"><input type="checkbox" name="caractere[]" value="Protecteur"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Protecteur</span></label>
+        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Chaleureux"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Chaleureux</span></label>
+        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Drôle"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Drôle</span></label>
+        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Doux"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Doux</span></label>
+        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Fort"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Fort</span></label>
+        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Généreux"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Généreux</span></label>
+        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Sage"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Sage</span></label>
+        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Passionné"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Passionné</span></label>
+        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Protecteur"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Protecteur</span></label>
+        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Courageux"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Courageux</span></label>
+        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Travailleur"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Travailleur</span></label>
+        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Créatif"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Créatif</span></label>
+        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Bienveillant"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Bienveillant</span></label>
+        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Joyeux"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Joyeux</span></label>
+        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Discret"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Discret</span></label>
+        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Fidèle"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Fidèle</span></label>
+        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Curieux"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Curieux</span></label>
+      </div>
+      <div class="q" style="margin-top:12px;">
+        <label for="f-carac-autre">Autre mot pour le décrire <span class="opt">(libre)</span></label>
+        <input id="f-carac-autre" type="text" name="caractere_autre" placeholder="Un mot ou une expression qui lui ressemble…" autocapitalize="sentences">
       </div>
     </div>
 
@@ -523,7 +535,7 @@
     </div>
     <div class="q">
       <label for="f-expr">Ses expressions habituelles, façons de parler <span class="req">*</span></label>
-      <textarea id="f-expr" name="expressions" placeholder="Ses phrases fétiches, ses blagues, son humour, son accent… Ces détails sont essentiels pour la voix." autocapitalize="sentences" required></textarea>
+      <textarea id="f-expr" name="expressions" placeholder="Ses phrases fétiches, ses blagues, son humour, son accent… Ces détails sont essentiels pour la création vocale encadrée." autocapitalize="sentences" required></textarea>
     </div>
     <div class="q">
       <label for="f-souv">Un souvenir marquant avec lui/elle <span class="req">*</span></label>
@@ -553,7 +565,7 @@
     <div class="q">
       <label>Comment souhaitez-vous le message ? <span class="req">*</span></label>
       <div class="radio-group" id="msgGrp">
-        <label class="r-item" onclick="toggleR(this,'msgGrp','type_msg','Je l\'écris moi-même')"><input type="radio" name="type_msg" value="Je l'écris moi-même" onchange="onMsg()"><div class="r-circle"></div><span>Je l'écris moi-même</span></label>
+        <label class="r-item" onclick="toggleR(this,'msgGrp','type_msg','Je l\'écris moi-même')"><input type="radio" name="type_msg" value="Je l'écris moi-même" onchange="onMsg()" required><div class="r-circle"></div><span>Je l'écris moi-même</span></label>
         <label class="r-item" onclick="toggleR(this,'msgGrp','type_msg','Vous l\'écrivez à partir de mes réponses')"><input type="radio" name="type_msg" value="Vous l'écrivez à partir de mes réponses" onchange="onMsg()"><div class="r-circle"></div><span>Vous l'écrivez à partir de mes réponses</span></label>
         <label class="r-item" onclick="toggleR(this,'msgGrp','type_msg','Une histoire de vie racontée')"><input type="radio" name="type_msg" value="Une histoire de vie racontée" onchange="onMsg()"><div class="r-circle"></div><span>Une histoire de vie racontée</span></label>
       </div>
@@ -561,7 +573,7 @@
 
     <div class="cond" id="msgLibre">
       <div class="q">
-      <label for="f-msg">Texte commémoratif <span class="opt">inspiré de ses mots, de ses valeurs ou de vos souvenirs</span></label>
+        <label for="f-msg">Texte commémoratif <span class="opt">inspiré de ses mots, de ses valeurs ou de vos souvenirs</span></label>
         <textarea id="f-msg" name="message_libre" class="lg" placeholder="Exemple : À travers cette capsule, nous souhaitons transmettre son amour, ses valeurs et les souvenirs qui nous relient à lui/elle…" autocapitalize="sentences"></textarea>
       </div>
     </div>
@@ -591,22 +603,30 @@
       </div>
     </div>
 
+    <!-- Enregistrement vocal disponible -->
     <div class="cond" id="voixOui">
+      <div class="notice" style="font-size:13px;">À la fin de ce questionnaire, nous vous expliquerons comment nous envoyer cet enregistrement (email, Google Drive ou WeTransfer).</div>
       <div class="q">
-        <label>Envoyez votre enregistrement</label>
-        <div class="upload-zone">
-          <input type="file" name="enregistrement" accept="audio/*,video/*">
-          <div class="upload-label">📎 Message vocal, vidéo, répondeur…</div>
-          <div class="upload-hint">MP3, MP4, MOV, WAV — jusqu'à 50 Mo</div>
-          <div class="upload-hint" style="margin-top:4px;color:var(--or);font-size:11px;">Appuyez pour choisir depuis votre appareil</div>
-        </div>
+        <label for="f-type-enreg">Quel type d'enregistrement avez-vous ? <span class="opt">(optionnel)</span></label>
+        <input id="f-type-enreg" type="text" name="type_enregistrement" placeholder="Message WhatsApp, vidéo de famille, répondeur, interview…" autocapitalize="sentences">
+      </div>
+      <div class="q">
+        <label for="f-qualite-enreg">La qualité sonore est… <span class="opt">(optionnel)</span></label>
+        <select id="f-qualite-enreg" name="qualite_enregistrement">
+          <option value="">Choisissez…</option>
+          <option>Bonne — voix claire et audible</option>
+          <option>Correcte — quelques bruits de fond</option>
+          <option>Faible — bruyant ou lointain</option>
+          <option>Je ne sais pas encore</option>
+        </select>
       </div>
     </div>
 
+    <!-- Pas d'enregistrement vocal -->
     <div class="cond" id="voixNon">
-      <div class="notice">Pas d'inquiétude — décrivez sa voix pour qu'on s'en approche au mieux.</div>
+      <div class="notice">Sans enregistrement vocal exploitable, <strong>nous ne recréons pas la voix du proche.</strong> Nous pouvons proposer une voix de narration douce, clairement présentée comme non authentique et non attribuée à la personne disparue.</div>
       <div class="q">
-        <label>Sa voix était…</label>
+        <label>Sa voix était… <span class="opt">(pour orienter le choix de la voix de narration)</span></label>
         <div class="radio-group row" id="descVoixGrp">
           <label class="r-item" onclick="toggleR(this,'descVoixGrp','desc_voix','Grave')"><input type="radio" name="desc_voix" value="Grave"><div class="r-circle"></div><span>Grave</span></label>
           <label class="r-item" onclick="toggleR(this,'descVoixGrp','desc_voix','Douce')"><input type="radio" name="desc_voix" value="Douce"><div class="r-circle"></div><span>Douce</span></label>
@@ -636,28 +656,33 @@
 
     <div class="s-label">Les photos</div>
 
-    <div class="notice"><strong>Jusqu'à <span id="maxPhotos">3 photos</span></strong> pour votre offre. Photos de face avec bon éclairage = meilleur résultat. Les vieilles photos abîmées sont restaurées.</div>
+    <div class="notice"><strong>Jusqu'à <span id="maxPhotos">3 photos</span></strong> pour votre offre. Photos de face avec bon éclairage = meilleur résultat. Les vieilles photos abîmées sont restaurées. <strong>Vous nous enverrez vos fichiers à la fin.</strong></div>
 
     <div class="q">
-      <label>Envoyez vos photos <span class="req">*</span></label>
-      <div class="upload-zone">
-        <input type="file" name="photos[]" id="photosInput" accept="image/*" multiple onchange="onPhotos(this)">
-        <div class="upload-label">📷 Appuyez pour choisir</div>
-        <div class="upload-hint">JPEG, PNG, HEIC — jusqu'à 10 Mo par photo</div>
-        <div class="upload-hint" style="color:var(--or);font-size:11px;margin-top:4px;">Depuis votre galerie photos ou votre caméra</div>
-      </div>
-      <div class="upload-list" id="photosList"></div>
+      <label for="f-photos-desc">Quelles photos souhaitez-vous nous envoyer ? <span class="opt">(décrivez-les brièvement)</span></label>
+      <textarea id="f-photos-desc" name="photos_description" placeholder="Ex : un portrait souriant en extérieur, une photo de famille des années 80, une photo avec ses petits-enfants…" autocapitalize="sentences"></textarea>
     </div>
 
     <div class="q">
       <label for="f-photo-princ">La photo principale <span class="opt">(celle qui le/la représente le mieux)</span></label>
-      <input id="f-photo-princ" type="text" name="photo_principale" placeholder="La première, la deuxième, le portrait souriant…" autocapitalize="sentences">
+      <input id="f-photo-princ" type="text" name="photo_principale" placeholder="Ex : le portrait en costume bleu, la photo du jardin…" autocapitalize="sentences">
+    </div>
+
+    <div class="q">
+      <label for="f-nb-photos">Combien de photos pensez-vous avoir ? <span class="opt">(optionnel)</span></label>
+      <select id="f-nb-photos" name="nombre_photos">
+        <option value="">Choisissez…</option>
+        <option>1 à 3 photos</option>
+        <option>4 à 10 photos</option>
+        <option>Plus de 10 photos</option>
+        <option>Je ne sais pas encore</option>
+      </select>
     </div>
 
     <div class="s-label">L'ambiance</div>
 
     <div class="q">
-      <label>Ambiance souhaitée pour la vidéo <span class="req">*</span></label>
+      <label>Ambiance souhaitée pour la vidéo hommage <span class="req">*</span></label>
       <div class="radio-group" id="ambianceGrp">
         <label class="r-item" onclick="toggleR(this,'ambianceGrp','ambiance','Douce et apaisante')"><input type="radio" name="ambiance" value="Douce et apaisante" required><div class="r-circle"></div><span>Douce et apaisante — lumière tamisée, musique calme</span></label>
         <label class="r-item" onclick="toggleR(this,'ambianceGrp','ambiance','Joyeuse et lumineuse')"><input type="radio" name="ambiance" value="Joyeuse et lumineuse"><div class="r-circle"></div><span>Joyeuse et lumineuse — couleurs claires, musique vive</span></label>
@@ -685,6 +710,10 @@
     <p class="page-sub">Son histoire écrite — un héritage pour les générations futures.</p>
     <div class="gold-line"></div>
 
+    <div class="notice">
+      <strong>Pas besoin d'écrire parfaitement.</strong> Quelques phrases, des souvenirs en vrac ou des mots simples suffisent. Nous nous chargeons ensuite de rédiger, structurer et illustrer le Livre de Vie.
+    </div>
+
     <div class="q">
       <label for="f-histoire">Son histoire — depuis le début <span class="req">*</span></label>
       <textarea id="f-histoire" name="histoire" class="lg" placeholder="Enfance, famille, les grandes étapes de sa vie, ses choix, ses épreuves, ses bonheurs…" autocapitalize="sentences" required></textarea>
@@ -698,14 +727,38 @@
       <textarea id="f-heritage" name="heritage" placeholder="Son héritage, ses valeurs, sa façon d'être unique…" autocapitalize="sentences" required></textarea>
     </div>
 
+    <div class="s-label">Pour enrichir le livre <span style="font-weight:300;text-transform:none;letter-spacing:0;color:var(--muted);font-size:11px;">(optionnel — chaque détail compte)</span></div>
+
     <div class="q">
-      <label>Documents supplémentaires <span class="opt">(optionnel)</span></label>
-      <div class="upload-zone">
-        <input type="file" name="documents[]" accept=".pdf,.doc,.docx,.txt,.jpg,.png" multiple onchange="onDocs(this)">
-        <div class="upload-label">📄 Lettres, textes, poèmes…</div>
-        <div class="upload-hint">PDF, Word, images</div>
-      </div>
-      <div class="upload-list" id="docsList"></div>
+      <label for="f-lieux">Quels lieux ont compté dans sa vie ? <span class="opt">(optionnel)</span></label>
+      <textarea id="f-lieux" name="lieux_importants" placeholder="Sa maison d'enfance, un village, une région, un pays…" autocapitalize="sentences"></textarea>
+    </div>
+    <div class="q">
+      <label for="f-personnes">Quelles personnes ont le plus compté pour lui/elle ? <span class="opt">(optionnel)</span></label>
+      <textarea id="f-personnes" name="personnes_importantes" placeholder="Son conjoint, ses enfants, un ami de toujours, un mentor…" autocapitalize="sentences"></textarea>
+    </div>
+    <div class="q">
+      <label for="f-anecdote">Une anecdote drôle, tendre ou typique ? <span class="opt">(optionnel)</span></label>
+      <textarea id="f-anecdote" name="anecdote_drole_tendre" placeholder="Un moment qui le/la résume bien, une histoire que tout le monde connaît dans la famille…" autocapitalize="sentences"></textarea>
+    </div>
+    <div class="q">
+      <label for="f-rituels">Ses habitudes ou petits rituels <span class="opt">(optionnel)</span></label>
+      <input id="f-rituels" type="text" name="rituels" placeholder="Son café du matin, sa façon de dire bonsoir, ses expressions fétiches…" autocapitalize="sentences">
+    </div>
+    <div class="q">
+      <label for="f-legendes">Pouvez-vous expliquer les photos importantes ? <span class="opt">(optionnel)</span></label>
+      <textarea id="f-legendes" name="legendes_photos" placeholder="Qui est sur cette photo, quand a-t-elle été prise, pourquoi est-elle précieuse pour vous…" autocapitalize="sentences"></textarea>
+    </div>
+    <div class="q">
+      <label for="f-eviter">Y a-t-il des sujets à éviter ? <span class="opt">(optionnel)</span></label>
+      <input id="f-eviter" type="text" name="sujets_a_eviter" placeholder="Des sujets sensibles ou des moments douloureux à ne pas évoquer…" autocapitalize="sentences">
+    </div>
+
+    <div class="s-label">Documents supplémentaires</div>
+
+    <div class="q">
+      <label for="f-docs-desc">Quels documents souhaitez-vous nous transmettre ? <span class="opt">(optionnel)</span></label>
+      <textarea id="f-docs-desc" name="docs_description" placeholder="Ex : une lettre manuscrite, un poème qu'il/elle avait écrit, un carnet de notes, un faire-part…" autocapitalize="sentences"></textarea>
     </div>
 
     <div class="btn-nav">
@@ -723,8 +776,8 @@
     <div class="gold-line"></div>
 
     <div class="q">
-      <label for="f-dedic">Une dédicace pour le début de la vidéo ? <span class="opt">(optionnel)</span></label>
-      <input id="f-dedic" type="text" name="dedicace" placeholder="Pour toi Papa, de tes enfants qui t'aiment pour toujours…" autocapitalize="sentences">
+      <label for="f-dedic">Une dédicace pour le début de la vidéo hommage ? <span class="opt">(optionnel)</span></label>
+      <input id="f-dedic" type="text" name="dedicace" placeholder="Pour toi Papa, de tes enfants qui t'aiment…" autocapitalize="sentences">
     </div>
     <div class="q">
       <label for="f-date">Souhaitez-vous la capsule avant une date précise ? <span class="opt">(optionnel)</span></label>
@@ -740,32 +793,33 @@
     <div style="margin-top:28px;border:1px solid rgba(196,164,107,.22);border-radius:6px;padding:22px 20px;background:rgba(240,234,224,.3);">
       <div style="font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--or);margin-bottom:16px;">Déclaration obligatoire — 5 cases à cocher</div>
       <div style="display:flex;flex-direction:column;gap:12px;">
-        <label class="c-item" onclick="toggleC(this)" style="min-height:auto;padding:12px 14px;align-items:flex-start;">
+        <label class="c-item" onclick="toggleC(this, event)" style="min-height:auto;padding:12px 14px;align-items:flex-start;">
           <input type="checkbox" name="consent_proche" value="oui" required>
           <div class="c-square" style="margin-top:2px;flex-shrink:0;"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <span style="font-size:13px;line-height:1.55;">Je certifie être un proche légitime ou agir avec l'accord de la famille proche. <span style="color:var(--or);">*</span></span>
         </label>
-        <label class="c-item" onclick="toggleC(this)" style="min-height:auto;padding:12px 14px;align-items:flex-start;">
+        <label class="c-item" onclick="toggleC(this, event)" style="min-height:auto;padding:12px 14px;align-items:flex-start;">
           <input type="checkbox" name="consent_fichiers" value="oui" required>
           <div class="c-square" style="margin-top:2px;flex-shrink:0;"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <span style="font-size:13px;line-height:1.55;">Je suis autorisé(e) à transmettre les photos, enregistrements et documents fournis. <span style="color:var(--or);">*</span></span>
         </label>
-        <label class="c-item" onclick="toggleC(this)" style="min-height:auto;padding:12px 14px;align-items:flex-start;">
+        <label class="c-item" onclick="toggleC(this, event)" style="min-height:auto;padding:12px 14px;align-items:flex-start;">
           <input type="checkbox" name="consent_ia" value="oui" required>
           <div class="c-square" style="margin-top:2px;flex-shrink:0;"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <span style="font-size:13px;line-height:1.55;">Je comprends que les contenus livrés sont des créations commémoratives assistées par IA, et non des documents réels ou des prises de parole authentiques. <span style="color:var(--or);">*</span></span>
         </label>
-        <label class="c-item" onclick="toggleC(this)" style="min-height:auto;padding:12px 14px;align-items:flex-start;">
+        <label class="c-item" onclick="toggleC(this, event)" style="min-height:auto;padding:12px 14px;align-items:flex-start;">
           <input type="checkbox" name="consent_usage" value="oui" required>
           <div class="c-square" style="margin-top:2px;flex-shrink:0;"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <span style="font-size:13px;line-height:1.55;">Je m'engage à ne pas utiliser ces contenus pour tromper, usurper une identité ou faire croire à une communication réelle avec la personne disparue. <span style="color:var(--or);">*</span></span>
         </label>
-        <label class="c-item" onclick="toggleC(this)" style="min-height:auto;padding:12px 14px;align-items:flex-start;">
+        <label class="c-item" onclick="toggleC(this, event)" style="min-height:auto;padding:12px 14px;align-items:flex-start;">
           <input type="checkbox" name="consent_qualite" value="oui" required>
           <div class="c-square" style="margin-top:2px;flex-shrink:0;"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <span style="font-size:13px;line-height:1.55;">Je comprends que la qualité finale dépend des éléments fournis et qu'une prévisualisation sera soumise à ma validation avant livraison. <span style="color:var(--or);">*</span></span>
         </label>
       </div>
+      <p class="error-msg" id="consent-error" style="margin-top:12px;">Veuillez cocher toutes les cases obligatoires pour continuer.</p>
     </div>
 
     <div class="btn-nav">
@@ -784,36 +838,142 @@
         <path d="M9 14.5l3.5 3.5 7-7" stroke="#C4A46B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </div>
+
     <h2 class="confirm-title">Merci.<br><span style="font-style:italic;color:var(--or);">Nous allons en prendre soin.</span></h2>
     <p class="confirm-text">Votre questionnaire a bien été reçu. Il reste une dernière étape : nous envoyer vos fichiers via WeTransfer.</p>
 
+    <!-- Numéro de dossier -->
+    <div class="dossier-box">
+      <div class="dossier-box-label">Votre numéro de dossier</div>
+      <div class="dossier-box-id" id="confirmDossierId">CM-…</div>
+      <div class="dossier-box-hint">Conservez ce numéro — vous devrez l'indiquer dans votre message WeTransfer pour que nous puissions associer vos fichiers à votre dossier.</div>
+    </div>
+
+    <!-- Bloc WeTransfer -->
     <div class="wetransfer-block">
       <div class="wetransfer-header">
         <div style="width:32px;height:32px;background:var(--or);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Cormorant Garamond',serif;color:var(--navy);font-size:16px;font-weight:600;">!</div>
         <p class="wetransfer-header-txt">Envoyez vos fichiers via <strong>WeTransfer</strong> — gratuit, simple, aucune inscription.</p>
       </div>
       <div class="wetransfer-body">
-        <div class="wt-steps-title">Comment faire en 4 étapes</div>
-        <div class="wt-steps">
-          <div class="wt-step"><div class="wt-num">1</div><div class="wt-txt">Allez sur <a href="https://wetransfer.com" target="_blank" rel="noopener" style="color:var(--navy);font-weight:500;text-decoration:underline;">wetransfer.com</a></div></div>
-          <div class="wt-step"><div class="wt-num">2</div><div class="wt-txt">Cliquez "Ajouter vos fichiers" et sélectionnez photos, vidéos, documents</div></div>
-          <div class="wt-step"><div class="wt-num">3</div><div class="wt-txt">Dans le champ "À", indiquez :<div class="wt-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9af9f5f4eefbf9eeb4f9fbeae9eff6fff7fff7f5f3e8ffdafdf7fbf3f6b4f9f5f7">[email&#160;protected]</a></div></div></div>
-          <div class="wt-step"><div class="wt-num">4</div><div class="wt-txt">Dans le message : indiquez votre <strong>prénom et nom</strong> puis cliquez "Transférer"</div></div>
+        <div class="wt-steps-title">Choisissez la méthode qui vous convient</div>
+
+        <!-- Méthode 1 : WeTransfer -->
+        <div style="border:1px solid var(--bord);border-radius:6px;margin-bottom:12px;overflow:hidden;">
+          <div style="background:rgba(196,164,107,.08);padding:12px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+            <span style="font-size:18px;">🔗</span>
+            <div style="flex:1;"><div style="font-size:14px;font-weight:500;color:var(--navy);">WeTransfer</div><div style="font-size:12px;color:var(--muted);">Recommandé — jusqu'à 2 Go, gratuit</div></div>
+            <span style="font-size:11px;color:var(--or);">Voir les étapes ▾</span>
+          </div>
+          <div style="padding:16px;display:none;">
+            <div class="wt-steps">
+              <div class="wt-step"><div class="wt-num">1</div><div class="wt-txt">Allez sur <a href="https://wetransfer.com" target="_blank" rel="noopener" style="color:var(--navy);font-weight:500;text-decoration:underline;">wetransfer.com</a></div></div>
+              <div class="wt-step"><div class="wt-num">2</div><div class="wt-txt">Cliquez "Ajouter vos fichiers" et sélectionnez tous vos fichiers</div></div>
+              <div class="wt-step"><div class="wt-num">3</div><div class="wt-txt">Dans le champ "À" :<div class="wt-email"><a href="mailto:contact.capsulememoire@gmail.com">contact.capsulememoire@gmail.com</a></div></div></div>
+              <div class="wt-step"><div class="wt-num">4</div><div class="wt-txt">Dans le message : votre <strong>prénom, nom</strong> + numéro de dossier <span class="wt-dossier-inline" id="wtDossierId">CM-…</span></div></div>
+            </div>
+          </div>
         </div>
+
+        <!-- Méthode 2 : Google Drive -->
+        <div style="border:1px solid var(--bord);border-radius:6px;margin-bottom:12px;overflow:hidden;">
+          <div style="background:rgba(196,164,107,.08);padding:12px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+            <span style="font-size:18px;">📁</span>
+            <div style="flex:1;"><div style="font-size:14px;font-weight:500;color:var(--navy);">Google Drive</div><div style="font-size:12px;color:var(--muted);">Si vous utilisez déjà Google — partage de lien</div></div>
+            <span style="font-size:11px;color:var(--or);">Voir les étapes ▾</span>
+          </div>
+          <div style="padding:16px;display:none;">
+            <div class="wt-steps">
+              <div class="wt-step"><div class="wt-num">1</div><div class="wt-txt">Mettez tous vos fichiers dans un dossier Google Drive</div></div>
+              <div class="wt-step"><div class="wt-num">2</div><div class="wt-txt">Clic droit sur le dossier → "Partager" → entrez <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="492a26273d282a3d672a28393a3c252c242c2426203b2c092e24282025672a2624">[email&#160;protected]</a></strong></div></div>
+              <div class="wt-step"><div class="wt-num">3</div><div class="wt-txt">Envoyez-nous le lien par email avec en objet votre numéro de dossier <span class="wt-dossier-inline" id="wtDossierIdDrive">CM-…</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Méthode 3 : Email direct -->
+        <div style="border:1px solid var(--bord);border-radius:6px;overflow:hidden;">
+          <div style="background:rgba(196,164,107,.08);padding:12px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+            <span style="font-size:18px;">✉️</span>
+            <div style="flex:1;"><div style="font-size:14px;font-weight:500;color:var(--navy);">Email direct</div><div style="font-size:12px;color:var(--muted);">Si total de fichiers &lt; 20 Mo</div></div>
+            <span style="font-size:11px;color:var(--or);">Voir les étapes ▾</span>
+          </div>
+          <div style="padding:16px;display:none;">
+            <div class="wt-steps">
+              <div class="wt-step"><div class="wt-num">1</div><div class="wt-txt">Créez un email avec tous vos fichiers en pièces jointes</div></div>
+              <div class="wt-step"><div class="wt-num">2</div><div class="wt-txt">Envoyez à :<div class="wt-email"><a href="mailto:contact.capsulememoire@gmail.com">contact.capsulememoire@gmail.com</a></div></div></div>
+              <div class="wt-step"><div class="wt-num">3</div><div class="wt-txt">Objet de l'email : votre <strong>prénom, nom</strong> + numéro de dossier <span class="wt-dossier-inline" id="wtDossierIdMail">CM-…</span></div></div>
+            </div>
+          </div>
+        </div>
+
         <div class="wt-divider"></div>
-        <div class="files-title">Quels fichiers nous envoyer</div>
-        <div class="file-type"><span style="font-size:20px;flex-shrink:0;">🖼️</span><div><div class="file-type-name">Photos de votre proche</div><div class="file-type-desc">Portraits nets, photos de famille, de jeunesse — JPG, PNG, HEIC</div></div></div>
-        <div class="file-type"><span style="font-size:20px;flex-shrink:0;">🎙️</span><div><div class="file-type-name">Enregistrements de sa voix</div><div class="file-type-desc">WhatsApp vocal, vidéo de famille, répondeur, interview — MP3, MP4, M4A</div></div></div>
-        <div class="file-type"><span style="font-size:20px;flex-shrink:0;">📝</span><div><div class="file-type-name">Textes et documents</div><div class="file-type-desc">Lettres, poèmes, carnets — PDF, Word, scan JPG</div></div></div>
-        <p class="wt-alt">💡 <strong>Pas de WeTransfer ?</strong> Envoyez directement par email à <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ceada1a0baafadbae0adafbebdbba2aba3aba3a1a7bcab8ea9a3afa7a2e0ada1a3">[email&#160;protected]</a></strong> si le total ne dépasse pas 20 Mo.</p>
+
+        <div class="files-title">Tout ce qu'il faut nous envoyer</div>
+
+        <div class="file-type" style="flex-direction:column;gap:8px;">
+          <div style="display:flex;gap:12px;align-items:center;">
+            <span style="font-size:22px;flex-shrink:0;">🖼️</span>
+            <div><div class="file-type-name">Photos de votre proche <span style="color:var(--or);font-size:11px;font-weight:400;">(indispensable)</span></div></div>
+          </div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.65;padding-left:34px;">
+            <strong style="color:var(--navy);">Idéal :</strong> portraits nets de face, bon éclairage, fond neutre<br>
+            <strong style="color:var(--navy);">Formats :</strong> JPG, PNG, HEIC — jusqu'à 10 Mo par photo<br>
+            <strong style="color:var(--navy);">Exemples :</strong> photo d'identité récente, portrait souriant, photo de famille, photo de jeunesse<br>
+            <strong style="color:var(--navy);">Conseil :</strong> envoyez plusieurs photos à différents âges pour un meilleur résultat
+          </div>
+        </div>
+
+        <div class="file-type" style="flex-direction:column;gap:8px;">
+          <div style="display:flex;gap:12px;align-items:center;">
+            <span style="font-size:22px;flex-shrink:0;">🎙️</span>
+            <div><div class="file-type-name">Enregistrements vocaux <span style="color:var(--muted);font-size:11px;font-weight:400;">(si disponibles)</span></div></div>
+          </div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.65;padding-left:34px;">
+            <strong style="color:var(--navy);">Formats :</strong> MP3, MP4, MOV, M4A, WAV — tous formats acceptés<br>
+            <strong style="color:var(--navy);">Exemples :</strong> messages WhatsApp ou vocaux, vidéos de famille, répondeur téléphonique, interview, discours<br>
+            <strong style="color:var(--navy);">Conseil :</strong> même court, même avec bruit de fond — chaque extrait est précieux
+          </div>
+        </div>
+
+        <div class="file-type" style="flex-direction:column;gap:8px;">
+          <div style="display:flex;gap:12px;align-items:center;">
+            <span style="font-size:22px;flex-shrink:0;">📝</span>
+            <div><div class="file-type-name">Textes et documents <span style="color:var(--muted);font-size:11px;font-weight:400;">(si disponibles)</span></div></div>
+          </div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.65;padding-left:34px;">
+            <strong style="color:var(--navy);">Formats :</strong> PDF, Word, scan JPG ou PNG<br>
+            <strong style="color:var(--navy);">Exemples :</strong> lettres manuscrites, poèmes, carnets, faire-part, coupures de presse, livret de famille<br>
+            <strong style="color:var(--navy);">Conseil :</strong> même un simple scan de téléphone suffit — la qualité n'a pas besoin d'être parfaite
+          </div>
+        </div>
+
+        <div class="file-type" style="flex-direction:column;gap:8px;">
+          <div style="display:flex;gap:12px;align-items:center;">
+            <span style="font-size:22px;flex-shrink:0;">🎵</span>
+            <div><div class="file-type-name">Musiques <span style="color:var(--muted);font-size:11px;font-weight:400;">(optionnel)</span></div></div>
+          </div>
+          <div style="font-size:12px;color:var(--muted);line-height:1.65;padding-left:34px;">
+            <strong style="color:var(--navy);">Formats :</strong> MP3, lien YouTube ou Spotify<br>
+            <strong style="color:var(--navy);">Exemples :</strong> sa chanson préférée, une musique associée à un souvenir, un morceau qu'il/elle jouait<br>
+            <strong style="color:var(--navy);">Conseil :</strong> un lien suffit — pas besoin de télécharger le fichier
+          </div>
+        </div>
+
+        <div style="background:rgba(196,164,107,.07);border-radius:4px;padding:12px 14px;margin-top:8px;font-size:12px;color:var(--muted);line-height:1.7;">
+          💡 <strong style="color:var(--navy);">Pas besoin de tout avoir.</strong> Envoyez ce que vous avez — nous travaillons avec ce que vous nous donnez. Un seul enregistrement vocal, même imparfait, peut suffire. Une seule bonne photo peut faire une capsule magnifique.
+        </div>
+
+
       </div>
     </div>
 
     <div class="confirm-steps">
-      <div class="c-step"><div class="c-num">1</div><div class="c-txt">Envoyez vos fichiers via WeTransfer dès maintenant.</div></div>
+      <div class="c-step"><div class="c-num">1</div><div class="c-txt">Envoyez vos fichiers via WeTransfer en indiquant votre numéro de dossier.</div></div>
       <div class="c-step"><div class="c-num">2</div><div class="c-txt">Nous analysons tout et vous contactons sous 24h si besoin.</div></div>
-      <div class="c-step"><div class="c-num">3</div><div class="c-txt">Vous recevez votre capsule par lien privé sécurisé dans les délais convenus.</div></div>
+      <div class="c-step"><div class="c-num">3</div><div class="c-txt">Vous recevez votre capsule par lien privé maintenu par Capsule Mémoire dans les délais convenus.</div></div>
     </div>
+
     <p class="confirm-slogan">"Un souvenir qui dure toute une vie."</p>
   </div>
 </div>
@@ -821,153 +981,297 @@
 </form>
 
 <script>
+  /* ═══════════════════════════════════════════
+     IDENTIFIANT DOSSIER UNIQUE
+  ═══════════════════════════════════════════ */
+  const DOSSIER_ID = (function() {
+    const now = new Date();
+    const d = now.toISOString().slice(0, 10).replace(/-/g, '');
+    const rand = Math.floor(1000 + Math.random() * 9000);
+    return 'CM-' + d + '-' + rand;
+  })();
+
   let cur = 0, isOffre2 = false;
   const TOTAL = 7;
 
-  /* ── NAVIGATION ── */
-  function go(n){
+  /* ─── NAVIGATION ─── */
+  function go(n) {
     document.querySelector('.page.active')?.classList.remove('active');
-    document.getElementById('p'+n)?.classList.add('active');
+    document.getElementById('p' + n)?.classList.add('active');
     cur = n;
     updateUI();
-    window.scrollTo({top:0, behavior:'smooth'});
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (n === 8) showConfirmDetails();
   }
-  function next(from){
-    if(!validate(from)) return;
-    if(from===5 && isOffre2){ go(6); return; }
-    if(from===5 && !isOffre2){ go(7); return; }
-    if(from===6){ go(7); return; }
-    go(from+1);
-  }
-  function goBack7(){ go(isOffre2 ? 6 : 5); }
 
-  /* ── UI UPDATE ── */
-  function updateUI(){
-    if(cur===0||cur===8){
-      document.getElementById('hStep').textContent='Questionnaire';
-      document.getElementById('hDots').innerHTML='';
-      document.getElementById('pBar').style.width=cur===8?'100%':'0%';
+  function next(from) {
+    if (!validate(from)) return;
+    if (from === 5 && isOffre2)  { go(6); return; }
+    if (from === 5 && !isOffre2) { go(7); return; }
+    if (from === 6) { go(7); return; }
+    go(from + 1);
+  }
+
+  function goBack7() { go(isOffre2 ? 6 : 5); }
+
+  /* ─── CONFIRMATION DETAILS ─── */
+  function showConfirmDetails() {
+    ['confirmDossierId','wtDossierId','wtDossierIdDrive','wtDossierIdMail'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = DOSSIER_ID;
+    });
+  }
+
+  /* ─── UI UPDATE ─── */
+  function updateUI() {
+    if (cur === 0 || cur === 8) {
+      document.getElementById('hStep').textContent = 'Questionnaire';
+      document.getElementById('hDots').innerHTML = '';
+      document.getElementById('pBar').style.width = cur === 8 ? '100%' : '0%';
       return;
     }
-    const labels=['','Commande','Votre proche','Son histoire','Message & voix','Photos','Livre de vie','Pour finir'];
-    document.getElementById('hStep').textContent=labels[cur]||'';
-    const pct=Math.round((cur/TOTAL)*100);
-    document.getElementById('pBar').style.width=pct+'%';
-    document.getElementById('pBar').setAttribute('aria-valuenow',pct);
-    const dotsEl=document.getElementById('hDots');
-    const total=isOffre2?7:6;
-    dotsEl.innerHTML='';
-    for(let i=1;i<=total;i++){
-      const real=(!isOffre2&&i>=6)?i+1:i;
-      const d=document.createElement('div');
-      d.className='dot'+(real<cur?' done':real===cur?' active':'');
+    const labels = ['', 'Commande', 'Votre proche', 'Son histoire', 'Message & voix', 'Photos', 'Livre de vie', 'Pour finir'];
+    document.getElementById('hStep').textContent = labels[cur] || '';
+    const pct = Math.round((cur / TOTAL) * 100);
+    document.getElementById('pBar').style.width = pct + '%';
+    document.getElementById('pBar').setAttribute('aria-valuenow', pct);
+    const dotsEl = document.getElementById('hDots');
+    const total = isOffre2 ? 7 : 6;
+    dotsEl.innerHTML = '';
+    for (let i = 1; i <= total; i++) {
+      const real = (!isOffre2 && i >= 6) ? i + 1 : i;
+      const d = document.createElement('div');
+      d.className = 'dot' + (real < cur ? ' done' : real === cur ? ' active' : '');
       dotsEl.appendChild(d);
     }
   }
 
-  /* ── CUSTOM RADIO TOGGLE ── */
-  function toggleR(el, grpId, name, val){
-    document.getElementById(grpId)?.querySelectorAll('.r-item').forEach(i=>i.classList.remove('sel'));
+  /* ─── CUSTOM RADIO TOGGLE ─── */
+  function toggleR(el, grpId, name, val) {
+    document.getElementById(grpId)?.querySelectorAll('.r-item').forEach(i => i.classList.remove('sel'));
     el.classList.add('sel');
     const inp = el.querySelector('input[type="radio"]');
-    if(inp){ inp.checked=true; inp.dispatchEvent(new Event('change')); }
+    if (inp) { inp.checked = true; inp.dispatchEvent(new Event('change')); }
   }
 
-  /* ── CUSTOM CHECKBOX TOGGLE ── */
-  function toggleC(el){
+  /* ─── CUSTOM CHECKBOX TOGGLE ─── */
+  function toggleC(el, ev) {
+    if (ev) ev.preventDefault();
     el.classList.toggle('sel');
     const inp = el.querySelector('input[type="checkbox"]');
-    if(inp) inp.checked = el.classList.contains('sel');
+    if (inp) inp.checked = el.classList.contains('sel');
+    el.style.borderColor = '';
   }
 
-  /* ── CONDITIONAL LOGIC ── */
-  function onOffre(){
-    const v=document.querySelector('input[name="offre"]:checked')?.value||'';
+  /* ─── CONDITIONAL LOGIC ─── */
+  function onOffre() {
+    const v = document.querySelector('input[name="offre"]:checked')?.value || '';
     isOffre2 = v.includes('990') || v.toLowerCase().includes('héritage');
-    document.getElementById('maxPhotos').textContent=isOffre2?'10 photos':'3 photos';
+    const isPhoto = v.includes('290') || v.toLowerCase().includes('photo');
+    const isSouvenir = v.includes('690') || v.toLowerCase().includes('souvenir');
+    document.getElementById('maxPhotos').textContent = isOffre2 ? '10 photos' : isSouvenir ? '5 photos' : '3 photos';
+    const optionVocale = document.getElementById('optionVocaleBlock');
+    if (optionVocale) optionVocale.classList.toggle('on', isPhoto);
     updateUI();
   }
-  function onMsg(){
-    const v=document.querySelector('input[name="type_msg"]:checked')?.value||'';
-    document.getElementById('msgLibre').classList.toggle('on',v.includes('moi-même'));
+  function onMsg() {
+    const v = document.querySelector('input[name="type_msg"]:checked')?.value || '';
+    document.getElementById('msgLibre').classList.toggle('on', v.includes('moi-même'));
   }
-  function onVoix(){
-    const v=document.querySelector('input[name="a_voix"]:checked')?.value;
-    document.getElementById('voixOui').classList.toggle('on',v==='Oui');
-    document.getElementById('voixNon').classList.toggle('on',v==='Non');
+  function onVoix() {
+    const v = document.querySelector('input[name="a_voix"]:checked')?.value;
+    document.getElementById('voixOui').classList.toggle('on', v === 'Oui');
+    document.getElementById('voixNon').classList.toggle('on', v === 'Non');
   }
 
-  /* ── FILE HANDLERS ── */
-  function onPhotos(input){
-    const list=document.getElementById('photosList');
-    list.innerHTML='';
-    Array.from(input.files).forEach(f=>{
-      const el=document.createElement('div');
-      el.className='upload-item';
-      el.innerHTML=`<span>🖼</span><span class="upload-item-name">${f.name}</span><span class="upload-item-size">${(f.size/1048576).toFixed(1)} Mo</span>`;
-      list.appendChild(el);
-    });
+  /* ─── FILE HANDLERS ─── */
+  function onAudio(input) {
+    const names = Array.from(input.files).map(f => f.name);
+    document.getElementById('enregistrement_nom_hidden').value = names.join(', ') || '(non sélectionné)';
   }
-  function onDocs(input){
-    const list=document.getElementById('docsList');
-    list.innerHTML='';
-    Array.from(input.files).forEach(f=>{
-      const el=document.createElement('div');
-      el.className='upload-item';
-      el.innerHTML=`<span>📄</span><span class="upload-item-name">${f.name}</span>`;
+
+  function onPhotos(input) {
+    const list = document.getElementById('photosList');
+    list.innerHTML = '';
+    const names = Array.from(input.files).map(f => f.name);
+    document.getElementById('photos_noms_hidden').value = names.join(', ') || '(non sélectionnées)';
+    Array.from(input.files).forEach(f => {
+      const el = document.createElement('div');
+      el.className = 'upload-item';
+      el.innerHTML = '<span>🖼</span><span class="upload-item-name">' + f.name + '</span><span class="upload-item-size">' + (f.size / 1048576).toFixed(1) + ' Mo</span>';
       list.appendChild(el);
     });
   }
 
-  /* ── VALIDATION ── */
-  function validate(n){
-    const page=document.getElementById('p'+n);
-    let ok=true;
-    /* Required text/email/select */
-    page.querySelectorAll('[required]').forEach(f=>{
-      if(f.type==='radio'||f.type==='checkbox') return; /* handled below */
-      if(!f.value.trim()){
+  function onDocs(input) {
+    const list = document.getElementById('docsList');
+    list.innerHTML = '';
+    const names = Array.from(input.files).map(f => f.name);
+    document.getElementById('docs_noms_hidden').value = names.join(', ') || '(non sélectionnés)';
+    Array.from(input.files).forEach(f => {
+      const el = document.createElement('div');
+      el.className = 'upload-item';
+      el.innerHTML = '<span>📄</span><span class="upload-item-name">' + f.name + '</span>';
+      list.appendChild(el);
+    });
+  }
+
+  /* ─── SCROLL TO ELEMENT (sans scrollIntoView) ─── */
+  function scrollToEl(el) {
+    const rect = el.getBoundingClientRect();
+    const top = window.pageYOffset + rect.top - 130;
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+  }
+
+  /* ─── VALIDATION PAR PAGE ─── */
+  function validate(n) {
+    const page = document.getElementById('p' + n);
+    let ok = true;
+    let firstError = null;
+
+    /* 1 — Champs texte / email / select / textarea obligatoires */
+    page.querySelectorAll('input:not([type="radio"]):not([type="checkbox"]):not([type="file"]):not([type="hidden"])[required], textarea[required], select[required]').forEach(f => {
+      if (!f.value.trim()) {
         f.classList.add('field-error');
-        ok=false;
-        f.addEventListener('input',()=>f.classList.remove('field-error'),{once:true});
+        ok = false;
+        if (!firstError) firstError = f;
+        f.addEventListener('input', () => f.classList.remove('field-error'), { once: true });
       }
     });
-    /* Required radio groups */
-    page.querySelectorAll('.radio-group').forEach(g=>{
-      const radios=[...g.querySelectorAll('input[type="radio"]')];
-      if(radios.some(r=>r.required)&&!radios.some(r=>r.checked)){
-        g.style.outline='2px solid #c0392b'; g.style.borderRadius='4px';
-        ok=false;
-        setTimeout(()=>{ g.style.outline=''; g.style.borderRadius=''; },2500);
+
+    /* 2 — Groupes radio obligatoires */
+    page.querySelectorAll('.radio-group').forEach(g => {
+      const radios = [...g.querySelectorAll('input[type="radio"]')];
+      if (radios.some(r => r.required) && !radios.some(r => r.checked)) {
+        g.classList.add('field-error-group');
+        ok = false;
+        if (!firstError) firstError = g;
+        const remove = () => { g.classList.remove('field-error-group'); g.removeEventListener('click', remove); };
+        g.addEventListener('click', remove);
       }
     });
-    if(!ok){
-      const first=page.querySelector('.field-error,[style*="outline"]');
-      if(first) first.scrollIntoView({behavior:'smooth',block:'center'});
+
+    /* 3 — Cases à cocher obligatoires (consentements) */
+    page.querySelectorAll('input[type="checkbox"][required]').forEach(cb => {
+      if (!cb.checked) {
+        const item = cb.closest('.c-item');
+        if (item) {
+          item.style.borderColor = '#c0392b';
+          ok = false;
+          if (!firstError) firstError = item;
+        }
+      }
+    });
+    if (n === 7 && !ok) {
+      const errEl = document.getElementById('consent-error');
+      if (errEl) errEl.classList.add('show');
     }
+
+    /* 4 — Validation cohérence des dates (page 2) */
+    if (n === 2) {
+      const naiss = document.getElementById('f-naiss').value;
+      const deces = document.getElementById('f-deces').value;
+      if (naiss && deces && naiss >= deces) {
+        document.getElementById('f-naiss').classList.add('field-error');
+        document.getElementById('f-deces').classList.add('field-error');
+        const errDate = document.getElementById('date-error');
+        if (errDate) errDate.classList.add('show');
+        ok = false;
+        if (!firstError) firstError = document.getElementById('f-naiss');
+        [document.getElementById('f-naiss'), document.getElementById('f-deces')].forEach(f => {
+          f.addEventListener('change', () => {
+            f.classList.remove('field-error');
+            const e = document.getElementById('date-error');
+            if (e) e.classList.remove('show');
+          }, { once: true });
+        });
+      }
+    }
+
+    /* 5 — Email valide (page 1) */
+    if (n === 1) {
+      const em = document.getElementById('f-email');
+      if (em && em.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value.trim())) {
+        em.classList.add('field-error');
+        ok = false;
+        if (!firstError) firstError = em;
+        em.addEventListener('input', () => em.classList.remove('field-error'), { once: true });
+      }
+    }
+
+    if (!ok && firstError) scrollToEl(firstError);
     return ok;
   }
 
-  /* ── FORM SUBMIT ── */
-  document.getElementById('form').addEventListener('submit', async e=>{
-    e.preventDefault();
-    if(!validate(7)) return;
-    const btn=document.getElementById('submitBtn');
-    btn.textContent='Envoi en cours…'; btn.disabled=true;
-    const data={};
-    document.getElementById('form').querySelectorAll('input:not([type="file"]), textarea, select').forEach(el=>{
-      if(!el.name) return;
-      if(el.type==='radio'||el.type==='checkbox'){
-        if(el.checked) data[el.name]=data[el.name]?data[el.name]+', '+el.value:el.value;
-      } else if(el.value.trim()) data[el.name]=el.value.trim();
+  /* ─── COLLECTE COMPLÈTE DES DONNÉES ─── */
+  function collectAllData() {
+    const data = {};
+    const form = document.getElementById('form');
+
+    /* Champs texte / textarea / select / hidden */
+    form.querySelectorAll('input:not([type="radio"]):not([type="checkbox"]):not([type="file"]), textarea, select').forEach(el => {
+      if (!el.name) return;
+      data[el.name] = el.value.trim() !== '' ? el.value.trim() : '(non renseigné)';
     });
-    try{
-      const res=await fetch('https://formspree.io/f/mykowvda',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)});
-      if(res.ok) go(8);
-      else throw new Error();
-    } catch {
-      btn.textContent='Envoyer ma capsule →'; btn.disabled=false;
-      alert('Une erreur est survenue. Écrivez à contact.capsulememoire@gmail.com');
+
+    /* Boutons radio — un seul par groupe */
+    const radioNames = new Set([...form.querySelectorAll('input[type="radio"]')].map(r => r.name));
+    radioNames.forEach(name => {
+      const checked = form.querySelector('input[type="radio"][name="' + name + '"]:checked');
+      data[name] = checked ? checked.value : '(non renseigné)';
+    });
+
+    /* Cases à cocher — regroupées, noms nettoyés */
+    const checkGroups = {};
+    form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+      const cleanName = cb.name.replace(/\[\]$/, '');
+      if (!checkGroups[cleanName]) checkGroups[cleanName] = [];
+      if (cb.checked) checkGroups[cleanName].push(cb.value);
+      else if (!checkGroups[cleanName]._seen) checkGroups[cleanName]._seen = true;
+    });
+    Object.entries(checkGroups).forEach(([name, vals]) => {
+      const checked = vals.filter(v => typeof v === 'string');
+      data[name] = checked.length > 0 ? checked.join(', ') : '(non renseigné)';
+    });
+
+    /* Métadonnées */
+    const now = new Date();
+    data['_dossier_id']  = DOSSIER_ID;
+    data['_offre']       = document.querySelector('input[name="offre"]:checked')?.value || '(non renseigné)';
+    data['_date_envoi']  = now.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }) +
+                           ' à ' + now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    data['_url']         = window.location.href;
+    data['_client']      = document.getElementById('f-nom')?.value || '';
+
+    return data;
+  }
+
+  /* ─── SOUMISSION DU FORMULAIRE ─── */
+  document.getElementById('form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    if (!validate(7)) return;
+
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = 'Envoi en cours…';
+    btn.disabled = true;
+
+    const data = collectAllData();
+
+    try {
+      const res = await fetch('https://formspree.io/f/mykowvda', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (res.ok) {
+        go(8);
+      } else {
+        throw new Error('Formspree error ' + res.status);
+      }
+    } catch (err) {
+      btn.textContent = 'Envoyer ma capsule →';
+      btn.disabled = false;
+      alert('Une erreur est survenue. Merci d\'écrire directement à contact.capsulememoire@gmail.com en indiquant votre dossier ' + DOSSIER_ID);
     }
   });
 
