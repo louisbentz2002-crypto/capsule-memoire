@@ -527,12 +527,11 @@
     try {
       if (WEBHOOK_URL) {
         /* Envoi vers webhook Make / n8n / Brevo */
-        await fetch(WEBHOOK_URL, {
+        fetch(WEBHOOK_URL, {
           method: 'POST',
-          mode: 'no-cors',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
-        });
+        }).catch(() => {});
       }
       /* Succès */
       form.style.display = 'none';
