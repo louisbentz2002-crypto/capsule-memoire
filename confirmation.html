@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merci — Capsule Mémoire</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="icon" href="/favicon.ico">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:#0D1829;font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center;}
+    .wrap{max-width:520px;width:100%;}
+    .icon{width:64px;height:64px;border-radius:50%;border:1px solid rgba(196,164,107,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 32px;}
+    .lbl{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#C4A46B;margin-bottom:20px;}
+    h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.2rem,6vw,3.2rem);color:#FAF8F5;line-height:1.15;margin-bottom:16px;}
+    h1 em{font-style:italic;color:#C4A46B;}
+    .gold-bar{width:36px;height:1px;background:#C4A46B;margin:0 auto 28px;}
+    .subtitle{font-size:15px;color:rgba(240,234,224,.65);line-height:1.8;margin-bottom:40px;}
+    .subtitle strong{color:#FAF8F5;}
+    .card{background:rgba(240,234,224,.04);border:1px solid rgba(196,164,107,.18);border-radius:12px;padding:28px 24px;margin-bottom:36px;text-align:left;}
+    .card-label{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:#C4A46B;margin-bottom:18px;}
+    .step{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px;}
+    .step:last-child{margin-bottom:0;}
+    .step-num{width:24px;height:24px;border-radius:50%;background:#C4A46B;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;font-weight:500;color:#0D1829;}
+    .step-txt{font-size:13.5px;color:rgba(240,234,224,.7);line-height:1.6;padding-top:2px;}
+    .step-txt strong{color:#FAF8F5;}
+    .email-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(196,164,107,.1);border:1px solid rgba(196,164,107,.25);border-radius:20px;padding:10px 18px;font-size:13px;color:#C4A46B;margin-bottom:32px;}
+    .slogan{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:rgba(240,234,224,.3);}
+    .back{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:rgba(196,164,107,.35);text-decoration:none;display:block;margin-top:24px;}
+    .back:hover{color:#C4A46B;}
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="icon">
+    <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
+      <circle cx="18" cy="18" r="16.5" stroke="#FAF8F5" stroke-width="0.8"/>
+      <circle cx="18" cy="18" r="10" stroke="#C4A46B" stroke-width="0.5" stroke-dasharray="1.5 3"/>
+      <circle cx="18" cy="18" r="2.5" fill="#C4A46B"/>
+    </svg>
+  </div>
+
+  <div class="lbl">Paiement confirmé</div>
+  <h1>Merci pour<br><em>votre confiance.</em></h1>
+  <div class="gold-bar"></div>
+
+  <p class="subtitle">Votre commande est bien enregistrée.<br><strong>Vous allez recevoir un email dans quelques minutes</strong> avec votre lien questionnaire et toutes les instructions pour nous envoyer vos souvenirs.</p>
+
+  <div class="email-badge">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C4A46B" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+    Un email vous a été envoyé
+  </div>
+
+  <div class="card">
+    <div class="card-label">Ce qui va se passer</div>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-txt"><strong>Remplissez le questionnaire</strong> — le lien est dans votre email. Prenez le temps qu'il vous faut.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-txt"><strong>Envoyez vos photos et fichiers</strong> via WeTransfer à l'adresse indiquée dans l'email.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-txt"><strong>Nous créons votre capsule</strong> et vous envoyons une prévisualisation avant la livraison finale.</div>
+    </div>
+  </div>
+
+  <p class="slogan">"Un souvenir qui dure toute une vie."</p>
+  <a href="/" class="back">← Retour au site</a>
+
+</div>
+</body>
+</html>
