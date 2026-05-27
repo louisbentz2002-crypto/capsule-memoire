@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#1A2B4A">
-  <title>Capsule Mémoire — Votre Questionnaire</title>
+  <title>Capsule Mémoire — Votre Questionnaire Mémoriel</title>
+  <meta name="description" content="Remplissez votre questionnaire mémoriel Capsule Mémoire. Nous allons créer un hommage digne et durable pour votre proche.">
+  <meta name="robots" content="noindex, nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
   <style>
@@ -326,6 +328,59 @@
   </style>
 </head>
 <body>
+
+  <!-- ══ ÉCRAN CONFIRMATION PAIEMENT ══ -->
+  <div id="paymentConfirm" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#0D1829;z-index:999;overflow-y:auto;-webkit-overflow-scrolling:touch;">
+    <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center;">
+
+      <!-- Logo -->
+      <svg width="48" height="48" viewBox="0 0 36 36" fill="none" style="margin-bottom:24px;">
+        <circle cx="18" cy="18" r="16.5" stroke="#FAF8F5" stroke-width="0.8"/>
+        <circle cx="18" cy="18" r="10" stroke="#C4A46B" stroke-width="0.5" stroke-dasharray="1.5 3"/>
+        <circle cx="18" cy="18" r="2.5" fill="#C4A46B"/>
+      </svg>
+
+      <!-- Confirmation -->
+      <p style="font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#C4A46B;margin-bottom:20px;">Paiement confirmé</p>
+      <h1 style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,6vw,3rem);color:#FAF8F5;line-height:1.15;margin-bottom:16px;">Merci pour<br><em style="color:#C4A46B;font-style:italic;">votre confiance.</em></h1>
+      <div style="width:36px;height:1px;background:#C4A46B;margin:0 auto 24px;"></div>
+      <p style="font-size:15px;color:rgba(240,234,224,.7);line-height:1.8;max-width:460px;margin-bottom:40px;">Votre commande est enregistrée. Nous allons prendre soin de chaque détail avec le plus grand respect.<br><br>Il vous reste une seule chose à faire : <strong style="color:#FAF8F5;">remplir votre questionnaire mémoriel</strong> pour nous permettre de commencer la création.</p>
+
+      <!-- Étapes -->
+      <div style="background:rgba(240,234,224,.05);border:1px solid rgba(196,164,107,.2);border-radius:10px;padding:24px;max-width:400px;width:100%;text-align:left;margin-bottom:36px;">
+        <p style="font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:#C4A46B;margin-bottom:16px;">Ce qui va se passer</p>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:22px;height:22px;border-radius:50%;background:#C4A46B;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;font-weight:500;color:#0D1829;">1</div>
+            <p style="font-size:13px;color:rgba(240,234,224,.75);line-height:1.6;margin:0;">Vous remplissez le questionnaire ci-dessous — à votre rythme, aussi longtemps que nécessaire.</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:22px;height:22px;border-radius:50%;background:#C4A46B;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;font-weight:500;color:#0D1829;">2</div>
+            <p style="font-size:13px;color:rgba(240,234,224,.75);line-height:1.6;margin:0;">Vous nous envoyez vos photos et fichiers via WeTransfer.</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:22px;height:22px;border-radius:50%;background:#C4A46B;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;font-weight:500;color:#0D1829;">3</div>
+            <p style="font-size:13px;color:rgba(240,234,224,.75);line-height:1.6;margin:0;">Nous créons votre capsule et vous envoyons une prévisualisation avant livraison finale.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <button onclick="document.getElementById('paymentConfirm').style.display='none';"
+        style="background:#C4A46B;color:#0D1829;border:none;padding:16px 40px;border-radius:2px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;cursor:pointer;margin-bottom:20px;">
+        Commencer le questionnaire →
+      </button>
+      <p style="font-size:12px;color:rgba(240,234,224,.3);font-style:italic;">"Un souvenir qui dure toute une vie."</p>
+    </div>
+  </div>
+
+  <script>
+    // Affiche l'écran si redirected depuis Stripe
+    if (window.location.search.includes('paiement=ok') || document.referrer.includes('stripe.com') || document.referrer.includes('checkout.stripe.com')) {
+      document.getElementById('paymentConfirm').style.display = 'block';
+    }
+  </script>
+
 
 <!-- ── HEADER ── -->
 <header class="header">
