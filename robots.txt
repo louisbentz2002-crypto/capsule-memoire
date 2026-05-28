@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
-
 Disallow: /questionnaire.html
+Disallow: /confirmation.html
 
-Sitemap: https://capsule-memoire.fr/sitemap.xml
+Sitemap: https://www.capsulememoire.fr/sitemap.xml
