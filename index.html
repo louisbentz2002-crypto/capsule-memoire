@@ -51,10 +51,6 @@
     a { text-decoration: none; color: inherit; }
 
 
-    /* CURSOR */
-    .cur-ring { position: fixed; width: 28px; height: 28px; border: 1.2px solid var(--or); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .25s, height .25s; }
-    .cur-dot  { position: fixed; width: 5px; height: 5px; background: var(--or); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); }
-
     /* LOADER */
     #loader { position: fixed; inset: 0; z-index: 9995; background: var(--navy); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; transition: opacity .7s, visibility .7s; }
     #loader.out { opacity: 0; visibility: hidden; pointer-events: none; }
@@ -75,9 +71,9 @@
     .n-links a { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: rgba(240,234,224,.45); transition: color .2s; white-space: nowrap; }
     .n-links a:hover { color: var(--or); }
     .n-cta { flex-shrink: 0; }
-    .btn-or { display: inline-block; background: var(--or); color: var(--navy); font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; padding: 12px 26px; border-radius: 2px; border: none; cursor: none; transition: background .2s, transform .15s; white-space: nowrap; }
+    .btn-or { display: inline-block; background: var(--or); color: var(--navy); font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; padding: 12px 26px; border-radius: 2px; border: none; cursor: pointer; transition: background .2s, transform .15s; white-space: nowrap; }
     .btn-or:hover { background: var(--or-l); }
-    .btn-ghost { display: inline-block; border: 1px solid rgba(196,164,107,.45); color: rgba(240,234,224,.65); font-family: 'DM Sans', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; padding: 12px 28px; border-radius: 2px; cursor: none; transition: border-color .2s, color .2s; white-space: nowrap; }
+    .btn-ghost { display: inline-block; border: 1px solid rgba(196,164,107,.45); color: rgba(240,234,224,.65); font-family: 'DM Sans', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; padding: 12px 28px; border-radius: 2px; cursor: pointer; transition: border-color .2s, color .2s; white-space: nowrap; }
     .btn-ghost:hover { border-color: var(--or); color: var(--or); }
 
     /* REVEAL */
@@ -226,14 +222,14 @@
 
     /* ── MOBILE MENU ── */
     .n-burger { display:none; background:none; border:none; cursor:pointer; color:var(--blanc); padding:8px; -webkit-tap-highlight-color:transparent; }
-    .mob-menu { position:fixed; inset:0; z-index:950; background:var(--navy); display:flex; flex-direction:column; padding:0 32px 32px; transform:translateX(100%); transition:transform .3s ease; }
-    .mob-menu.open { transform:translateX(0); }
-    .mob-menu-header { height:72px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid rgba(196,164,107,.1); }
+    .mob-menu { position:fixed; top:0; left:0; width:100%; height:100vh; height:100dvh; z-index:950; background:var(--navy); display:flex; flex-direction:column; padding:0 32px 32px; transform:translateX(100%); transition:transform .3s ease; overflow:hidden; }
+    .mob-menu.open { transform:translateX(0) !important; }
+    .mob-menu-header { height:68px; min-height:68px; flex-shrink:0; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid rgba(196,164,107,.1); }
     .mob-menu-close { width:44px; height:44px; display:flex; align-items:center; justify-content:center; background:none; border:none; cursor:pointer; color:rgba(240,234,224,.6); -webkit-tap-highlight-color:transparent; }
-    .mob-menu-links { display:flex; flex-direction:column; gap:0; overflow-y:auto; padding:8px 0 16px; }
-    .mob-menu-links a { padding:14px 0; border-bottom:1px solid rgba(196,164,107,.08); font-family:'Cormorant Garamond',serif; font-weight:300; font-size:28px; letter-spacing:.04em; color:rgba(240,234,224,.75); transition:color .2s; }
+    .mob-menu-links { display:flex; flex-direction:column; gap:0; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:4px 0 12px; flex-grow:1; flex-shrink:1; flex-basis:0; min-height:0; overflow-y:auto; }
+    .mob-menu-links a { display:block; padding:14px 0; border-bottom:1px solid rgba(196,164,107,.08); font-family:'Cormorant Garamond',serif; font-weight:300; font-size:26px; letter-spacing:.04em; color:rgba(240,234,224,.75); transition:color .2s; }
     .mob-menu-links a:hover, .mob-menu-links a:active { color:var(--or); }
-    .mob-menu-cta { margin-top:16px; padding-bottom:8px; flex-shrink:0; }
+    .mob-menu-cta { margin-top:12px; padding-bottom:env(safe-area-inset-bottom,8px); flex-shrink:0; }
     .mob-menu-cta a { display:block; background:var(--or); color:var(--navy); font-family:'DM Sans',sans-serif; font-weight:500; font-size:11px; letter-spacing:.2em; text-transform:uppercase; padding:18px 0; border-radius:2px; text-align:center; }
     .mob-menu-tag { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:rgba(196,164,107,.35); text-align:center; margin-top:16px; }
     /* ── STICKY CTA (mobile) ── */
@@ -251,31 +247,90 @@
     .cf-submit { text-align:center; }
     #contact { background:var(--blanc); padding:120px 56px; }
 
+    /* VIDÉOS */
+    .videos-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:56px; }
+    .video-card { background:rgba(255,255,255,.03); border:1px solid rgba(196,164,107,.12); border-radius:2px; overflow:hidden; transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s; }
+    .video-card:hover { transform:translateY(-5px); box-shadow:0 20px 48px rgba(0,0,0,.3); }
+    .video-card video { width:100%; aspect-ratio:4/5; object-fit:cover; display:block; }
+    .video-card-body { padding:20px 24px 24px; }
+    .video-card-ttl { font-family:'Cormorant Garamond',serif; font-weight:500; font-size:19px; color:var(--blanc); margin-bottom:8px; }
+    .video-card-desc { font-size:13px; color:rgba(240,234,224,.5); line-height:1.7; }
+
     /* RESPONSIVE */
     @media(max-width:960px){
-      nav{padding:0 20px; height:64px;} *,*::before,*::after{cursor:auto !important;} .slider-wrap{cursor:default !important;} .n-burger,.mob-menu-close,.mob-menu-links a,.btn-or,.btn-ghost,.faq-q,.slider-wrap{cursor:pointer !important;} .n-links{display:none;} .n-cta{display:none;} .n-burger{display:flex;} .sticky-cta{display:block;} section{padding:80px 24px;}
-      #contact{padding:64px 20px;}
-      .cf-row{grid-template-columns:1fr;}
-      #philosophie{padding:80px 24px;} #philosophie .inner{grid-template-columns:1fr;gap:48px;}
-      .cards,.temo-grid,.proc-track{grid-template-columns:repeat(2,1fr) !important;gap:16px !important;} .guar-grid{grid-template-columns:repeat(2,1fr) !important;}
-      .tarif-grid{grid-template-columns:1fr;}
-      .tarif-grid{gap:20px;}
-      .t-card{padding:36px 28px;}
-      .t-price{font-size:56px;}
-      .proc-track::before{display:none;} .guar-item{border-right:none;border-bottom:1px solid rgba(196,164,107,.1);}
-      #prestations,#processus,#temoignages,#garanties,#tarifs,#faq{padding:80px 24px;} .temo-card{padding:24px 20px !important;} .temo-txt{font-size:15px !important;} .temo-mark{font-size:48px !important;}
-      footer{padding:48px 24px;}
-      section[style*="beige"]{padding:64px 20px !important;}
-      section[style*="blanc"]{padding:64px 20px !important;}
-      #parcours > .inner > div[style*="grid"],#limites > .inner > div[style*="grid"]{grid-template-columns:1fr !important;gap:20px !important;}
-      section[style*="beige"] > div[style*="grid"]{grid-template-columns:1fr !important;gap:40px !important;}
+      nav { padding:0 20px; height:64px; }
+      .n-links { display:none; }
+      .n-cta { display:none; }
+      .n-burger { display:flex; }
+      .sticky-cta { display:block; }
+      #hero { padding:100px 20px 80px; }
+      .h-title { font-size:clamp(42px,11vw,70px) !important; }
+      .h-sub { font-size:clamp(15px,3.5vw,19px); max-width:100%; }
+      #philosophie { padding:64px 20px; }
+      #philosophie .inner { grid-template-columns:1fr; gap:40px; }
+      .philo-right { padding-left:0; border-left:none; padding-top:28px; border-top:1px solid rgba(196,164,107,.18); }
+      .philo-right::before { display:none; }
+      #parcours { padding:64px 20px !important; }
+      #parcours > .inner > div[style*="grid"] { grid-template-columns:1fr !important; gap:14px !important; }
+      #prestations { padding:64px 20px; }
+      .cards { grid-template-columns:1fr !important; gap:14px !important; }
+      .card { padding:28px 20px; }
+      #processus { padding:64px 20px; }
+      .proc-track { grid-template-columns:1fr !important; gap:20px !important; }
+      .proc-track::before { display:none; }
+      #limites { padding:64px 20px !important; }
+      #limites > .inner > div[style*="grid"] { grid-template-columns:1fr !important; gap:14px !important; }
+      #demo { padding:64px 0; }
+      .demo-grid { grid-template-columns:1fr !important; }
+      #videos { padding:64px 20px !important; }
+      .videos-grid { grid-template-columns:repeat(2,1fr) !important; }
+      #temoignages { padding:64px 20px; }
+      .temo-grid { grid-template-columns:1fr !important; gap:14px !important; }
+      .temo-card { padding:24px 18px !important; }
+      .temo-txt { font-size:16px !important; }
+      .temo-mark { font-size:52px !important; }
+      #garanties { padding:56px 20px; }
+      .guar-grid { grid-template-columns:1fr !important; }
+      .guar-item { border-right:none !important; border-bottom:1px solid rgba(196,164,107,.1); padding:28px 20px; }
+      .guar-item:last-child { border-bottom:none; }
+      #tarifs { padding:64px 20px; }
+      .tarif-grid { grid-template-columns:1fr !important; gap:16px; }
+      .t-card { padding:32px 20px; }
+      .t-price { font-size:54px; }
+      #ethique { padding:64px 20px !important; }
+      #ethique .inner { grid-template-columns:1fr !important; gap:40px !important; }
+      #faq { padding:64px 20px; }
+      .faq-q-txt { font-size:17px; }
+      #contact { padding:64px 20px; }
+      .cf-row { grid-template-columns:1fr; }
+      section[style*="beige"] { padding:64px 20px !important; }
+      section[style*="blanc"] { padding:64px 20px !important; }
+      footer { padding:40px 20px; }
+      .mob-menu { padding:0 20px 20px; height:100vh; height:100dvh; }
+      .mob-menu-links { padding:4px 0 8px; }
+      .mob-menu-links a { font-size:20px; padding:12px 0; }
+      .sticky-cta a { font-size:12px; padding:15px 0; }
+    }
+    @media(max-width:640px){
+      .h-title { font-size:clamp(34px,10vw,54px) !important; }
+      .h-sub { font-size:14px; }
+      .h-btns { flex-direction:column; gap:10px; width:100%; }
+      .h-btns a { width:100%; text-align:center; padding:16px 20px; box-sizing:border-box; }
+      .sec-ttl { font-size:clamp(26px,7vw,40px); }
+      .philo-cit { font-size:clamp(20px,5.5vw,30px); }
+      .card { padding:24px 16px !important; }
+      .card-ttl { font-size:20px; }
+      .videos-grid { grid-template-columns:1fr !important; }
+      .video-card video { aspect-ratio:16/9; }
+      .t-price { font-size:48px; }
+      .proc-num { width:36px; height:36px; font-size:15px; }
+      .faq-q-txt { font-size:16px; }
+      .mob-menu-links a { font-size:19px; }
+      footer { padding:36px 16px; gap:16px; }
     }
   </style>
 </head>
 <body>
-
-<div class="cur-ring" id="cR"></div>
-<div class="cur-dot"  id="cD"></div>
 
 <div id="loader">
   <div class="ld-icon">
@@ -311,6 +366,7 @@
   </div>
   <nav class="mob-menu-links">
     <a href="#prestations" onclick="closeMobMenu()">Prestations</a>
+    <a href="#videos" onclick="closeMobMenu()">Vidéos</a>
     <a href="#tarifs" onclick="closeMobMenu()">Tarifs</a>
     <a href="#faq" onclick="closeMobMenu()">FAQ</a>
     <a href="#contact" onclick="closeMobMenu()">Contact</a>
@@ -346,6 +402,7 @@
   </a>
   <div class="n-links">
     <a href="#prestations">Prestations</a>
+    <a href="#videos">Vidéos</a>
     <a href="#parcours">Pour qui ?</a>
     <a href="#processus">Processus</a>
     <a href="#tarifs">Tarifs</a>
@@ -441,7 +498,7 @@
       <div class="sec-lbl rv">Ce que vous recevez</div>
       <h2 class="sec-ttl rv d1">Un héritage complet,<br><em>numérique et physique.</em></h2>
     </div>
-    <div class="cards" style="grid-template-columns:repeat(4,1fr);">
+    <div class="cards" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));">
       <div class="card rv">
         <div class="card-ico">
           <svg width="42" height="42" viewBox="0 0 40 40" fill="none">
@@ -495,6 +552,23 @@
         <h3 class="card-ttl">L'Écrin Héritage</h3>
         <p class="card-desc">Écrin noir premium préparé à la main : Livre de Vie imprimé, clé USB Capsule Mémoire, plaque QR mémorielle, carte d'accès, lettre d'accompagnement, papier de soie. Rien n'est lancé sans validation finale.</p>
         <span class="badge">Expédié sous 7–12 jours ouvrés</span>
+      </div>
+      <div class="card rv d4">
+        <div class="card-ico">
+          <svg width="42" height="42" viewBox="0 0 40 40" fill="none">
+            <rect x="7" y="5" width="20" height="28" rx="2" stroke="#1A2B4A" stroke-width="1.4"/>
+            <path d="M7 10h20" stroke="#C4A46B" stroke-width="0.7" opacity=".5"/>
+            <line x1="11" y1="16" x2="23" y2="16" stroke="#1A2B4A" stroke-width="1" stroke-linecap="round" opacity=".4"/>
+            <line x1="11" y1="20" x2="21" y2="20" stroke="#1A2B4A" stroke-width="1" stroke-linecap="round" opacity=".4"/>
+            <line x1="11" y1="24" x2="19" y2="24" stroke="#1A2B4A" stroke-width="1" stroke-linecap="round" opacity=".3"/>
+            <path d="M28 30 C33 22 36 14 32 8" stroke="#C4A46B" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+            <line x1="30" y1="21" x2="26" y2="33" stroke="#C4A46B" stroke-width="1" stroke-linecap="round"/>
+            <circle cx="26" cy="33.5" r="1.2" fill="#C4A46B"/>
+          </svg>
+        </div>
+        <h3 class="card-ttl">Le Livre d’Or</h3>
+        <p class="card-desc">Un livre d’or graphique et illustré, conçu par une graphiste professionnelle, pour recueillir les témoignages de la famille lors des obsèques ou d’une cérémonie. Format premium, couverture personnalisée, impression soignée.</p>
+        <span class="badge">Sur commande</span>
       </div>
 </section>
 
@@ -660,6 +734,55 @@
   </div>
 </section>
 
+
+
+<!-- VIDÉOS -->
+<section id="videos" style="background:var(--navy-mid);padding:100px 56px;">
+  <div class="inner">
+    <div class="hdr" style="text-align:center;">
+      <div class="sec-lbl rv" style="color:var(--or);">Portraits animés</div>
+      <h2 class="sec-ttl rv d1" style="color:var(--blanc);">Des souvenirs qui <em>reprennent vie.</em></h2>
+      <p class="rv d2" style="font-size:15px;color:rgba(240,234,224,.5);margin-top:16px;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.7;">Quelques secondes suffisent parfois à retrouver une présence, un geste, un regard. Découvrez des exemples de portraits animés et de souvenirs vidéo créés dans une approche douce, sobre et respectueuse.</p>
+    </div>
+    <div class="videos-grid">
+      <div class="video-card rv">
+        <video autoplay muted loop playsinline preload="metadata"><source src="assets/videos/mariage-anime.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video>
+        <div class="video-card-body">
+          <h3 class="video-card-ttl">Mariage animé</h3>
+          <p class="video-card-desc">Une ancienne photo de mariage subtilement animée, avec des mouvements doux et naturels.</p>
+        </div>
+      </div>
+      <div class="video-card rv d1">
+        <video autoplay muted loop playsinline preload="metadata"><source src="assets/videos/femme-campagne.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video>
+        <div class="video-card-body">
+          <h3 class="video-card-ttl">Portrait souvenir</h3>
+          <p class="video-card-desc">Un portrait ancien animé avec délicatesse, pour redonner vie à une expression et une présence.</p>
+        </div>
+      </div>
+      <div class="video-card rv d2">
+        <video autoplay muted loop playsinline preload="metadata"><source src="assets/videos/couple-ferme.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video>
+        <div class="video-card-body">
+          <h3 class="video-card-ttl">Souvenir familial</h3>
+          <p class="video-card-desc">Deux figures familiales mises en mouvement dans un décor rural, avec une ambiance sobre et réaliste.</p>
+        </div>
+      </div>
+      <div class="video-card rv d3">
+        <video autoplay muted loop playsinline preload="metadata"><source src="assets/videos/jeune-fille.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video>
+        <div class="video-card-body">
+          <h3 class="video-card-ttl">Portrait d’époque</h3>
+          <p class="video-card-desc">Une image ancienne transformée en court souvenir vivant, sans effet exagéré.</p>
+        </div>
+      </div>
+      <div class="video-card rv d4">
+        <video autoplay muted loop playsinline preload="metadata"><source src="assets/videos/jeune-femme.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video>
+        <div class="video-card-body">
+          <h3 class="video-card-ttl">Regard d’époque</h3>
+          <p class="video-card-desc">Un portrait ancien animé dans un style doux, fidèle et élégant.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- TÉMOIGNAGES -->
 <section id="temoignages">
@@ -858,7 +981,7 @@
         <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:24px;color:var(--blanc);line-height:1.2;margin-bottom:10px;">Un projet hors normes ?<br><em style="color:var(--or);">Sur devis.</em></div>
         <p style="font-size:13px;color:rgba(240,234,224,.5);line-height:1.7;max-width:420px;">Plusieurs membres de la famille, multilangue, archives importantes à traiter, livre de vie de grande envergure… Contactez-nous pour un devis personnalisé.</p>
       </div>
-      <a href="mailto:contact.capsulememoire@gmail.com">contact.capsulememoire@gmail.com</a>
+      <a href="/cdn-cgi/l/email-protection#a3c0cccdd7c2c0d78dc0c2d3d0d6cfc6cec6cecccad1c6e3c4cec2cacf8dc0ccce"><span class="__cf_email__" data-cfemail="61020e0f150002154f02001112140d040c040c0e08130421060c00080d4f020e0c">[email&#160;protected]</span></a>
     </div>
 
   </div>
@@ -1042,7 +1165,7 @@
   <div class="ft-logo">CAPSULE <b>MÉMOIRE</b></div>
   <p class="ft-tag">"Un souvenir qui dure toute une vie."</p>
   <div class="ft-div"></div>
-  <a href="mailto:contact.capsulememoire@gmail.com">contact.capsulememoire@gmail.com</a>
+  <a href="/cdn-cgi/l/email-protection#41222e2f352022356f22203132342d242c242c2e28332401262c20282d6f222e2c" class="ft-email"><span class="__cf_email__" data-cfemail="83e0ecedf7e2e0f7ade0e2f3f0f6efe6eee6eeeceaf1e6c3e4eee2eaefade0ecee">[email&#160;protected]</span></a>
   <div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:center;">
     <a href="ethique.html" style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(196,164,107,.4);transition:color .2s;" onmouseover="this.style.color='#C4A46B'" onmouseout="this.style.color='rgba(196,164,107,.4)'">Engagement éthique</a>
     <a href="cgv.html" style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(196,164,107,.4);transition:color .2s;" onmouseover="this.style.color='#C4A46B'" onmouseout="this.style.color='rgba(196,164,107,.4)'">CGV</a>
@@ -1053,12 +1176,8 @@
   <p class="ft-legal">© 2025–2026 Capsule Mémoire · Traitement confidentiel · RGPD · Contenus créés avec assistance IA</p>
 </footer>
 
-<script>
-/* CURSOR */
-const cR = document.getElementById('cR'), cD = document.getElementById('cD');
-let mx=-99,my=-99,rx=-99,ry=-99;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
-(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;cR.style.left=rx+'px';cR.style.top=ry+'px';cD.style.left=mx+'px';cD.style.top=my+'px';requestAnimationFrame(loop);})();
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+
 
 /* LOADER */
 window.addEventListener('load',()=>{
