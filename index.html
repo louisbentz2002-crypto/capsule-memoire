@@ -47,7 +47,7 @@
       --muted:    #7A8BAA;
     }
     html { scroll-behavior: smooth; }
-    body { background: var(--blanc); color: var(--texte); font-family: 'DM Sans', sans-serif; font-weight: 300; cursor: none; overflow-x: hidden; }
+    body { background: var(--blanc); color: var(--texte); font-family: 'DM Sans', sans-serif; font-weight: 300;  overflow-x: hidden; }
     a { text-decoration: none; color: inherit; }
 
 
@@ -201,7 +201,7 @@
     #faq .inner { max-width:760px; margin:0 auto; }
     .faq-list { margin-top:56px; }
     .faq-item { border-bottom:1px solid rgba(196,164,107,.18); }
-    .faq-q { display:flex; justify-content:space-between; align-items:center; padding:24px 0; cursor:none; gap:16px; }
+    .faq-q { display:flex; justify-content:space-between; align-items:center; padding:24px 0; cursor:pointer; gap:16px; }
     .faq-q-txt { font-family:'Cormorant Garamond',serif; font-weight:400; font-size:20px; color:var(--navy-mid); line-height:1.3; }
     .faq-icon { width:28px; height:28px; border:1px solid rgba(196,164,107,.3); border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background .25s, border-color .25s; }
     .faq-item.open .faq-icon { background:var(--or); border-color:var(--or); }
@@ -253,17 +253,17 @@
 
     /* RESPONSIVE */
     @media(max-width:960px){
-      nav{padding:0 20px; height:64px;} *{cursor:auto !important;} .faq-q{cursor:pointer !important;} .n-links{display:none;} .n-cta{display:none;} .n-burger{display:flex;} .sticky-cta{display:block;} section{padding:80px 24px;}
+      nav{padding:0 20px; height:64px;} *,*::before,*::after{cursor:auto !important;} .n-burger,.mob-menu-close,.mob-menu-links a,.btn-or,.btn-ghost,.faq-q,.slider-wrap{cursor:pointer !important;} .n-links{display:none;} .n-cta{display:none;} .n-burger{display:flex;} .sticky-cta{display:block;} section{padding:80px 24px;}
       #contact{padding:64px 20px;}
       .cf-row{grid-template-columns:1fr;}
       #philosophie{padding:80px 24px;} #philosophie .inner{grid-template-columns:1fr;gap:48px;}
-      .cards,.proc-track{grid-template-columns:repeat(2,1fr) !important;gap:16px !important;} .temo-grid{grid-template-columns:1fr !important;} .guar-grid{grid-template-columns:repeat(2,1fr) !important;}
+      .cards,.temo-grid,.proc-track{grid-template-columns:repeat(2,1fr) !important;gap:16px !important;} .guar-grid{grid-template-columns:repeat(2,1fr) !important;}
       .tarif-grid{grid-template-columns:1fr;}
       .tarif-grid{gap:20px;}
       .t-card{padding:36px 28px;}
       .t-price{font-size:56px;}
       .proc-track::before{display:none;} .guar-item{border-right:none;border-bottom:1px solid rgba(196,164,107,.1);}
-      #prestations,#processus,#temoignages,#garanties,#tarifs,#faq{padding:80px 24px;}
+      #prestations,#processus,#temoignages,#garanties,#tarifs,#faq{padding:80px 24px;} .temo-card{padding:24px 20px !important;} .temo-txt{font-size:15px !important;} .temo-mark{font-size:48px !important;}
       footer{padding:48px 24px;}
       section[style*="beige"]{padding:64px 20px !important;}
       section[style*="blanc"]{padding:64px 20px !important;}
@@ -311,7 +311,6 @@
   </div>
   <nav class="mob-menu-links">
     <a href="#prestations" onclick="closeMobMenu()">Prestations</a>
-    <a href="#processus" onclick="closeMobMenu()">Comment ça marche</a>
     <a href="#tarifs" onclick="closeMobMenu()">Tarifs</a>
     <a href="#faq" onclick="closeMobMenu()">FAQ</a>
     <a href="#contact" onclick="closeMobMenu()">Contact</a>
@@ -976,7 +975,7 @@
   <div class="inner">
     <div class="hdr">
       <div class="sec-lbl rv">Contact</div>
-      <h2 class="sec-ttl rv d1">Nous joindre</h2>
+      <h2 class="sec-ttl rv d1">Une question ?<br><em>Nous vous répondons.</em></h2>
     </div>
     <form class="contact-form rv" id="contactForm" action="https://formspree.io/f/mykowvda" method="POST" novalidate>
       <div class="cf-row">
@@ -1132,7 +1131,7 @@ function closeMobMenu(){
 if(burgerBtn) burgerBtn.addEventListener('click', openMobMenu);
 if(mobClose) mobClose.addEventListener('click', closeMobMenu);
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeMobMenu(); });
-if(mobMenu) mobMenu.addEventListener('click', e => { if(e.target===mobMenu) closeMobMenu(); });
+if(mobMenu) mobMenu.addEventListener('click', e => { if(e.target === mobMenu) closeMobMenu(); });
 
 /* STICKY CTA */
 const stickyCta = document.getElementById('stickyCta');
