@@ -182,7 +182,7 @@
     .demo-card-header span { font-size:13px; font-weight:500; color:var(--beige); }
     .demo-tag { font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--or); padding:3px 9px; border:1px solid rgba(196,164,107,.4); border-radius:20px; }
     .slider-wrap { position:relative; overflow:hidden; aspect-ratio:3/4; cursor:col-resize; user-select:none; -webkit-user-select:none; }
-    .slider-wrap img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; object-position:center 25%; pointer-events:none; } #s1 img { object-position:center 18% !important; }
+    .slider-wrap img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; object-position:center 25%; pointer-events:none; }
     .sl-after { clip-path:inset(0 50% 0 0); }
     .sl-line { position:absolute; top:0; left:50%; transform:translateX(-50%); width:2px; height:100%; background:var(--or); z-index:10; pointer-events:none; }
     .sl-btn { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:38px; height:38px; border-radius:50%; background:var(--or); color:var(--navy); display:flex; align-items:center; justify-content:center; z-index:11; pointer-events:none; box-shadow:0 2px 12px rgba(0,0,0,.25); }
@@ -222,8 +222,8 @@
 
     /* ── MOBILE MENU ── */
     .n-burger { display:none; background:none; border:none; cursor:pointer; color:var(--blanc); padding:8px; -webkit-tap-highlight-color:transparent; }
-    .mob-menu { position:fixed; top:0; left:0; width:100%; height:100vh; height:100dvh; z-index:950; background:var(--navy); display:flex; flex-direction:column; padding:0 32px 32px; transform:translateX(100%); transition:transform .3s ease; overflow:hidden; }
-    .mob-menu.open { transform:translateX(0) !important; }
+    .mob-menu { position:fixed; top:0; left:0; width:100%; height:100%; z-index:950; background:var(--navy); display:flex; flex-direction:column; padding:0 28px 28px; visibility:hidden; opacity:0; transition:opacity .25s ease, visibility .25s ease; }
+    .mob-menu.open { visibility:visible !important; opacity:1 !important; }
     .mob-menu-header { height:68px; min-height:68px; flex-shrink:0; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid rgba(196,164,107,.1); }
     .mob-menu-close { width:44px; height:44px; display:flex; align-items:center; justify-content:center; background:none; border:none; cursor:pointer; color:rgba(240,234,224,.6); -webkit-tap-highlight-color:transparent; }
     .mob-menu-links { display:flex; flex-direction:column; gap:0; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:4px 0 12px; flex-grow:1; flex-shrink:1; flex-basis:0; min-height:0; overflow-y:auto; }
@@ -1221,14 +1221,18 @@ const mobMenu = document.getElementById('mobMenu');
 const burgerBtn = document.getElementById('burgerBtn');
 const mobClose = document.getElementById('mobClose');
 function openMobMenu(){
-  if(mobMenu) mobMenu.classList.add('open');
+  if(!mobMenu) return;
+  mobMenu.style.visibility='visible';
+  mobMenu.style.opacity='1';
+  mobMenu.classList.add('open');
   if(burgerBtn) burgerBtn.setAttribute('aria-expanded','true');
-  document.body.style.overflow='hidden';
 }
 function closeMobMenu(){
-  if(mobMenu) mobMenu.classList.remove('open');
+  if(!mobMenu) return;
+  mobMenu.style.opacity='0';
+  mobMenu.style.visibility='hidden';
+  mobMenu.classList.remove('open');
   if(burgerBtn) burgerBtn.setAttribute('aria-expanded','false');
-  document.body.style.overflow='';
 }
 if(burgerBtn) burgerBtn.addEventListener('click', openMobMenu);
 if(mobClose) mobClose.addEventListener('click', closeMobMenu);
