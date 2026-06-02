@@ -253,11 +253,11 @@
 
     /* RESPONSIVE */
     @media(max-width:960px){
-      nav{padding:0 20px; height:64px;} .n-links{display:none;} .n-cta{display:none;} .n-burger{display:flex;} .sticky-cta{display:block;} section{padding:80px 24px;}
+      nav{padding:0 20px; height:64px;} *{cursor:auto !important;} .faq-q{cursor:pointer !important;} .n-links{display:none;} .n-cta{display:none;} .n-burger{display:flex;} .sticky-cta{display:block;} section{padding:80px 24px;}
       #contact{padding:64px 20px;}
       .cf-row{grid-template-columns:1fr;}
       #philosophie{padding:80px 24px;} #philosophie .inner{grid-template-columns:1fr;gap:48px;}
-      .cards,.temo-grid,.proc-track{grid-template-columns:repeat(2,1fr) !important;gap:16px !important;} .guar-grid{grid-template-columns:repeat(2,1fr) !important;}
+      .cards,.proc-track{grid-template-columns:repeat(2,1fr) !important;gap:16px !important;} .temo-grid{grid-template-columns:1fr !important;} .guar-grid{grid-template-columns:repeat(2,1fr) !important;}
       .tarif-grid{grid-template-columns:1fr;}
       .tarif-grid{gap:20px;}
       .t-card{padding:36px 28px;}
@@ -311,7 +311,6 @@
   </div>
   <nav class="mob-menu-links">
     <a href="#prestations" onclick="closeMobMenu()">Prestations</a>
-    <a href="#parcours" onclick="closeMobMenu()">Pour qui ?</a>
     <a href="#processus" onclick="closeMobMenu()">Comment ça marche</a>
     <a href="#tarifs" onclick="closeMobMenu()">Tarifs</a>
     <a href="#faq" onclick="closeMobMenu()">FAQ</a>
@@ -321,7 +320,6 @@
   <div class="mob-menu-cta">
     <a href="#tarifs" onclick="closeMobMenu()">Créer ma capsule</a>
   </div>
-  <p class="mob-menu-tag">"Un souvenir qui dure toute une vie."</p>
 </div>
 
 <!-- STICKY CTA MOBILE -->
@@ -978,7 +976,7 @@
   <div class="inner">
     <div class="hdr">
       <div class="sec-lbl rv">Contact</div>
-      <h2 class="sec-ttl rv d1">Une question ?<br><em>Nous vous répondons.</em></h2>
+      <h2 class="sec-ttl rv d1">Nous joindre</h2>
     </div>
     <form class="contact-form rv" id="contactForm" action="https://formspree.io/f/mykowvda" method="POST" novalidate>
       <div class="cf-row">
@@ -1134,6 +1132,7 @@ function closeMobMenu(){
 if(burgerBtn) burgerBtn.addEventListener('click', openMobMenu);
 if(mobClose) mobClose.addEventListener('click', closeMobMenu);
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeMobMenu(); });
+if(mobMenu) mobMenu.addEventListener('click', e => { if(e.target===mobMenu) closeMobMenu(); });
 
 /* STICKY CTA */
 const stickyCta = document.getElementById('stickyCta');
