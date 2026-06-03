@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="10 questions à poser à un parent avant qu'il ne soit trop tard — Guide gratuit Capsule Mémoire">
   <meta name="theme-color" content="#0D1829">
+  <link rel="canonical" href="https://www.capsulememoire.fr/guide-souvenirs.html">
   <title>Guide gratuit — 10 questions à poser à un parent | Capsule Mémoire</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 
   <!--
@@ -37,9 +39,12 @@
       --sab:     env(safe-area-inset-bottom, 0px);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-    body { background: var(--blanc); color: var(--texte); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; max-width: 100%; overflow-x: hidden; }
+    body { background: var(--blanc); color: var(--texte); font-family: 'DM Sans', sans-serif; font-weight: 300; max-width: 100%; overflow-x: hidden; }
+    img, video, iframe, svg { max-width: 100%; }
+    img, video { height: auto; }
     a { text-decoration: none; color: inherit; -webkit-tap-highlight-color: transparent; }
+    a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--or); outline-offset: 4px; }
 
     /* ════ NAV ════ */
     nav {
@@ -240,6 +245,10 @@
       .form-box { padding: 36px 24px; margin-top: 40px; }
       #capsule-link { padding: 72px 20px; }
       footer { padding: 40px 20px calc(40px + var(--sab)); }
+    }
+    @media(max-width:480px) {
+      nav { gap: 12px; }
+      .n-back { font-size: 9px; letter-spacing: .12em; }
     }
     @media(max-width:400px) {
       .h-title { font-size: 26px; }
@@ -455,10 +464,10 @@
   const WEBHOOK_URL = 'https://hook.eu1.make.com/szf1ewdw1pdj7a4zbgv391jvomje771x';
 
   /* ══ REVEAL AU SCROLL ══ */
-  const obs = new IntersectionObserver(entries => {
+  const obs = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+  }, { threshold: 0.08 }) : null;
+  document.querySelectorAll('.rv').forEach(el => obs ? obs.observe(el) : el.classList.add('in'));
 
   /* ══ ACCORDÉON QUESTIONS ══ */
   document.querySelectorAll('.q-header').forEach(h => {
@@ -484,7 +493,7 @@
 
   /* ══ FORMULAIRE ══ */
   const form = document.getElementById('guideForm');
-  form.addEventListener('submit', async e => {
+  if (form) form.addEventListener('submit', async e => {
     e.preventDefault();
     let valid = true;
 
