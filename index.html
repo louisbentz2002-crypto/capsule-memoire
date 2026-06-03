@@ -222,8 +222,9 @@
 
     /* ── MOBILE MENU ── */
     .n-burger { display:none; background:none; border:none; cursor:pointer; color:var(--blanc); padding:8px; -webkit-tap-highlight-color:transparent; }
-    .mob-menu { position:fixed; top:0; left:0; width:100%; height:100vh; height:100dvh; z-index:950; background:var(--navy); display:flex; flex-direction:column; padding:0 32px 32px; transform:translateX(100%); transition:transform .3s ease; overflow:hidden; }
-    .mob-menu.open { transform:translateX(0) !important; }
+    .mob-menu { position:fixed; top:0; left:0; width:100%; height:100vh; height:100dvh; z-index:950; background:var(--navy); display:flex; flex-direction:column; padding:0 32px 32px; transform:translateX(100%); transition:transform .35s cubic-bezier(.16,1,.3,1), visibility 0s linear .35s; overflow-y:auto; overflow-x:hidden; visibility:hidden; -webkit-overflow-scrolling:touch; }
+    .mob-menu.open { transform:translateX(0); visibility:visible; transition:transform .35s cubic-bezier(.16,1,.3,1), visibility 0s linear 0s; }
+    body.mob-open { overflow:hidden; }
     .mob-menu-header { height:68px; min-height:68px; flex-shrink:0; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid rgba(196,164,107,.1); }
     .mob-menu-close { width:44px; height:44px; display:flex; align-items:center; justify-content:center; background:none; border:none; cursor:pointer; color:rgba(240,234,224,.6); -webkit-tap-highlight-color:transparent; }
     .mob-menu-links { display:flex; flex-direction:column; gap:0; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:4px 0 12px; flex-grow:1; flex-shrink:1; flex-basis:0; min-height:0; overflow-y:auto; }
@@ -328,17 +329,13 @@
       .mob-menu-links a { font-size:19px; }
       footer { padding:36px 16px; gap:16px; }
     }
-  
-    /* FIX 1 — Menu mobile display:none au lieu de transform */
-    .mob-menu { transform: none !important; display: none !important; }
-    .mob-menu.open { display: flex !important; }
 
-    /* FIX 2 — Photo mariage : voir les têtes */
-    #s1 img { object-position: center 8% !important; }
+    /* Photo mariage — cadrage sur les têtes */
+    #s1 img { object-position: center 12%; }
 
-    /* FIX 3 — Pas de curseur custom sur mobile */
-    @media (max-width: 768px) {
-      *, *::before, *::after { cursor: auto !important; }
+    /* Curseur sur mobile — désactivé */
+    @media (hover: none) and (pointer: coarse) {
+      .slider-wrap { cursor: default; }
     }
 </style>
 </head>
@@ -1235,12 +1232,12 @@ const mobClose = document.getElementById('mobClose');
 function openMobMenu(){
   if(mobMenu) mobMenu.classList.add('open');
   if(burgerBtn) burgerBtn.setAttribute('aria-expanded','true');
-  
+  document.body.classList.add('mob-open');
 }
 function closeMobMenu(){
   if(mobMenu) mobMenu.classList.remove('open');
   if(burgerBtn) burgerBtn.setAttribute('aria-expanded','false');
-  
+  document.body.classList.remove('mob-open');
 }
 if(burgerBtn) burgerBtn.addEventListener('click', openMobMenu);
 if(mobClose) mobClose.addEventListener('click', closeMobMenu);
