@@ -1806,7 +1806,7 @@ if(contactForm){
       var hint = wrap.querySelector('.portrait-hint');
       var loaded = false, timer;
 
-      // Clic sur l'overlay (état arrêté) → play
+      // Clic sur l'overlay → play si arrêté, pause si en cours
       wrap.querySelector('.portrait-overlay').addEventListener('click', function(){
         if (!loaded) { vid.src = srcs[i]; vid.load(); loaded = true; }
         if (vid.paused) {
@@ -1820,13 +1820,11 @@ if(contactForm){
         }
       });
 
-      // Clic sur la vidéo pendant lecture (mobile) → afficher overlay 2s
+      // Clic direct sur la vidéo pendant lecture → pause immédiate
       vid.addEventListener('click', function(e){
         e.stopPropagation();
         if (!vid.paused) {
-          wrap.classList.add('show-ctrl');
-          clearTimeout(timer);
-          timer = setTimeout(function(){ wrap.classList.remove('show-ctrl'); }, 2000);
+          reset(wrap);
         }
       });
 
