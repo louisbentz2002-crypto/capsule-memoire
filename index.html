@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Capsule Mémoire — Préserver la mémoire d'un proche | Restauration photo, voix, vidéo hommage</title>
   <meta name="description" content="Service premium de préservation mémorielle : restauration de photos anciennes, évocation vocale, portrait animé et livre de vie. Pour les familles endeuillées. Dès 290€.">
   <meta name="keywords" content="restauration photo ancienne, souvenir proche disparu, hommage numérique, capsule mémoire, préserver voix proche, livre de vie">
@@ -32,8 +32,6 @@
       <circle cx="60" cy="40" r="2.5" fill="#C4A46B"/>
     </svg>
   </template>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
   <script async src="https://js.stripe.com/v3/buy-button.js"></script>
   <style>
@@ -48,17 +46,9 @@
       --texte:    #2D3748;
       --muted:    #7A8BAA;
     }
-    html { scroll-behavior: smooth; max-width: 100%; overflow-x: hidden; -webkit-text-size-adjust: 100%; }
-    body { background: var(--blanc); color: var(--texte); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.7; max-width: 100%; overflow-x: hidden; text-rendering: optimizeLegibility; }
-    img, video, iframe, svg { max-width: 100%; }
-    img, video { height: auto; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--blanc); color: var(--texte); font-family: 'DM Sans', sans-serif; font-weight: 300;  overflow-x: hidden; }
     a { text-decoration: none; color: inherit; }
-    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid var(--or); outline-offset: 4px; }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
-      .rv { opacity: 1 !important; transform: none !important; }
-    }
 
 
     /* LOADER */
@@ -247,11 +237,6 @@
     .sticky-cta { display:none; position:fixed; bottom:0; left:0; right:0; z-index:800; background:rgba(10,18,34,.97); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-top:1px solid rgba(196,164,107,.15); padding:12px 20px; padding-bottom:calc(12px + env(safe-area-inset-bottom,0px)); }
     .sticky-cta a { display:block; background:var(--or); color:var(--navy); font-family:'DM Sans',sans-serif; font-weight:500; font-size:11px; letter-spacing:.2em; text-transform:uppercase; padding:16px 0; border-radius:2px; text-align:center; }
     .sticky-cta.hidden { display:none !important; }
-    body.mob-open { position: fixed; width: 100%; }
-    .faq-q { cursor: pointer; }
-    .faq-q:focus-visible { outline: 2px solid var(--or); outline-offset: 6px; }
-    stripe-buy-button { display: block; max-width: 100%; overflow: hidden; }
-
     /* ── CONTACT FORM ── */
     .contact-form { margin-top:48px; display:flex; flex-direction:column; gap:18px; }
     .cf-row { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
@@ -346,10 +331,6 @@
       .sticky-cta a { font-size:12px; padding:15px 0; }
     }
     @media(max-width:640px){
-      #nav { padding: 0 16px; }
-      #nav .n-logo-txt { font-size:12px; letter-spacing:.14em; }
-      #nav .n-logo-txt b { letter-spacing:.18em; }
-      .n-burger { width:44px; height:44px; }
       .h-title { font-size:clamp(34px,10vw,54px) !important; }
       .h-sub { font-size:14px; }
       .h-btns { flex-direction:column; gap:10px; width:100%; }
@@ -364,14 +345,6 @@
       .proc-num { width:36px; height:36px; font-size:15px; }
       .faq-q-txt { font-size:16px; }
       footer { padding:36px 16px; gap:16px; }
-    }
-    @media(max-width:380px){
-      #nav .n-logo { gap:8px; }
-      #nav .n-logo svg { width:26px; height:26px; }
-      #nav .n-logo-txt { font-size:11px; letter-spacing:.1em; }
-      #nav .n-logo-txt b { letter-spacing:.13em; }
-      .sticky-cta { padding-left:12px; padding-right:12px; }
-      .sticky-cta a { letter-spacing:.12em; }
     }
 
     /* Photo mariage — cadrage sur les têtes */
@@ -446,28 +419,21 @@
       }
     }
 
-    /* Vidéo mariage : priorité aux visages, bas légèrement rogné pour masquer le logo Runway */
-    .video-card.wedding-video { overflow: hidden; }
+    /* Vidéo mariage : priorité aux visages, jamais aux corps coupés */
     .video-card.wedding-video video {
       width: 100% !important;
       height: auto !important;
       aspect-ratio: 4 / 5 !important;
-      object-fit: cover !important;
+      object-fit: contain !important;
       object-position: center top !important;
-      transform: none !important;
-      clip-path: inset(0 0 7% 0);
-      margin-bottom: -7%;
       background: var(--navy) !important;
     }
 
     @media (max-width: 640px) {
       .video-card.wedding-video video {
         aspect-ratio: 4 / 5 !important;
-        object-fit: cover !important;
+        object-fit: contain !important;
         object-position: center top !important;
-        transform: none !important;
-        clip-path: inset(0 0 8% 0);
-        margin-bottom: -8%;
       }
     }
 
@@ -485,11 +451,10 @@
       .mob-menu-links a { width: 100%; max-width: none; text-align: left; white-space: normal; overflow-wrap: anywhere; }
     }
 
-    /* CORRECTION FINALE VIDÉO MARIAGE — visages conservés, watermark masqué par rognage bas */
-    .video-card.wedding-video { overflow: hidden; }
-    .video-card.wedding-video video { object-fit: cover !important; object-position: center top !important; transform: none !important; clip-path: inset(0 0 7% 0); margin-bottom: -7%; background: var(--navy); aspect-ratio: 4 / 5; height: auto; }
+    /* CORRECTION FINALE VIDÉO MARIAGE — priorité aux visages */
+    .video-card.wedding-video video { object-fit: contain !important; object-position: center top !important; background: var(--navy); aspect-ratio: 4 / 5; height: auto; }
     @media(max-width:640px){
-      .video-card.wedding-video video { aspect-ratio: 4 / 5 !important; object-fit: cover !important; object-position: center top !important; transform: none !important; clip-path: inset(0 0 8% 0); margin-bottom: -8%; }
+      .video-card.wedding-video video { aspect-ratio: 4 / 5 !important; object-fit: contain !important; object-position: center top !important; }
     }
 
 </style>
@@ -518,7 +483,7 @@
 
 <!-- NAV -->
 <!-- MENU MOBILE -->
-<div class="mob-menu" id="mobMenu" role="dialog" aria-modal="true" aria-label="Menu de navigation" aria-hidden="true">
+<div class="mob-menu" id="mobMenu" role="dialog" aria-modal="true" aria-label="Menu de navigation">
   <div class="mob-menu-header">
     <div class="n-logo">
       <svg width="30" height="30" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="16.5" stroke="#FAF8F5" stroke-width="1"/><circle cx="18" cy="18" r="10" stroke="#C4A46B" stroke-width="0.6" stroke-dasharray="1.5 3"/><circle cx="18" cy="18" r="2.5" fill="#C4A46B"/></svg>
@@ -910,35 +875,35 @@
     </div>
     <div class="videos-grid">
       <div class="video-card wedding-video rv">
-        <video class="lazy-video" muted loop playsinline preload="none"><source data-src="assets/videos/mariage-anime.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video>
+        <video autoplay muted loop playsinline preload="metadata"><source src="assets/videos/mariage-anime.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video>
         <div class="video-card-body">
           <h3 class="video-card-ttl">Mariage animé</h3>
           <p class="video-card-desc">Une ancienne photo de mariage subtilement animée, avec des mouvements doux et naturels.</p>
         </div>
       </div>
       <div class="video-card rv d1">
-        <video class="lazy-video" muted loop playsinline preload="none"><source data-src="assets/videos/femme-campagne.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video>
+        <video autoplay muted loop playsinline preload="metadata"><source src="assets/videos/femme-campagne.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video>
         <div class="video-card-body">
           <h3 class="video-card-ttl">Portrait souvenir</h3>
           <p class="video-card-desc">Un portrait ancien animé avec délicatesse, pour redonner vie à une expression et une présence.</p>
         </div>
       </div>
       <div class="video-card rv d2">
-        <video class="lazy-video" muted loop playsinline preload="none"><source data-src="assets/videos/couple-ferme.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video>
+        <video autoplay muted loop playsinline preload="metadata"><source src="assets/videos/couple-ferme.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video>
         <div class="video-card-body">
           <h3 class="video-card-ttl">Souvenir familial</h3>
           <p class="video-card-desc">Deux figures familiales mises en mouvement dans un décor rural, avec une ambiance sobre et réaliste.</p>
         </div>
       </div>
       <div class="video-card rv d3">
-        <video class="lazy-video" muted loop playsinline preload="none"><source data-src="assets/videos/jeune-fille.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video>
+        <video autoplay muted loop playsinline preload="metadata"><source src="assets/videos/jeune-fille.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video>
         <div class="video-card-body">
           <h3 class="video-card-ttl">Portrait d’époque</h3>
           <p class="video-card-desc">Une image ancienne transformée en court souvenir vivant, sans effet exagéré.</p>
         </div>
       </div>
       <div class="video-card rv d4">
-        <video class="lazy-video" muted loop playsinline preload="none"><source data-src="assets/videos/jeune-femme.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video>
+        <video autoplay muted loop playsinline preload="metadata"><source src="assets/videos/jeune-femme.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video>
         <div class="video-card-body">
           <h3 class="video-card-ttl">Regard d’époque</h3>
           <p class="video-card-desc">Un portrait ancien animé dans un style doux, fidèle et élégant.</p>
@@ -1145,7 +1110,7 @@
         <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:24px;color:var(--blanc);line-height:1.2;margin-bottom:10px;">Un projet hors normes ?<br><em style="color:var(--or);">Sur devis.</em></div>
         <p style="font-size:13px;color:rgba(240,234,224,.5);line-height:1.7;max-width:420px;">Plusieurs membres de la famille, multilangue, archives importantes à traiter, livre de vie de grande envergure… Contactez-nous pour un devis personnalisé.</p>
       </div>
-      <a href="mailto:contact.capsulememoire@gmail.com">contact.capsulememoire@gmail.com</a>
+      <a href="/cdn-cgi/l/email-protection#a3c0cccdd7c2c0d78dc0c2d3d0d6cfc6cec6cecccad1c6e3c4cec2cacf8dc0ccce"><span class="__cf_email__" data-cfemail="61020e0f150002154f02001112140d040c040c0e08130421060c00080d4f020e0c">[email&#160;protected]</span></a>
     </div>
 
   </div>
@@ -1326,35 +1291,35 @@
   <div class="ft-logo">CAPSULE <b>MÉMOIRE</b></div>
   <p class="ft-tag">"Un souvenir qui dure toute une vie."</p>
   <div class="ft-div"></div>
-  <a href="mailto:contact.capsulememoire@gmail.com" class="ft-email">contact.capsulememoire@gmail.com</a>
+  <a href="/cdn-cgi/l/email-protection#41222e2f352022356f22203132342d242c242c2e28332401262c20282d6f222e2c" class="ft-email"><span class="__cf_email__" data-cfemail="83e0ecedf7e2e0f7ade0e2f3f0f6efe6eee6eeeceaf1e6c3e4eee2eaefade0ecee">[email&#160;protected]</span></a>
   <div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:center;">
     <a href="ethique.html" style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(196,164,107,.4);transition:color .2s;" onmouseover="this.style.color='#C4A46B'" onmouseout="this.style.color='rgba(196,164,107,.4)'">Engagement éthique</a>
     <a href="cgv.html" style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(196,164,107,.4);transition:color .2s;" onmouseover="this.style.color='#C4A46B'" onmouseout="this.style.color='rgba(196,164,107,.4)'">CGV</a>
     <a href="confidentialite.html" style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(196,164,107,.4);transition:color .2s;" onmouseover="this.style.color='#C4A46B'" onmouseout="this.style.color='rgba(196,164,107,.4)'">Confidentialité</a>
     <a href="mentions-legales.html" style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(196,164,107,.4);transition:color .2s;" onmouseover="this.style.color='#C4A46B'" onmouseout="this.style.color='rgba(196,164,107,.4)'">Mentions légales</a>
-    <a href="guide-souvenirs.html" style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(196,164,107,.4);transition:color .2s;" onmouseover="this.style.color='#C4A46B'" onmouseout="this.style.color='rgba(196,164,107,.4)'">Guide gratuit</a>
+    <a href="guide-10-questions.html" style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(196,164,107,.4);transition:color .2s;" onmouseover="this.style.color='#C4A46B'" onmouseout="this.style.color='rgba(196,164,107,.4)'">Guide gratuit</a>
   </div>
   <p class="ft-legal">© 2025–2026 Capsule Mémoire · Traitement confidentiel · RGPD · Contenus créés avec assistance IA</p>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 
 
 /* LOADER */
 window.addEventListener('load',()=>{
   setTimeout(()=>{
-    document.getElementById('loader')?.classList.add('out');
+    document.getElementById('loader').classList.add('out');
     document.querySelectorAll('#hero .rv').forEach(el=>el.classList.add('in'));
-  },900);
+  },1800);
 });
 
 /* NAV SCROLL */
 const nav=document.getElementById('nav');
-if(nav) window.addEventListener('scroll',()=>nav.classList.toggle('on',window.scrollY>60),{passive:true});
+window.addEventListener('scroll',()=>nav.classList.toggle('on',scrollY>60),{passive:true});
 
 /* REVEAL */
-const obs = 'IntersectionObserver' in window ? new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.1}) : null;
-document.querySelectorAll('.rv:not(#hero .rv)').forEach(el=> obs ? obs.observe(el) : el.classList.add('in'));
+const obs=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.1});
+document.querySelectorAll('.rv:not(#hero .rv)').forEach(el=>obs.observe(el));
 
 /* MAGNETIC */
 document.querySelectorAll('.mag').forEach(b=>{
@@ -1363,45 +1328,14 @@ document.querySelectorAll('.mag').forEach(b=>{
   b.addEventListener('mouseenter',()=>{b.style.transition='transform .15s ease,background .2s';});
 });
 
-/* LAZY VIDEOS */
-function loadVideo(video){
-  const source = video.querySelector('source[data-src]');
-  if(source){ source.src = source.dataset.src; source.removeAttribute('data-src'); video.load(); }
-  video.play?.().catch(()=>{});
-}
-const lazyVideos = document.querySelectorAll('video.lazy-video');
-if('IntersectionObserver' in window){
-  const videoObs = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      const video = entry.target;
-      if(entry.isIntersecting){ loadVideo(video); }
-      else { video.pause?.(); }
-    });
-  }, { rootMargin: '200px 0px', threshold: .1 });
-  lazyVideos.forEach(video => videoObs.observe(video));
-} else {
-  lazyVideos.forEach(loadVideo);
-}
-
 /* FAQ */
-document.querySelectorAll('.faq-q').forEach((q, index)=>{
-  const answer = q.nextElementSibling;
-  if(answer && !answer.id) answer.id = `faq-answer-${index + 1}`;
-  q.setAttribute('role','button');
-  q.setAttribute('tabindex','0');
-  q.setAttribute('aria-expanded','false');
-  if(answer) q.setAttribute('aria-controls', answer.id);
-  const toggleFaq = () => {
+document.querySelectorAll('.faq-q').forEach(q=>{
+  q.addEventListener('click',()=>{
     const item=q.closest('.faq-item');
     const isOpen=item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i=>{
-      i.classList.remove('open');
-      i.querySelector('.faq-q')?.setAttribute('aria-expanded','false');
-    });
-    if(!isOpen){ item.classList.add('open'); q.setAttribute('aria-expanded','true'); }
-  };
-  q.addEventListener('click', toggleFaq);
-  q.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggleFaq(); } });
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+    if(!isOpen) item.classList.add('open');
+  });
 });
 
 
@@ -1416,12 +1350,12 @@ var _scrollY = 0;
 function openMobMenu(){
   _scrollY = window.scrollY;
   document.body.style.top = '-' + _scrollY + 'px';
-  if(mobMenu){ mobMenu.classList.add('open'); mobMenu.setAttribute('aria-hidden','false'); }
+  if(mobMenu) mobMenu.classList.add('open');
   if(burgerBtn) burgerBtn.setAttribute('aria-expanded','true');
   document.body.classList.add('mob-open');
 }
 function closeMobMenu(){
-  if(mobMenu){ mobMenu.classList.remove('open'); mobMenu.setAttribute('aria-hidden','true'); }
+  if(mobMenu) mobMenu.classList.remove('open');
   if(burgerBtn) burgerBtn.setAttribute('aria-expanded','false');
   document.body.classList.remove('mob-open');
   document.body.style.top = '';
@@ -1435,7 +1369,6 @@ if(mobMenu) mobMenu.addEventListener('click', e => { if(e.target === mobMenu) cl
 /* STICKY CTA */
 const stickyCta = document.getElementById('stickyCta');
 const heroEl = document.getElementById('hero');
-stickyCta?.querySelector('a')?.addEventListener('click', () => stickyCta.classList.add('hidden'));
 window.addEventListener('scroll',()=>{
   if(stickyCta && heroEl){
     const heroH = heroEl.offsetHeight;
