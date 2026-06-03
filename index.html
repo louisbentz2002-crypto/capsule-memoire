@@ -488,6 +488,9 @@
     }
 
     /* ── BOUTON PLAY/PAUSE UNIVERSEL ── */
+    .cm-play-btn.is-playing .icon-play { display:none; }
+    .cm-play-btn.is-playing .icon-pause { display:block !important; }
+
     .cm-play-btn {
       width:52px; height:52px; border-radius:50%; flex-shrink:0;
       border:1.5px solid rgba(196,164,107,.7);
@@ -1019,9 +1022,7 @@
           <div class="voice-title">La voix telle qu'elle était</div>
           <p class="voice-desc">Un message vocal du quotidien,<br>quelques secondes suffisent.</p>
           <button class="cm-play-btn" onclick="voiceToggle('orig')" aria-label="Lire">
-            <svg width="18" height="18" viewBox="0 0 20 20" fill="#C4A46B">
-              <polygon id="vicon-orig" points="7,4 15,10 7,16"/>
-            </svg>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="#C4A46B"><polygon class="icon-play" points="7,4 15,10 7,16"/><g class="icon-pause" style="display:none"><rect x="5" y="4" width="3" height="12" rx="1"/><rect x="11" y="4" width="3" height="12" rx="1"/></g></svg>
           </button>
           <div class="voice-waveform" onclick="voiceSeek('orig',event)">
             <div class="voice-progress" id="vprog-orig"></div>
@@ -1034,9 +1035,7 @@
           <div class="voice-title">Les mots qu'il voulait dire</div>
           <p class="voice-desc">La même présence, portant<br>un message pour toujours.</p>
           <button class="cm-play-btn" onclick="voiceToggle('clone')" aria-label="Lire">
-            <svg width="18" height="18" viewBox="0 0 20 20" fill="#C4A46B">
-              <polygon id="vicon-clone" points="7,4 15,10 7,16"/>
-            </svg>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="#C4A46B"><polygon class="icon-play" points="7,4 15,10 7,16"/><g class="icon-pause" style="display:none"><rect x="5" y="4" width="3" height="12" rx="1"/><rect x="11" y="4" width="3" height="12" rx="1"/></g></svg>
           </button>
           <div class="voice-waveform" onclick="voiceSeek('clone',event)">
             <div class="voice-progress" id="vprog-clone"></div>
@@ -1065,7 +1064,7 @@
         <div class="portrait-video-wrap" style="position:relative;">
           <video class="portrait-vid" preload="none" playsinline style="width:100%;aspect-ratio:9/16;object-fit:cover;display:block;"></video>
           <div class="portrait-overlay" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:rgba(13,24,41,.55);cursor:pointer;">
-            <button class="cm-play-btn" aria-label="Lire"><svg width="18" height="18" viewBox="0 0 20 20" fill="#C4A46B"><polygon class="portrait-icon-poly" points="7,4 15,10 7,16"/></svg></button>
+            <button class="cm-play-btn" aria-label="Lire"><svg width="18" height="18" viewBox="0 0 20 20" fill="#C4A46B"><polygon class="icon-play" points="7,4 15,10 7,16"/><g class="icon-pause" style="display:none"><rect x="5" y="4" width="3" height="12" rx="1"/><rect x="11" y="4" width="3" height="12" rx="1"/></g></svg></button>
             <span class="portrait-hint" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:rgba(240,234,224,.7);">Appuyer pour écouter</span>
           </div>
         </div>
@@ -1078,7 +1077,7 @@
         <div class="portrait-video-wrap" style="position:relative;">
           <video class="portrait-vid" preload="none" playsinline style="width:100%;aspect-ratio:9/16;object-fit:cover;display:block;"></video>
           <div class="portrait-overlay" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:rgba(13,24,41,.55);cursor:pointer;">
-            <button class="cm-play-btn" aria-label="Lire"><svg width="18" height="18" viewBox="0 0 20 20" fill="#C4A46B"><polygon class="portrait-icon-poly" points="7,4 15,10 7,16"/></svg></button>
+            <button class="cm-play-btn" aria-label="Lire"><svg width="18" height="18" viewBox="0 0 20 20" fill="#C4A46B"><polygon class="icon-play" points="7,4 15,10 7,16"/><g class="icon-pause" style="display:none"><rect x="5" y="4" width="3" height="12" rx="1"/><rect x="11" y="4" width="3" height="12" rx="1"/></g></svg></button>
             <span class="portrait-hint" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:rgba(240,234,224,.7);">Appuyer pour écouter</span>
           </div>
         </div>
@@ -1635,90 +1634,6 @@ if(contactForm){
   }
   ['s1','s2','s3','s4','s5','s6','s7','s8'].forEach(initSlider);
 </script>
-  <script>
-  // ── VOICE PLAYERS ──
-  (function(){
-    var N=36;
-    ['orig','clone'].forEach(function(id){
-      var bars=document.getElementById('vbars-'+id);
-      if(!bars) return;
-      for(var i=0;i<N;i++){var b=document.createElement('div');b.className='vbar';b.style.height=(18+Math.random()*64)+'%';bars.appendChild(b);}
-      var a=document.getElementById('vaudio-'+id);
-      a.addEventListener('loadedmetadata',function(){document.getElementById('vdur-'+id).textContent=fmt(a.duration);});
-      a.addEventListener('timeupdate',function(){
-        var pct=a.duration?a.currentTime/a.duration*100:0;
-        document.getElementById('vprog-'+id).style.width=pct+'%';
-        document.getElementById('vcur-'+id).textContent=fmt(a.currentTime);
-        var bs=bars.children, idx=Math.floor(pct/100*N);
-        for(var i=0;i<bs.length;i++) bs[i].classList.toggle('played',i<idx);
-      });
-      a.addEventListener('ended',function(){
-        document.getElementById('vicon-'+id).setAttribute('points','7,4 15,10 7,16');
-        document.getElementById('vprog-'+id).style.width='0%';
-        document.getElementById('vcur-'+id).textContent='0:00';
-        var bs=bars.children; for(var b of bs) b.classList.remove('played');
-      });
-    });
-    function fmt(s){return Math.floor(s/60)+':'+(Math.floor(s%60)<10?'0':'')+Math.floor(s%60);}
-    window.voiceToggle=function(id){
-      var a=document.getElementById('vaudio-'+id);
-      var oth=id==='orig'?'clone':'orig';
-      var ao=document.getElementById('vaudio-'+oth);
-      var PLAY='7,4 15,10 7,16', PAUSE='5,4 8,4 8,16 5,16 M11,4 14,4 14,16 11,16';
-      if(!a.paused){
-        a.pause(); document.getElementById('vicon-'+id).setAttribute('points',PLAY);
-      } else {
-        ao.pause(); document.getElementById('vicon-'+oth).setAttribute('points',PLAY);
-        a.play(); document.getElementById('vicon-'+id).setAttribute('points',PAUSE);
-      }
-    };
-    window.voiceSeek=function(id,e){
-      var a=document.getElementById('vaudio-'+id);
-      if(a.duration) a.currentTime=(e.offsetX/e.currentTarget.offsetWidth)*a.duration;
-    };
-  })();
-
-  // ── PORTRAIT PLAYERS ──
-  (function(){
-    var srcs=['assets/videos/portrait-parle-1.mp4','assets/videos/portrait-parle-2.mp4'];
-    var wraps=document.querySelectorAll('.portrait-video-wrap');
-    var PLAY='7,4 15,10 7,16', PAUSE='5,4 8,4 8,16 5,16 M11,4 14,4 14,16 11,16';
-
-    function reset(w){
-      var v=w.querySelector('.portrait-vid');
-      if(!v.paused) v.pause();
-      w.classList.remove('playing','show-ctrl');
-      w.querySelector('.portrait-icon-poly').setAttribute('points',PLAY);
-      var h=w.querySelector('.portrait-hint'); if(h) h.style.opacity='1';
-    }
-
-    wraps.forEach(function(wrap,i){
-      var vid=wrap.querySelector('.portrait-vid');
-      var poly=wrap.querySelector('.portrait-icon-poly');
-      var hint=wrap.querySelector('.portrait-hint');
-      var loaded=false, timer;
-
-      wrap.querySelector('.portrait-overlay').addEventListener('click',function(){
-        if(!loaded){vid.src=srcs[i];vid.load();loaded=true;}
-        if(vid.paused){
-          wraps.forEach(function(w,j){if(j!==i)reset(w);});
-          vid.play(); wrap.classList.add('playing');
-          poly.setAttribute('points',PAUSE);
-          if(hint) hint.style.opacity='0';
-        } else { reset(wrap); }
-      });
-
-      vid.addEventListener('click',function(e){
-        e.stopPropagation();
-        if(!vid.paused){
-          wrap.classList.add('show-ctrl'); clearTimeout(timer);
-          timer=setTimeout(function(){wrap.classList.remove('show-ctrl');},2000);
-        }
-      });
-      vid.addEventListener('ended',function(){reset(wrap);vid.currentTime=0;});
-    });
-  })();
-  </script>
 </body>
 </html>
   <script>
@@ -1805,3 +1720,119 @@ if(contactForm){
     });
   })();
   </script>
+  <script>
+  // ── UTILITAIRE ICÔNE ──
+  function setPlaying(btn, playing) {
+    if (playing) {
+      btn.classList.add('is-playing');
+    } else {
+      btn.classList.remove('is-playing');
+    }
+  }
+
+  // ── VOICE PLAYERS ──
+  (function(){
+    var N = 36;
+    var audios = { orig: document.getElementById('vaudio-orig'), clone: document.getElementById('vaudio-clone') };
+    var btns   = { orig: document.querySelector('#vc-orig .cm-play-btn'), clone: document.querySelector('#vc-clone .cm-play-btn') };
+
+    ['orig','clone'].forEach(function(id){
+      var bars = document.getElementById('vbars-'+id);
+      if (!bars) return;
+      for (var i=0; i<N; i++) {
+        var b = document.createElement('div');
+        b.className = 'vbar';
+        b.style.height = (18 + Math.random()*64) + '%';
+        bars.appendChild(b);
+      }
+      var a = audios[id];
+      a.addEventListener('loadedmetadata', function(){ document.getElementById('vdur-'+id).textContent = fmt(a.duration); });
+      a.addEventListener('timeupdate', function(){
+        var pct = a.duration ? a.currentTime/a.duration*100 : 0;
+        document.getElementById('vprog-'+id).style.width = pct + '%';
+        document.getElementById('vcur-'+id).textContent = fmt(a.currentTime);
+        var bs = bars.children, idx = Math.floor(pct/100*N);
+        for (var i=0; i<bs.length; i++) bs[i].classList.toggle('played', i<idx);
+      });
+      a.addEventListener('ended', function(){
+        setPlaying(btns[id], false);
+        document.getElementById('vprog-'+id).style.width = '0%';
+        document.getElementById('vcur-'+id).textContent = '0:00';
+        var bs = bars.children;
+        for (var i=0; i<bs.length; i++) bs[i].classList.remove('played');
+      });
+    });
+
+    function fmt(s){ return Math.floor(s/60)+':'+(Math.floor(s%60)<10?'0':'')+Math.floor(s%60); }
+
+    window.voiceToggle = function(id){
+      var a = audios[id];
+      var oth = id==='orig' ? 'clone' : 'orig';
+      if (!a.paused) {
+        a.pause();
+        setPlaying(btns[id], false);
+      } else {
+        audios[oth].pause();
+        setPlaying(btns[oth], false);
+        a.play();
+        setPlaying(btns[id], true);
+      }
+    };
+
+    window.voiceSeek = function(id, e){
+      var a = audios[id];
+      if (a.duration) a.currentTime = (e.offsetX / e.currentTarget.offsetWidth) * a.duration;
+    };
+  })();
+
+  // ── PORTRAIT PLAYERS ──
+  (function(){
+    var srcs = ['assets/videos/portrait-parle-1.mp4','assets/videos/portrait-parle-2.mp4'];
+    var wraps = document.querySelectorAll('.portrait-video-wrap');
+
+    function reset(wrap){
+      var vid = wrap.querySelector('.portrait-vid');
+      var btn = wrap.querySelector('.cm-play-btn');
+      var hint = wrap.querySelector('.portrait-hint');
+      if (!vid.paused) vid.pause();
+      wrap.classList.remove('playing','show-ctrl');
+      setPlaying(btn, false);
+      if (hint) hint.style.opacity = '1';
+    }
+
+    wraps.forEach(function(wrap, i){
+      var vid  = wrap.querySelector('.portrait-vid');
+      var btn  = wrap.querySelector('.cm-play-btn');
+      var hint = wrap.querySelector('.portrait-hint');
+      var loaded = false, timer;
+
+      // Clic sur l'overlay (état arrêté) → play
+      wrap.querySelector('.portrait-overlay').addEventListener('click', function(){
+        if (!loaded) { vid.src = srcs[i]; vid.load(); loaded = true; }
+        if (vid.paused) {
+          wraps.forEach(function(w,j){ if(j!==i) reset(w); });
+          vid.play();
+          wrap.classList.add('playing');
+          setPlaying(btn, true);
+          if (hint) hint.style.opacity = '0';
+        } else {
+          reset(wrap);
+        }
+      });
+
+      // Clic sur la vidéo pendant lecture (mobile) → afficher overlay 2s
+      vid.addEventListener('click', function(e){
+        e.stopPropagation();
+        if (!vid.paused) {
+          wrap.classList.add('show-ctrl');
+          clearTimeout(timer);
+          timer = setTimeout(function(){ wrap.classList.remove('show-ctrl'); }, 2000);
+        }
+      });
+
+      vid.addEventListener('ended', function(){ reset(wrap); vid.currentTime = 0; });
+    });
+  })();
+  </script>
+</body>
+</html>
