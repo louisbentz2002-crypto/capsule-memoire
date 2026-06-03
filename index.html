@@ -376,10 +376,6 @@
 
     /* Photo mariage — cadrage sur les têtes */
     #s1 img { object-position: center 12%; }
-    @media (max-width: 768px) {
-      #s1 { aspect-ratio: unset !important; height: 260px !important; }
-      #s1 img { object-position: center 8% !important; }
-    }
 
     /* Curseur sur mobile — désactivé */
     @media (hover: none) and (pointer: coarse) {
@@ -451,26 +447,10 @@
     }
 
     /* Vidéo mariage : priorité aux visages, jamais aux corps coupés */
-    .video-card.wedding-video { overflow: hidden; }
-    .video-card.wedding-video video {
-      width: 100% !important;
-      height: auto !important;
-      aspect-ratio: 4 / 5 !important;
-      object-fit: contain !important;
-      object-position: center top !important;
-      transform: scale(1.075) !important;
-      transform-origin: center top !important;
-      background: var(--navy) !important;
-    }
+    
 
     @media (max-width: 640px) {
-      .video-card.wedding-video video {
-        aspect-ratio: 4 / 5 !important;
-        object-fit: contain !important;
-        object-position: center top !important;
-        transform: scale(1.075) !important;
-        transform-origin: center top !important;
-      }
+      
     }
 
 
@@ -488,12 +468,24 @@
     }
 
     /* CORRECTION FINALE VIDÉO MARIAGE — priorité aux visages */
-    .video-card.wedding-video { overflow: hidden; }
-    .video-card.wedding-video video { object-fit: contain !important; object-position: center top !important; transform: scale(1.075) !important; transform-origin: center top !important; background: var(--navy); aspect-ratio: 4 / 5; height: auto; }
-    @media(max-width:640px){
-      .video-card.wedding-video video { aspect-ratio: 4 / 5 !important; object-fit: contain !important; object-position: center top !important; transform: scale(1.075) !important; transform-origin: center top !important; }
-    }
+    
+    
 
+
+    /* Vidéo mariage — cadrage têtes, hauteur fixe mobile */
+    .video-card.wedding-video video {
+      object-fit: cover;
+      object-position: center 15%;
+    }
+    @media (max-width: 768px) {
+      .video-card.wedding-video { overflow: hidden; }
+      .video-card.wedding-video video {
+        aspect-ratio: 3/4;
+        object-fit: cover;
+        object-position: center 15%;
+        max-height: 320px;
+      }
+    }
 </style>
 </head>
 <body>
