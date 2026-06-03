@@ -1061,38 +1061,38 @@
       <div style="background:rgba(255,255,255,.03);border:1px solid rgba(196,164,107,.15);border-radius:4px;overflow:hidden;">
         <div style="position:relative;">
           <video id="pvid-0" preload="none" playsinline style="width:100%;aspect-ratio:9/16;object-fit:cover;display:block;"></video>
-          <div id="pthumb-0" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(13,24,41,.4);pointer-events:none;">
-            <svg width="18" height="18" viewBox="0 0 20 20" fill="rgba(196,164,107,.6)"><polygon points="6,4 16,10 6,16"/></svg>
-            <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:rgba(240,234,224,.5);">Appuyer pour écouter</span>
+          <!-- Thumbnail hint — pointer-events:none pour ne pas bloquer le bouton -->
+          <div id="pthumb-0" style="position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:24px;pointer-events:none;">
+            <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:rgba(240,234,224,.5);">Appuyer sur play pour écouter</span>
           </div>
-        </div>
-        <div style="padding:14px 20px 18px;display:flex;align-items:center;gap:14px;border-top:1px solid rgba(196,164,107,.1);">
-          <button class="cm-play-btn" id="pbtn-0" onclick="portraitToggle(0)" aria-label="Lire" style="flex-shrink:0;">
+          <!-- Bouton play/pause centré sur la vidéo -->
+          <button class="cm-play-btn" id="pbtn-0" onclick="portraitToggle(0)" aria-label="Lire"
+            style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);flex-shrink:0;">
             <svg width="18" height="18" viewBox="0 0 20 20" fill="#C4A46B"><polygon class="icon-play" points="7,4 15,10 7,16"/><g class="icon-pause" style="display:none"><rect x="5" y="4" width="3" height="12" rx="1"/><rect x="11" y="4" width="3" height="12" rx="1"/></g></svg>
           </button>
-          <div>
-            <h3 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;color:var(--blanc);margin-bottom:3px;">Portrait animé — voix préservée</h3>
-            <p style="font-size:12px;color:rgba(240,234,224,.4);line-height:1.5;">Une photo ancienne, une voix reconstituée.</p>
-          </div>
+        </div>
+        <div style="padding:14px 20px 18px;border-top:1px solid rgba(196,164,107,.1);">
+          <h3 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;color:var(--blanc);margin-bottom:3px;">Portrait animé — voix préservée</h3>
+          <p style="font-size:12px;color:rgba(240,234,224,.4);line-height:1.5;">Une photo ancienne, une voix reconstituée.</p>
         </div>
       </div>
 
       <div style="background:rgba(255,255,255,.03);border:1px solid rgba(196,164,107,.15);border-radius:4px;overflow:hidden;">
         <div style="position:relative;">
           <video id="pvid-1" preload="none" playsinline style="width:100%;aspect-ratio:9/16;object-fit:cover;display:block;"></video>
-          <div id="pthumb-1" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(13,24,41,.4);pointer-events:none;">
-            <svg width="18" height="18" viewBox="0 0 20 20" fill="rgba(196,164,107,.6)"><polygon points="6,4 16,10 6,16"/></svg>
-            <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:rgba(240,234,224,.5);">Appuyer pour écouter</span>
+          <!-- Thumbnail hint — pointer-events:none pour ne pas bloquer le bouton -->
+          <div id="pthumb-1" style="position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:24px;pointer-events:none;">
+            <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:rgba(240,234,224,.5);">Appuyer sur play pour écouter</span>
           </div>
-        </div>
-        <div style="padding:14px 20px 18px;display:flex;align-items:center;gap:14px;border-top:1px solid rgba(196,164,107,.1);">
-          <button class="cm-play-btn" id="pbtn-1" onclick="portraitToggle(1)" aria-label="Lire" style="flex-shrink:0;">
+          <!-- Bouton play/pause centré sur la vidéo -->
+          <button class="cm-play-btn" id="pbtn-1" onclick="portraitToggle(1)" aria-label="Lire"
+            style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);flex-shrink:0;">
             <svg width="18" height="18" viewBox="0 0 20 20" fill="#C4A46B"><polygon class="icon-play" points="7,4 15,10 7,16"/><g class="icon-pause" style="display:none"><rect x="5" y="4" width="3" height="12" rx="1"/><rect x="11" y="4" width="3" height="12" rx="1"/></g></svg>
           </button>
-          <div>
-            <h3 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;color:var(--blanc);margin-bottom:3px;">Portrait animé — message personnel</h3>
-            <p style="font-size:12px;color:rgba(240,234,224,.4);line-height:1.5;">La même présence, portant un message intime.</p>
-          </div>
+        </div>
+        <div style="padding:14px 20px 18px;border-top:1px solid rgba(196,164,107,.1);">
+          <h3 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;color:var(--blanc);margin-bottom:3px;">Portrait animé — message personnel</h3>
+          <p style="font-size:12px;color:rgba(240,234,224,.4);line-height:1.5;">La même présence, portant un message intime.</p>
         </div>
       </div>
 
