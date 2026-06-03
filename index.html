@@ -377,6 +377,12 @@
     /* Photo mariage — cadrage sur les têtes */
     #s1 img { object-position: center 12%; }
 
+    /* Slider mariage mobile — rogné pour voir le titre dessous */
+    @media (max-width: 768px) {
+      #s1 { aspect-ratio: 4/5; }
+      #s1 img { object-position: center 10%; }
+    }
+
     /* Curseur sur mobile — désactivé */
     @media (hover: none) and (pointer: coarse) {
       .slider-wrap { cursor: default; }
