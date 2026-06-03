@@ -62,16 +62,16 @@
     .ld-txt { font-size:9px; letter-spacing:.32em; text-transform:uppercase; color:rgba(240,234,224,.3); }
 
     /* NAV */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 900; height: 76px; padding: 0 60px; display: flex; align-items: center; justify-content: space-between; gap: 32px; transition: background .4s, box-shadow .4s; }
-    nav.on { background: rgba(10,18,34,.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 1px 0 rgba(196,164,107,.12); }
+    #nav { position: fixed; top: 0; left: 0; right: 0; z-index: 900; height: 76px; padding: 0 clamp(22px, 3vw, 60px); display: flex; align-items: center; justify-content: space-between; gap: clamp(14px, 2vw, 32px); transition: background .4s, box-shadow .4s; max-width: 100vw; overflow: visible; }
+    #nav.on { background: rgba(10,18,34,.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 1px 0 rgba(196,164,107,.12); }
     .n-logo { display: flex; align-items: center; gap: 13px; flex-shrink: 0; }
     .n-logo-txt { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 15px; letter-spacing: .22em; text-transform: uppercase; color: var(--blanc); white-space: nowrap; }
     .n-logo-txt b { color: var(--or); font-weight: 500; letter-spacing: .28em; }
-    .n-links { display: flex; align-items: center; gap: 36px; flex: 1; justify-content: center; }
-    .n-links a { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: rgba(240,234,224,.45); transition: color .2s; white-space: nowrap; }
+    .n-links { display: flex; align-items: center; gap: clamp(16px, 2vw, 32px); flex: 1 1 auto; justify-content: center; min-width: 0; }
+    .n-links a { font-size: clamp(8px, .58vw, 10px); letter-spacing: clamp(.12em, .85vw, .2em); text-transform: uppercase; color: rgba(240,234,224,.45); transition: color .2s; white-space: nowrap; }
     .n-links a:hover { color: var(--or); }
     .n-cta { flex-shrink: 0; }
-    .btn-or { display: inline-block; background: var(--or); color: var(--navy); font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; padding: 12px 26px; border-radius: 2px; border: none; cursor: pointer; transition: background .2s, transform .15s; white-space: nowrap; }
+    .btn-or { display: inline-block; background: var(--or); color: var(--navy); font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; padding: 12px 22px; border-radius: 2px; border: none; cursor: pointer; transition: background .2s, transform .15s; white-space: nowrap; }
     .btn-or:hover { background: var(--or-l); }
     .btn-ghost { display: inline-block; border: 1px solid rgba(196,164,107,.45); color: rgba(240,234,224,.65); font-family: 'DM Sans', sans-serif; font-weight: 300; font-size: 10px; letter-spacing: .2em; text-transform: uppercase; padding: 12px 28px; border-radius: 2px; cursor: pointer; transition: border-color .2s, color .2s; white-space: nowrap; }
     .btn-ghost:hover { border-color: var(--or); color: var(--or); }
@@ -257,12 +257,33 @@
     .video-card-ttl { font-family:'Cormorant Garamond',serif; font-weight:500; font-size:19px; color:var(--blanc); margin-bottom:8px; }
     .video-card-desc { font-size:13px; color:rgba(240,234,224,.5); line-height:1.7; }
 
+
+
+    /* NAV DESKTOP INTERMÉDIAIRE — évite que le CTA soit coupé */
+    @media(max-width:1380px){
+      #nav { padding-left: 28px; padding-right: 28px; gap: 14px; }
+      #nav .n-logo { gap: 10px; }
+      #nav .n-logo-txt { font-size: 14px; letter-spacing: .18em; }
+      #nav .n-logo-txt b { letter-spacing: .23em; }
+      #nav .n-links { gap: 20px; }
+      #nav .n-links a { font-size: 8.5px; letter-spacing: .12em; }
+      #nav .n-cta .btn-or { padding: 12px 16px; font-size: 9px; letter-spacing: .14em; }
+    }
+
+    @media(max-width:1180px){
+      #nav { padding: 0 20px; height: 64px; }
+      #nav .n-links,
+      #nav .n-cta { display: none !important; }
+      #nav .n-burger { display: flex !important; }
+      .sticky-cta { display: block; }
+    }
+
     /* RESPONSIVE */
     @media(max-width:960px){
-      nav { padding:0 20px; height:64px; }
-      .n-links { display:none; }
-      .n-cta { display:none; }
-      .n-burger { display:flex; }
+      #nav { padding:0 20px; height:64px; }
+      #nav .n-links { display:none; }
+      #nav .n-cta { display:none; }
+      #nav .n-burger { display:flex; }
       .sticky-cta { display:block; }
       #hero { padding:100px 20px 80px; }
       .h-title { font-size:clamp(42px,11vw,70px) !important; }
@@ -333,6 +354,109 @@
     @media (hover: none) and (pointer: coarse) {
       .slider-wrap { cursor: default; }
     }
+
+    /* === CORRECTIFS CRITIQUES MOBILE — menu + vidéo mariage === */
+    @media (max-width: 960px) {
+      /* Le menu mobile ne doit jamais hériter du style de la navbar desktop */
+      .mob-menu {
+        position: fixed !important;
+        inset: 0 !important;
+        width: 100vw !important;
+        height: 100dvh !important;
+        z-index: 9999 !important;
+        background: var(--navy) !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+      }
+
+      .mob-menu-header {
+        position: static !important;
+        width: 100% !important;
+        height: 72px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-shrink: 0 !important;
+      }
+
+      .mob-menu-links {
+        position: static !important;
+        inset: auto !important;
+        width: 100% !important;
+        height: auto !important;
+        padding: 20px 24px 24px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        justify-content: flex-start !important;
+        gap: 0 !important;
+        overflow: visible !important;
+      }
+
+      .mob-menu-links a {
+        display: block !important;
+        width: 100% !important;
+        max-width: none !important;
+        padding: 18px 0 !important;
+        text-align: left !important;
+        white-space: normal !important;
+        line-height: 1.15 !important;
+        overflow-wrap: break-word !important;
+        font-size: clamp(25px, 8vw, 34px) !important;
+      }
+
+      .mob-menu-cta {
+        width: 100% !important;
+        padding: 0 24px 40px !important;
+      }
+
+      .mob-menu-cta a {
+        width: 100% !important;
+      }
+
+      body.mob-open .sticky-cta {
+        display: none !important;
+      }
+    }
+
+    /* Vidéo mariage : priorité aux visages, jamais aux corps coupés */
+    .video-card.wedding-video video {
+      width: 100% !important;
+      height: auto !important;
+      aspect-ratio: 4 / 5 !important;
+      object-fit: contain !important;
+      object-position: center top !important;
+      background: var(--navy) !important;
+    }
+
+    @media (max-width: 640px) {
+      .video-card.wedding-video video {
+        aspect-ratio: 4 / 5 !important;
+        object-fit: contain !important;
+        object-position: center top !important;
+      }
+    }
+
+
+
+    /* CORRECTION FINALE NAV + MENU MOBILE */
+    html, body { max-width: 100%; overflow-x: hidden; }
+    .mob-menu { display: flex; flex-direction: column; }
+    body.mob-open .sticky-cta { display: none !important; }
+    @media(max-width:1180px){
+      #nav .n-links, #nav .n-cta { display: none !important; }
+      #nav .n-burger { display: flex !important; }
+      .mob-menu { width: 100vw; height: 100dvh; max-width: 100vw; overflow-x: hidden; }
+      .mob-menu-links { display: flex; flex-direction: column; align-items: stretch; width: 100%; padding: 18px 24px 24px; }
+      .mob-menu-links a { width: 100%; max-width: none; text-align: left; white-space: normal; overflow-wrap: anywhere; }
+    }
+
+    /* CORRECTION FINALE VIDÉO MARIAGE — priorité aux visages */
+    .video-card.wedding-video video { object-fit: contain !important; object-position: center top !important; background: var(--navy); aspect-ratio: 4 / 5; height: auto; }
+    @media(max-width:640px){
+      .video-card.wedding-video video { aspect-ratio: 4 / 5 !important; object-fit: contain !important; object-position: center top !important; }
+    }
+
 </style>
 </head>
 <body>
@@ -369,14 +493,14 @@
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><line x1="3" y1="3" x2="17" y2="17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="17" y1="3" x2="3" y2="17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
     </button>
   </div>
-  <nav class="mob-menu-links">
+  <div class="mob-menu-links">
     <a href="#prestations" onclick="closeMobMenu()">Prestations</a>
     <a href="#videos" onclick="closeMobMenu()">Vidéos</a>
     <a href="#tarifs" onclick="closeMobMenu()">Tarifs</a>
     <a href="#faq" onclick="closeMobMenu()">FAQ</a>
     <a href="#contact" onclick="closeMobMenu()">Contact</a>
     <a href="guide-souvenirs.html" onclick="closeMobMenu()" style="color:var(--or);">Guide gratuit</a>
-  </nav>
+  </div>
   <div class="mob-menu-cta">
     <a href="#tarifs" onclick="closeMobMenu()">Créer ma capsule</a>
   </div>
@@ -750,7 +874,7 @@
       <p class="rv d2" style="font-size:15px;color:rgba(240,234,224,.5);margin-top:16px;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.7;">Quelques secondes suffisent parfois à retrouver une présence, un geste, un regard. Découvrez des exemples de portraits animés et de souvenirs vidéo créés dans une approche douce, sobre et respectueuse.</p>
     </div>
     <div class="videos-grid">
-      <div class="video-card rv">
+      <div class="video-card wedding-video rv">
         <video autoplay muted loop playsinline preload="metadata"><source src="assets/videos/mariage-anime.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video>
         <div class="video-card-body">
           <h3 class="video-card-ttl">Mariage animé</h3>
@@ -1133,9 +1257,6 @@
         <a href="guide-souvenirs.html" style="display:inline-flex;align-items:center;gap:10px;background:var(--navy-mid);color:var(--or);font-family:'DM Sans',sans-serif;font-weight:500;font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:16px 32px;border-radius:2px;text-decoration:none;transition:background .2s;" onmouseover="this.style.background='#0D1829'" onmouseout="this.style.background='#1A2B4A'">
           Recevoir le guide
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="guide-10-questions.html" style="display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(196,164,107,.4);color:var(--or);font-family:'DM Sans',sans-serif;font-weight:300;font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:16px 24px;border-radius:2px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='#C4A46B'" onmouseout="this.style.borderColor='rgba(196,164,107,.4)'">
-          Voir le PDF
         </a>
       </div>
     </div>
