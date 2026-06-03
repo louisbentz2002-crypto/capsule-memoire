@@ -547,9 +547,9 @@
 
     /* ── PORTRAIT overlay ── */
     .portrait-video-wrap .portrait-overlay { transition:opacity .25s ease; }
-    .portrait-video-wrap.playing .portrait-overlay { opacity:0; pointer-events:none; }
-    .portrait-video-wrap.playing:hover .portrait-overlay,
-    .portrait-video-wrap.playing.show-ctrl .portrait-overlay { opacity:1; pointer-events:auto; }
+    /* Overlay toujours cliquable — juste invisible pendant lecture */
+    .portrait-video-wrap.playing .portrait-overlay { opacity:0; pointer-events:auto; }
+    .portrait-video-wrap.playing:hover .portrait-overlay { opacity:1; }
 
 </style>
 </head>
