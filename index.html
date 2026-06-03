@@ -222,17 +222,17 @@
 
     /* ── MOBILE MENU ── */
     .n-burger { display:none; background:none; border:none; cursor:pointer; color:var(--blanc); padding:8px; -webkit-tap-highlight-color:transparent; }
-    .mob-menu { position:fixed; top:0; left:0; width:100%; height:100vh; height:100dvh; z-index:950; background:var(--navy); display:flex; flex-direction:column; padding:0 32px 32px; transform:translateX(100%); transition:transform .35s cubic-bezier(.16,1,.3,1), visibility 0s linear .35s; overflow-y:auto; overflow-x:hidden; visibility:hidden; -webkit-overflow-scrolling:touch; }
-    .mob-menu.open { transform:translateX(0); visibility:visible; transition:transform .35s cubic-bezier(.16,1,.3,1), visibility 0s linear 0s; }
-    body.mob-open { overflow:hidden; }
-    .mob-menu-header { height:68px; min-height:68px; flex-shrink:0; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid rgba(196,164,107,.1); }
-    .mob-menu-close { width:44px; height:44px; display:flex; align-items:center; justify-content:center; background:none; border:none; cursor:pointer; color:rgba(240,234,224,.6); -webkit-tap-highlight-color:transparent; }
-    .mob-menu-links { display:flex; flex-direction:column; gap:0; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:4px 0 12px; flex-grow:1; flex-shrink:1; flex-basis:0; min-height:0; overflow-y:auto; }
-    .mob-menu-links a { display:block; padding:14px 0; border-bottom:1px solid rgba(196,164,107,.08); font-family:'Cormorant Garamond',serif; font-weight:300; font-size:26px; letter-spacing:.04em; color:rgba(240,234,224,.75); transition:color .2s; }
-    .mob-menu-links a:hover, .mob-menu-links a:active { color:var(--or); }
-    .mob-menu-cta { margin-top:12px; padding-bottom:env(safe-area-inset-bottom,8px); flex-shrink:0; }
-    .mob-menu-cta a { display:block; background:var(--or); color:var(--navy); font-family:'DM Sans',sans-serif; font-weight:500; font-size:11px; letter-spacing:.2em; text-transform:uppercase; padding:18px 0; border-radius:2px; text-align:center; }
-    .mob-menu-tag { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:rgba(196,164,107,.35); text-align:center; margin-top:16px; }
+    .mob-menu { position:fixed; top:0; left:0; right:0; bottom:0; z-index:1000; background:var(--navy); overflow-y:auto; -webkit-overflow-scrolling:touch; opacity:0; pointer-events:none; transition:opacity .25s ease; }
+    .mob-menu.open { opacity:1; pointer-events:auto; }
+    body.mob-open { overflow:hidden; position:fixed; width:100%; }
+    .mob-menu-header { height:68px; display:flex; align-items:center; justify-content:space-between; padding:0 24px; border-bottom:1px solid rgba(196,164,107,.15); }
+    .mob-menu-close { width:44px; height:44px; display:flex; align-items:center; justify-content:center; background:none; border:none; color:rgba(240,234,224,.7); -webkit-tap-highlight-color:transparent; }
+    .mob-menu-links { padding:16px 24px 24px; }
+    .mob-menu-links a { display:block; padding:18px 0; border-bottom:1px solid rgba(196,164,107,.1); font-family:'Cormorant Garamond',serif; font-weight:300; font-size:28px; letter-spacing:.03em; color:rgba(240,234,224,.8); }
+    .mob-menu-links a:active { color:var(--or); }
+    .mob-menu-cta { padding:0 24px 40px; }
+    .mob-menu-cta a { display:block; background:var(--or); color:var(--navy); font-family:'DM Sans',sans-serif; font-weight:500; font-size:11px; letter-spacing:.2em; text-transform:uppercase; padding:20px 0; border-radius:2px; text-align:center; }
+    .mob-menu-tag { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:rgba(196,164,107,.35); text-align:center; padding:0 24px 16px; }
     /* ── STICKY CTA (mobile) ── */
     .sticky-cta { display:none; position:fixed; bottom:0; left:0; right:0; z-index:800; background:rgba(10,18,34,.97); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-top:1px solid rgba(196,164,107,.15); padding:12px 20px; padding-bottom:calc(12px + env(safe-area-inset-bottom,0px)); }
     .sticky-cta a { display:block; background:var(--or); color:var(--navy); font-family:'DM Sans',sans-serif; font-weight:500; font-size:11px; letter-spacing:.2em; text-transform:uppercase; padding:16px 0; border-radius:2px; text-align:center; }
@@ -1229,7 +1229,10 @@ document.querySelectorAll('.faq-q').forEach(q=>{
 const mobMenu = document.getElementById('mobMenu');
 const burgerBtn = document.getElementById('burgerBtn');
 const mobClose = document.getElementById('mobClose');
+var _scrollY = 0;
 function openMobMenu(){
+  _scrollY = window.scrollY;
+  document.body.style.top = '-' + _scrollY + 'px';
   if(mobMenu) mobMenu.classList.add('open');
   if(burgerBtn) burgerBtn.setAttribute('aria-expanded','true');
   document.body.classList.add('mob-open');
@@ -1238,6 +1241,8 @@ function closeMobMenu(){
   if(mobMenu) mobMenu.classList.remove('open');
   if(burgerBtn) burgerBtn.setAttribute('aria-expanded','false');
   document.body.classList.remove('mob-open');
+  document.body.style.top = '';
+  window.scrollTo(0, _scrollY);
 }
 if(burgerBtn) burgerBtn.addEventListener('click', openMobMenu);
 if(mobClose) mobClose.addEventListener('click', closeMobMenu);
