@@ -1054,36 +1054,48 @@
     <div class="hdr" style="text-align:center;">
       <div class="sec-lbl rv" style="color:var(--or);">Portrait animé</div>
       <h2 class="sec-ttl rv" style="color:var(--blanc);">Le visage qui se souvient,<br><em style="color:var(--or);font-style:italic;">la voix qui revient.</em></h2>
-      <p class="sec-sub rv" style="max-width:500px;margin:0 auto 16px;">Découvrez ce que donne un portrait animé avec la voix reconstituée de votre proche.</p>
-      <p class="rv" style="font-size:13px;color:rgba(196,164,107,.7);margin-top:8px;"><svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor" style="vertical-align:-2px;margin-right:5px;"><polygon points="6,4 16,10 6,16"/></svg>Appuyez sur play pour voir et entendre</p>
+      <p class="sec-sub rv" style="max-width:500px;margin:0 auto;">Découvrez ce que donne un portrait animé avec la voix reconstituée de votre proche.</p>
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,360px));gap:24px;margin-top:48px;justify-content:center;">
+
       <div style="background:rgba(255,255,255,.03);border:1px solid rgba(196,164,107,.15);border-radius:4px;overflow:hidden;">
-        <div class="portrait-video-wrap" style="position:relative;">
-          <video class="portrait-vid" preload="none" playsinline style="width:100%;aspect-ratio:9/16;object-fit:cover;display:block;"></video>
-          <div class="portrait-overlay" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:rgba(13,24,41,.55);cursor:pointer;">
-            <button class="cm-play-btn" aria-label="Lire"><svg width="18" height="18" viewBox="0 0 20 20" fill="#C4A46B"><polygon class="icon-play" points="7,4 15,10 7,16"/><g class="icon-pause" style="display:none"><rect x="5" y="4" width="3" height="12" rx="1"/><rect x="11" y="4" width="3" height="12" rx="1"/></g></svg></button>
-            <span class="portrait-hint" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:rgba(240,234,224,.7);">Appuyer pour écouter</span>
+        <div style="position:relative;">
+          <video id="pvid-0" preload="none" playsinline style="width:100%;aspect-ratio:9/16;object-fit:cover;display:block;"></video>
+          <div id="pthumb-0" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(13,24,41,.4);pointer-events:none;">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="rgba(196,164,107,.6)"><polygon points="6,4 16,10 6,16"/></svg>
+            <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:rgba(240,234,224,.5);">Appuyer pour écouter</span>
           </div>
         </div>
-        <div style="padding:18px 22px 22px;">
-          <h3 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:18px;color:var(--blanc);margin-bottom:6px;">Portrait animé — voix préservée</h3>
-          <p style="font-size:13px;color:rgba(240,234,224,.45);line-height:1.7;">Une photo ancienne, une voix reconstituée. Le portrait prononce les mots qu'il n'a jamais pu dire.</p>
-        </div>
-      </div>
-      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(196,164,107,.15);border-radius:4px;overflow:hidden;">
-        <div class="portrait-video-wrap" style="position:relative;">
-          <video class="portrait-vid" preload="none" playsinline style="width:100%;aspect-ratio:9/16;object-fit:cover;display:block;"></video>
-          <div class="portrait-overlay" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:rgba(13,24,41,.55);cursor:pointer;">
-            <button class="cm-play-btn" aria-label="Lire"><svg width="18" height="18" viewBox="0 0 20 20" fill="#C4A46B"><polygon class="icon-play" points="7,4 15,10 7,16"/><g class="icon-pause" style="display:none"><rect x="5" y="4" width="3" height="12" rx="1"/><rect x="11" y="4" width="3" height="12" rx="1"/></g></svg></button>
-            <span class="portrait-hint" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:rgba(240,234,224,.7);">Appuyer pour écouter</span>
+        <div style="padding:14px 20px 18px;display:flex;align-items:center;gap:14px;border-top:1px solid rgba(196,164,107,.1);">
+          <button class="cm-play-btn" id="pbtn-0" onclick="portraitToggle(0)" aria-label="Lire" style="flex-shrink:0;">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="#C4A46B"><polygon class="icon-play" points="7,4 15,10 7,16"/><g class="icon-pause" style="display:none"><rect x="5" y="4" width="3" height="12" rx="1"/><rect x="11" y="4" width="3" height="12" rx="1"/></g></svg>
+          </button>
+          <div>
+            <h3 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;color:var(--blanc);margin-bottom:3px;">Portrait animé — voix préservée</h3>
+            <p style="font-size:12px;color:rgba(240,234,224,.4);line-height:1.5;">Une photo ancienne, une voix reconstituée.</p>
           </div>
         </div>
-        <div style="padding:18px 22px 22px;">
-          <h3 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:18px;color:var(--blanc);margin-bottom:6px;">Portrait animé — message personnel</h3>
-          <p style="font-size:13px;color:rgba(240,234,224,.45);line-height:1.7;">La même présence, portant un message intime — celui qu'on aurait tant voulu entendre.</p>
+      </div>
+
+      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(196,164,107,.15);border-radius:4px;overflow:hidden;">
+        <div style="position:relative;">
+          <video id="pvid-1" preload="none" playsinline style="width:100%;aspect-ratio:9/16;object-fit:cover;display:block;"></video>
+          <div id="pthumb-1" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(13,24,41,.4);pointer-events:none;">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="rgba(196,164,107,.6)"><polygon points="6,4 16,10 6,16"/></svg>
+            <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:rgba(240,234,224,.5);">Appuyer pour écouter</span>
+          </div>
+        </div>
+        <div style="padding:14px 20px 18px;display:flex;align-items:center;gap:14px;border-top:1px solid rgba(196,164,107,.1);">
+          <button class="cm-play-btn" id="pbtn-1" onclick="portraitToggle(1)" aria-label="Lire" style="flex-shrink:0;">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="#C4A46B"><polygon class="icon-play" points="7,4 15,10 7,16"/><g class="icon-pause" style="display:none"><rect x="5" y="4" width="3" height="12" rx="1"/><rect x="11" y="4" width="3" height="12" rx="1"/></g></svg>
+          </button>
+          <div>
+            <h3 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;color:var(--blanc);margin-bottom:3px;">Portrait animé — message personnel</h3>
+            <p style="font-size:12px;color:rgba(240,234,224,.4);line-height:1.5;">La même présence, portant un message intime.</p>
+          </div>
         </div>
       </div>
+
     </div>
     <p style="text-align:center;margin-top:36px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:rgba(196,164,107,.4);">"Certaines voix méritent de ne jamais s'éteindre."</p>
   </div>
@@ -1678,45 +1690,36 @@ if(contactForm){
   })();
 
   // ── PORTRAIT PLAYERS ──
-  (function(){
-    var srcs=['assets/videos/portrait-parle-1.mp4','assets/videos/portrait-parle-2.mp4'];
-    var wraps=document.querySelectorAll('.portrait-video-wrap');
-    var PLAY='7,4 15,10 7,16', PAUSE='5,4 8,4 8,16 5,16 M11,4 14,4 14,16 11,16';
+  var pSrcs = ['assets/videos/portrait-parle-1.mp4','assets/videos/portrait-parle-2.mp4'];
+  var pLoaded = [false, false];
 
-    function reset(w){
-      var v=w.querySelector('.portrait-vid');
-      if(!v.paused) v.pause();
-      w.classList.remove('playing','show-ctrl');
-      w.querySelector('.portrait-icon-poly').setAttribute('points',PLAY);
-      var h=w.querySelector('.portrait-hint'); if(h) h.style.opacity='1';
+  function portraitToggle(i) {
+    var vid   = document.getElementById('pvid-' + i);
+    var btn   = document.getElementById('pbtn-' + i);
+    var thumb = document.getElementById('pthumb-' + i);
+    var other = i === 0 ? 1 : 0;
+
+    if (!pLoaded[i]) { vid.src = pSrcs[i]; vid.load(); pLoaded[i] = true; }
+
+    if (vid.paused) {
+      // Pause l'autre
+      var ovid = document.getElementById('pvid-' + other);
+      var obtn = document.getElementById('pbtn-' + other);
+      var othumb = document.getElementById('pthumb-' + other);
+      if (!ovid.paused) { ovid.pause(); setPlaying(obtn, false); if(othumb) othumb.style.display='flex'; }
+      // Lance celui-ci
+      vid.play();
+      setPlaying(btn, true);
+      if (thumb) thumb.style.display = 'none';
+    } else {
+      vid.pause();
+      setPlaying(btn, false);
+      if (thumb) thumb.style.display = 'flex';
     }
+  }
 
-    wraps.forEach(function(wrap,i){
-      var vid=wrap.querySelector('.portrait-vid');
-      var poly=wrap.querySelector('.portrait-icon-poly');
-      var hint=wrap.querySelector('.portrait-hint');
-      var loaded=false, timer;
-
-      wrap.querySelector('.portrait-overlay').addEventListener('click',function(){
-        if(!loaded){vid.src=srcs[i];vid.load();loaded=true;}
-        if(vid.paused){
-          wraps.forEach(function(w,j){if(j!==i)reset(w);});
-          vid.play(); wrap.classList.add('playing');
-          poly.setAttribute('points',PAUSE);
-          if(hint) hint.style.opacity='0';
-        } else { reset(wrap); }
-      });
-
-      vid.addEventListener('click',function(e){
-        e.stopPropagation();
-        if(!vid.paused){
-          wrap.classList.add('show-ctrl'); clearTimeout(timer);
-          timer=setTimeout(function(){wrap.classList.remove('show-ctrl');},2000);
-        }
-      });
-      vid.addEventListener('ended',function(){reset(wrap);vid.currentTime=0;});
-    });
-  })();
+  document.getElementById('pvid-0').addEventListener('ended', function(){ setPlaying(document.getElementById('pbtn-0'),false); document.getElementById('pthumb-0').style.display='flex'; this.currentTime=0; });
+  document.getElementById('pvid-1').addEventListener('ended', function(){ setPlaying(document.getElementById('pbtn-1'),false); document.getElementById('pthumb-1').style.display='flex'; this.currentTime=0; });
   </script>
   <script>
   // ── UTILITAIRE ICÔNE ──
