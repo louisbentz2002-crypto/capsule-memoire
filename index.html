@@ -486,6 +486,68 @@
         max-height: 320px;
       }
     }
+
+    /* ── BOUTON PLAY/PAUSE UNIVERSEL ── */
+    .cm-play-btn {
+      width:52px; height:52px; border-radius:50%; flex-shrink:0;
+      border:1.5px solid rgba(196,164,107,.7);
+      background:rgba(13,24,41,.55);
+      backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer; transition:transform .2s, background .2s, border-color .2s;
+      -webkit-tap-highlight-color:transparent;
+    }
+    .cm-play-btn:hover { transform:scale(1.07); background:rgba(13,24,41,.75); border-color:rgba(196,164,107,1); }
+    .cm-play-btn svg { pointer-events:none; }
+
+    /* ── MODULE VOIX ── */
+    .voice-section { background:var(--navy); padding:80px 56px; }
+    @media(max-width:768px){ .voice-section { padding:60px 20px; } }
+    .voice-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:48px; }
+    @media(max-width:520px){ .voice-grid { grid-template-columns:1fr; } }
+    .voice-card {
+      border-radius:3px; padding:28px 22px 24px;
+      display:flex; flex-direction:column; align-items:center; gap:16px;
+      border:1px solid rgba(196,164,107,.12);
+      background:rgba(13,24,41,.5);
+    }
+    .voice-card.vc-after {
+      border-color:rgba(196,164,107,.3);
+      background:rgba(196,164,107,.04);
+    }
+    .voice-badge {
+      font-size:9px; letter-spacing:2px; text-transform:uppercase;
+      padding:3px 10px; border-radius:20px;
+      background:rgba(255,255,255,.06); color:var(--muted);
+    }
+    .vc-after .voice-badge { background:rgba(196,164,107,.15); color:var(--or); }
+    .voice-title {
+      font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:400;
+      text-align:center; color:rgba(240,234,224,.75);
+    }
+    .vc-after .voice-title { color:var(--or); }
+    .voice-desc { font-size:12px; color:rgba(122,139,170,.75); text-align:center; line-height:1.65; }
+    .voice-waveform { width:100%; height:32px; position:relative; cursor:pointer; }
+    .voice-progress {
+      position:absolute; left:0; top:0; bottom:0; width:0%;
+      background:linear-gradient(90deg,rgba(196,164,107,.25),rgba(196,164,107,.06));
+      border-radius:2px; pointer-events:none;
+    }
+    .voice-bars {
+      position:relative; z-index:1;
+      display:flex; align-items:center; height:100%; gap:2px;
+    }
+    .vbar { flex:1; min-width:2px; border-radius:1px; background:rgba(196,164,107,.18); }
+    .vc-after .vbar { background:rgba(196,164,107,.28); }
+    .vbar.played { background:var(--or) !important; }
+    .voice-time { display:flex; justify-content:space-between; width:100%; font-size:11px; color:var(--muted); font-variant-numeric:tabular-nums; }
+
+    /* ── PORTRAIT overlay ── */
+    .portrait-video-wrap .portrait-overlay { transition:opacity .25s ease; }
+    .portrait-video-wrap.playing .portrait-overlay { opacity:0; pointer-events:none; }
+    .portrait-video-wrap.playing:hover .portrait-overlay,
+    .portrait-video-wrap.playing.show-ctrl .portrait-overlay { opacity:1; pointer-events:auto; }
+
 </style>
 </head>
 <body>
@@ -943,55 +1005,54 @@
 </section>
 
 <!-- TÉMOIGNAGES -->
-
-  <!-- ── SECTION PORTRAIT PARLANT ── -->
-  <section id="portrait-parlant" style="background:var(--navy);padding:80px 56px;">
+  <!-- ── SECTION VOIX ── -->
+  <section id="voix" class="voice-section">
     <div class="inner">
       <div class="hdr" style="text-align:center;">
-        <div class="sec-lbl rv" style="color:var(--or);">Nouveau</div>
+        <div class="sec-lbl rv" style="color:var(--or);">Démo</div>
         <h2 class="sec-ttl rv" style="color:var(--blanc);">Entendre une dernière fois<br><em style="color:var(--or);font-style:italic;">les mots qu'il n'a pas eu le temps de dire.</em></h2>
-        <p class="sec-sub rv" style="max-width:520px;margin:0 auto 16px;">À partir d'une photo et d'un enregistrement vocal, nous reconstituons une présence — avec douceur, avec respect.</p>
-        <p class="rv" style="font-size:13px;color:rgba(196,164,107,.7);margin-top:8px;">
-          <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor" style="vertical-align:-2px;margin-right:5px;"><polygon points="6,4 16,10 6,16"/></svg>
-          Appuyez sur play pour voir et entendre
-        </p>
+        <p class="sec-sub rv" style="max-width:500px;margin:0 auto;">À partir d'un simple enregistrement, nous préservons une voix pour toujours.</p>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,360px));gap:24px;margin-top:48px;justify-content:center;">
-
-        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(196,164,107,.15);border-radius:4px;overflow:hidden;">
-          <div class="portrait-video-wrap" style="position:relative;">
-            <video class="portrait-vid" preload="none" playsinline style="width:100%;aspect-ratio:9/16;object-fit:cover;display:block;"></video>
-            <div class="portrait-overlay" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:rgba(13,24,41,.55);cursor:pointer;">
-              <div class="portrait-play-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="#C4A46B"><polygon class="portrait-icon-poly" points="7,4 17,10 7,16 7,4 17,12 7,20"/></svg></div>
-              <span class="portrait-hint" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:rgba(240,234,224,.7);">Appuyer pour écouter</span>
-            </div>
+      <div class="voice-grid">
+        <div class="voice-card" id="vc-orig">
+          <span class="voice-badge">Enregistrement d'origine</span>
+          <div class="voice-title">La voix telle qu'elle était</div>
+          <p class="voice-desc">Un message vocal du quotidien,<br>quelques secondes suffisent.</p>
+          <button class="cm-play-btn" onclick="voiceToggle('orig')" aria-label="Lire">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="#C4A46B">
+              <polygon id="vicon-orig" points="7,4 15,10 7,16"/>
+            </svg>
+          </button>
+          <div class="voice-waveform" onclick="voiceSeek('orig',event)">
+            <div class="voice-progress" id="vprog-orig"></div>
+            <div class="voice-bars" id="vbars-orig"></div>
           </div>
-          <div style="padding:18px 22px 22px;">
-            <h3 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:18px;color:var(--blanc);margin-bottom:6px;">Portrait animé — voix préservée</h3>
-            <p style="font-size:13px;color:rgba(240,234,224,.45);line-height:1.7;">Une photo ancienne, une voix reconstituée. Le portrait prononce les mots qu'il n'a jamais pu dire.</p>
-          </div>
+          <div class="voice-time"><span id="vcur-orig">0:00</span><span id="vdur-orig">—</span></div>
         </div>
-
-        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(196,164,107,.15);border-radius:4px;overflow:hidden;">
-          <div class="portrait-video-wrap" style="position:relative;">
-            <video class="portrait-vid" preload="none" playsinline style="width:100%;aspect-ratio:9/16;object-fit:cover;display:block;"></video>
-            <div class="portrait-overlay" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:rgba(13,24,41,.55);cursor:pointer;">
-              <div class="portrait-play-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="#C4A46B"><polygon class="portrait-icon-poly" points="7,4 17,10 7,16 7,4 17,12 7,20"/></svg></div>
-              <span class="portrait-hint" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:rgba(240,234,224,.7);">Appuyer pour écouter</span>
-            </div>
+        <div class="voice-card vc-after" id="vc-clone">
+          <span class="voice-badge">✦ Voix préservée</span>
+          <div class="voice-title">Les mots qu'il voulait dire</div>
+          <p class="voice-desc">La même présence, portant<br>un message pour toujours.</p>
+          <button class="cm-play-btn" onclick="voiceToggle('clone')" aria-label="Lire">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="#C4A46B">
+              <polygon id="vicon-clone" points="7,4 15,10 7,16"/>
+            </svg>
+          </button>
+          <div class="voice-waveform" onclick="voiceSeek('clone',event)">
+            <div class="voice-progress" id="vprog-clone"></div>
+            <div class="voice-bars" id="vbars-clone"></div>
           </div>
-          <div style="padding:18px 22px 22px;">
-            <h3 style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:18px;color:var(--blanc);margin-bottom:6px;">Portrait animé — message personnel</h3>
-            <p style="font-size:13px;color:rgba(240,234,224,.45);line-height:1.7;">La même présence, portant un message intime — celui qu'on aurait tant voulu entendre.</p>
-          </div>
+          <div class="voice-time"><span id="vcur-clone">0:00</span><span id="vdur-clone">—</span></div>
         </div>
-
       </div>
-      <p style="text-align:center;margin-top:36px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:rgba(196,164,107,.4);">"Certaines voix méritent de ne jamais s'éteindre."</p>
+      <p style="text-align:center;margin-top:32px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:rgba(196,164,107,.4);">"Un souvenir qui dure toute une vie."</p>
     </div>
   </section>
 
-  <section id="temoignages">
+  <audio id="vaudio-orig" src="assets/audio/voix-originale.mp3" preload="metadata"></audio>
+  <audio id="vaudio-clone" src="assets/audio/voix-clonee.mp3" preload="metadata"></audio>
+
+<section id="temoignages">
   <div class="inner">
     <div class="hdr">
       <div class="sec-lbl rv">Témoignages</div>
@@ -1533,27 +1594,54 @@ if(contactForm){
   }
   ['s1','s2','s3','s4','s5','s6','s7','s8'].forEach(initSlider);
 </script>
-  <style>
-  .portrait-video-wrap .portrait-overlay { transition: opacity .25s ease; }
-  .portrait-video-wrap.playing .portrait-overlay { opacity: 0; pointer-events: none; }
-  .portrait-video-wrap.playing:hover .portrait-overlay,
-  .portrait-video-wrap.playing.show-ctrl .portrait-overlay { opacity: 1; pointer-events: auto; }
-  .portrait-play-icon {
-    width: 56px; height: 56px; border-radius: 50%;
-    border: 1.5px solid rgba(196,164,107,.85);
-    background: rgba(13,24,41,.5);
-    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-    display: flex; align-items: center; justify-content: center;
-    transition: transform .2s;
-  }
-  .portrait-video-wrap:hover .portrait-play-icon { transform: scale(1.08); }
-  </style>
   <script>
+  // ── VOICE PLAYERS ──
   (function(){
-    var srcs = ['assets/videos/portrait-parle-1.mp4','assets/videos/portrait-parle-2.mp4'];
-    var wraps = document.querySelectorAll('.portrait-video-wrap');
-    var PLAY  = '7,4 17,10 7,16 7,4 17,12 7,20';
-    var PAUSE = '6,4 10,4 10,16 6,16 M14,4 18,4 18,16 14,16';
+    var N=36;
+    ['orig','clone'].forEach(function(id){
+      var bars=document.getElementById('vbars-'+id);
+      if(!bars) return;
+      for(var i=0;i<N;i++){var b=document.createElement('div');b.className='vbar';b.style.height=(18+Math.random()*64)+'%';bars.appendChild(b);}
+      var a=document.getElementById('vaudio-'+id);
+      a.addEventListener('loadedmetadata',function(){document.getElementById('vdur-'+id).textContent=fmt(a.duration);});
+      a.addEventListener('timeupdate',function(){
+        var pct=a.duration?a.currentTime/a.duration*100:0;
+        document.getElementById('vprog-'+id).style.width=pct+'%';
+        document.getElementById('vcur-'+id).textContent=fmt(a.currentTime);
+        var bs=bars.children, idx=Math.floor(pct/100*N);
+        for(var i=0;i<bs.length;i++) bs[i].classList.toggle('played',i<idx);
+      });
+      a.addEventListener('ended',function(){
+        document.getElementById('vicon-'+id).setAttribute('points','7,4 15,10 7,16');
+        document.getElementById('vprog-'+id).style.width='0%';
+        document.getElementById('vcur-'+id).textContent='0:00';
+        var bs=bars.children; for(var b of bs) b.classList.remove('played');
+      });
+    });
+    function fmt(s){return Math.floor(s/60)+':'+(Math.floor(s%60)<10?'0':'')+Math.floor(s%60);}
+    window.voiceToggle=function(id){
+      var a=document.getElementById('vaudio-'+id);
+      var oth=id==='orig'?'clone':'orig';
+      var ao=document.getElementById('vaudio-'+oth);
+      var PLAY='7,4 15,10 7,16', PAUSE='5,4 8,4 8,16 5,16 M11,4 14,4 14,16 11,16';
+      if(!a.paused){
+        a.pause(); document.getElementById('vicon-'+id).setAttribute('points',PLAY);
+      } else {
+        ao.pause(); document.getElementById('vicon-'+oth).setAttribute('points',PLAY);
+        a.play(); document.getElementById('vicon-'+id).setAttribute('points',PAUSE);
+      }
+    };
+    window.voiceSeek=function(id,e){
+      var a=document.getElementById('vaudio-'+id);
+      if(a.duration) a.currentTime=(e.offsetX/e.currentTarget.offsetWidth)*a.duration;
+    };
+  })();
+
+  // ── PORTRAIT PLAYERS ──
+  (function(){
+    var srcs=['assets/videos/portrait-parle-1.mp4','assets/videos/portrait-parle-2.mp4'];
+    var wraps=document.querySelectorAll('.portrait-video-wrap');
+    var PLAY='7,4 15,10 7,16', PAUSE='5,4 8,4 8,16 5,16 M11,4 14,4 14,16 11,16';
 
     function reset(w){
       var v=w.querySelector('.portrait-vid');
@@ -1567,14 +1655,13 @@ if(contactForm){
       var vid=wrap.querySelector('.portrait-vid');
       var poly=wrap.querySelector('.portrait-icon-poly');
       var hint=wrap.querySelector('.portrait-hint');
-      var loaded=false, hideTimer;
+      var loaded=false, timer;
 
       wrap.querySelector('.portrait-overlay').addEventListener('click',function(){
         if(!loaded){vid.src=srcs[i];vid.load();loaded=true;}
         if(vid.paused){
           wraps.forEach(function(w,j){if(j!==i)reset(w);});
-          vid.play();
-          wrap.classList.add('playing');
+          vid.play(); wrap.classList.add('playing');
           poly.setAttribute('points',PAUSE);
           if(hint) hint.style.opacity='0';
         } else { reset(wrap); }
@@ -1583,15 +1670,97 @@ if(contactForm){
       vid.addEventListener('click',function(e){
         e.stopPropagation();
         if(!vid.paused){
-          wrap.classList.add('show-ctrl');
-          clearTimeout(hideTimer);
-          hideTimer=setTimeout(function(){wrap.classList.remove('show-ctrl');},2000);
+          wrap.classList.add('show-ctrl'); clearTimeout(timer);
+          timer=setTimeout(function(){wrap.classList.remove('show-ctrl');},2000);
         }
       });
-
       vid.addEventListener('ended',function(){reset(wrap);vid.currentTime=0;});
     });
   })();
   </script>
 </body>
 </html>
+  <script>
+  // ── VOICE PLAYERS ──
+  (function(){
+    var N=36;
+    ['orig','clone'].forEach(function(id){
+      var bars=document.getElementById('vbars-'+id);
+      if(!bars) return;
+      for(var i=0;i<N;i++){var b=document.createElement('div');b.className='vbar';b.style.height=(18+Math.random()*64)+'%';bars.appendChild(b);}
+      var a=document.getElementById('vaudio-'+id);
+      a.addEventListener('loadedmetadata',function(){document.getElementById('vdur-'+id).textContent=fmt(a.duration);});
+      a.addEventListener('timeupdate',function(){
+        var pct=a.duration?a.currentTime/a.duration*100:0;
+        document.getElementById('vprog-'+id).style.width=pct+'%';
+        document.getElementById('vcur-'+id).textContent=fmt(a.currentTime);
+        var bs=bars.children, idx=Math.floor(pct/100*N);
+        for(var i=0;i<bs.length;i++) bs[i].classList.toggle('played',i<idx);
+      });
+      a.addEventListener('ended',function(){
+        document.getElementById('vicon-'+id).setAttribute('points','7,4 15,10 7,16');
+        document.getElementById('vprog-'+id).style.width='0%';
+        document.getElementById('vcur-'+id).textContent='0:00';
+        var bs=bars.children; for(var b of bs) b.classList.remove('played');
+      });
+    });
+    function fmt(s){return Math.floor(s/60)+':'+(Math.floor(s%60)<10?'0':'')+Math.floor(s%60);}
+    window.voiceToggle=function(id){
+      var a=document.getElementById('vaudio-'+id);
+      var oth=id==='orig'?'clone':'orig';
+      var ao=document.getElementById('vaudio-'+oth);
+      var PLAY='7,4 15,10 7,16', PAUSE='5,4 8,4 8,16 5,16 M11,4 14,4 14,16 11,16';
+      if(!a.paused){
+        a.pause(); document.getElementById('vicon-'+id).setAttribute('points',PLAY);
+      } else {
+        ao.pause(); document.getElementById('vicon-'+oth).setAttribute('points',PLAY);
+        a.play(); document.getElementById('vicon-'+id).setAttribute('points',PAUSE);
+      }
+    };
+    window.voiceSeek=function(id,e){
+      var a=document.getElementById('vaudio-'+id);
+      if(a.duration) a.currentTime=(e.offsetX/e.currentTarget.offsetWidth)*a.duration;
+    };
+  })();
+
+  // ── PORTRAIT PLAYERS ──
+  (function(){
+    var srcs=['assets/videos/portrait-parle-1.mp4','assets/videos/portrait-parle-2.mp4'];
+    var wraps=document.querySelectorAll('.portrait-video-wrap');
+    var PLAY='7,4 15,10 7,16', PAUSE='5,4 8,4 8,16 5,16 M11,4 14,4 14,16 11,16';
+
+    function reset(w){
+      var v=w.querySelector('.portrait-vid');
+      if(!v.paused) v.pause();
+      w.classList.remove('playing','show-ctrl');
+      w.querySelector('.portrait-icon-poly').setAttribute('points',PLAY);
+      var h=w.querySelector('.portrait-hint'); if(h) h.style.opacity='1';
+    }
+
+    wraps.forEach(function(wrap,i){
+      var vid=wrap.querySelector('.portrait-vid');
+      var poly=wrap.querySelector('.portrait-icon-poly');
+      var hint=wrap.querySelector('.portrait-hint');
+      var loaded=false, timer;
+
+      wrap.querySelector('.portrait-overlay').addEventListener('click',function(){
+        if(!loaded){vid.src=srcs[i];vid.load();loaded=true;}
+        if(vid.paused){
+          wraps.forEach(function(w,j){if(j!==i)reset(w);});
+          vid.play(); wrap.classList.add('playing');
+          poly.setAttribute('points',PAUSE);
+          if(hint) hint.style.opacity='0';
+        } else { reset(wrap); }
+      });
+
+      vid.addEventListener('click',function(e){
+        e.stopPropagation();
+        if(!vid.paused){
+          wrap.classList.add('show-ctrl'); clearTimeout(timer);
+          timer=setTimeout(function(){wrap.classList.remove('show-ctrl');},2000);
+        }
+      });
+      vid.addEventListener('ended',function(){reset(wrap);vid.currentTime=0;});
+    });
+  })();
+  </script>
