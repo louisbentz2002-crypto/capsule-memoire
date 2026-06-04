@@ -317,7 +317,7 @@
       .proc-track::before { display:none; }
       #limites { padding:64px 20px !important; }
       #limites > .inner > div[style*="grid"] { grid-template-columns:1fr !important; gap:14px !important; }
-      #demo { padding:64px 0; }
+      #demo { padding:64px 20px; }
       .demo-grid { grid-template-columns:1fr !important; }
       #videos { padding:64px 20px !important; }
       .videos-grid { grid-template-columns:repeat(2,1fr) !important; }
@@ -548,6 +548,17 @@
     /* ── PORTRAIT overlay ── */
     .portrait-video-wrap .portrait-overlay { transition:opacity .25s ease; }
     /* overlay supprimé — bouton sous vidéo */
+
+
+    /* OPTIONS MINI */
+    .option-mini-list { display:flex; flex-direction:column; gap:10px; margin-top:4px; }
+    .option-mini-item { background:rgba(196,164,107,.04); border:1px solid rgba(196,164,107,.18); border-radius:3px; padding:14px 16px; }
+    .option-mini-header { display:flex; align-items:baseline; gap:8px; margin-bottom:5px; flex-wrap:wrap; }
+    .option-price { font-family:'Cormorant Garamond',serif; font-size:17px; font-weight:600; color:var(--or); white-space:nowrap; }
+    .option-title { font-family:'Cormorant Garamond',serif; font-size:14px; font-weight:500; color:var(--navy-mid); }
+    .option-desc { font-size:12.5px; color:var(--texte); line-height:1.55; margin-bottom:4px; }
+    .option-note { font-size:11px; color:var(--muted); line-height:1.5; font-style:italic; }
+    .option-ethical { font-size:11px; color:var(--muted); line-height:1.55; font-style:italic; border-top:1px solid rgba(196,164,107,.12); padding-top:10px; margin-top:8px; }
 
 </style>
 </head>
@@ -855,9 +866,9 @@
 </section>
 
 <!-- RÉSULTATS -->
-<section id="demo" style="background:var(--blanc);padding:100px 0;">
-  <div class="inner">
-    <div class="hdr">
+<section id="demo" style="background:var(--blanc);padding:100px 56px;">
+  <div class="inner" style="display:block;max-width:1200px;margin:0 auto;">
+    <div class="hdr" style="text-align:center;">
       <div class="sec-lbl rv">Résultats réels</div>
       <h2 class="sec-ttl rv d1">Vos photos transformées,<br><em>vos souvenirs sublimés.</em></h2>
       <p class="rv d2" style="font-size:15px;color:var(--muted);margin-top:16px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7;">Glissez le curseur pour voir la transformation. Ce sont de vraies photos de famille.</p>
@@ -1190,8 +1201,26 @@
             <div style="font-size:13px;color:var(--texte);line-height:1.5;">Livraison numérique uniquement, sans voix, sans écrin</div>
           </div>
           <div style="border-top:1px solid rgba(196,164,107,.12);padding-top:12px;">
-            <div style="font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--or);margin-bottom:6px;">Option +190 €</div>
-            <div style="font-size:13px;color:var(--texte);line-height:1.5;">Évocation vocale commémorative, uniquement si enregistrement vocal exploitable disponible</div>
+            <div style="font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--or);margin-bottom:8px;">Options disponibles</div>
+            <div class="option-mini-list">
+              <div class="option-mini-item">
+                <div class="option-mini-header">
+                  <span class="option-price">+140 €</span>
+                  <span class="option-title">Évocation vocale seule</span>
+                </div>
+                <p class="option-desc">Un court message audio commémoratif de 30 à 60 secondes, livré en format numérique.</p>
+                <p class="option-note">À partir d'un enregistrement vocal exploitable. Sans audio exploitable, une voix de narration douce, clairement non authentique, peut être proposée.</p>
+              </div>
+              <div class="option-mini-item">
+                <div class="option-mini-header">
+                  <span class="option-price">+290 €</span>
+                  <span class="option-title">Portrait animé avec message vocal</span>
+                </div>
+                <p class="option-desc">Une courte vidéo hommage de 10 à 20 secondes, à partir d'une photo restaurée et d'un message validé avec vous.</p>
+
+              </div>
+            </div>
+            <p class="option-ethical">Ces créations sont des hommages assistés par IA. Elles ne prétendent pas recréer une personne ni produire une parole authentique du proche.</p>
           </div>
         </div>
         <stripe-buy-button
@@ -1222,6 +1251,9 @@
           <div style="border-top:1px solid rgba(196,164,107,.12);padding-top:12px;">
             <div style="font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--or);margin-bottom:6px;">Format</div>
             <div style="font-size:13px;color:var(--texte);line-height:1.5;">Livraison numérique uniquement, sans écrin physique</div>
+          </div>
+          <div style="border-top:1px solid rgba(196,164,107,.12);padding-top:12px;">
+            <p style="font-size:12px;color:var(--muted);line-height:1.6;font-style:italic;">Une formule plus complète pour réunir photos, voix, vidéo hommage et espace privé.</p>
           </div>
         </div>
         <stripe-buy-button
@@ -1277,13 +1309,13 @@
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
 
         <div class="rv" style="background:var(--blanc);border:1px solid rgba(196,164,107,.15);border-radius:3px;padding:28px 24px;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--or);margin-bottom:6px;">+180<span style="font-size:14px;">€</span></div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--or);margin-bottom:6px;">+240<span style="font-size:14px;">€</span></div>
           <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;color:var(--navy-mid);margin-bottom:8px;">Pack Duo</div>
-          <p style="font-size:13px;color:var(--muted);line-height:1.6;">Un deuxième écrin complet (boîte, clé USB, livre imprimé) pour un autre membre de la famille.</p>
+          <p style="font-size:13px;color:var(--muted);line-height:1.6;">Un second écrin complet pour un autre membre de la famille : boîte noire, Livre de Vie imprimé, clé USB Capsule Mémoire, carte d'accès et lettre d'accompagnement.</p>
         </div>
 
         <div class="rv d1" style="background:var(--blanc);border:1px solid rgba(196,164,107,.15);border-radius:3px;padding:28px 24px;">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--or);margin-bottom:6px;">+59<span style="font-size:14px;">€</span></div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--or);margin-bottom:6px;">+79<span style="font-size:14px;">€</span></div>
           <div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:17px;color:var(--navy-mid);margin-bottom:8px;">Plaque Additionnelle</div>
           <p style="font-size:13px;color:var(--muted);line-height:1.6;">Une deuxième plaque QR identique pour un second lieu de mémoire : jardin ou maison de famille.</p>
         </div>
@@ -1298,7 +1330,7 @@
         <div style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:24px;color:var(--blanc);line-height:1.2;margin-bottom:10px;">Un projet hors normes ?<br><em style="color:var(--or);">Sur devis.</em></div>
         <p style="font-size:13px;color:rgba(240,234,224,.5);line-height:1.7;max-width:420px;">Plusieurs membres de la famille, multilangue, archives importantes à traiter, livre de vie de grande envergure… Contactez-nous pour un devis personnalisé.</p>
       </div>
-      <a href="mailto:contact.capsulememoire@gmail.com">contact.capsulememoire@gmail.com</a>
+      <a href="/cdn-cgi/l/email-protection#bcdfd3d2c8dddfc892dfddcccfc9d0d9d1d9d1d3d5ced9fcdbd1ddd5d092dfd3d1"><span class="__cf_email__" data-cfemail="6f0c00011b0e0c1b410c0e1f1c1a030a020a0200061d0a2f08020e0603410c0002">[email&#160;protected]</span></a>
     </div>
 
   </div>
@@ -1388,6 +1420,16 @@
         <span class="faq-line"></span>
         <div class="faq-q"><span class="faq-q-txt">Comment se passe le paiement ?</span><div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
         <div class="faq-a"><div class="faq-a-inner">En ligne, 100% sécurisé via Stripe (certifié PCI-DSS). La production ne commence qu'après réception complète de vos éléments via WeTransfer. Capsule Mémoire ne conserve aucune donnée bancaire.</div></div>
+      </div>
+      <div class="faq-item">
+        <span class="faq-line"></span>
+        <div class="faq-q"><span class="faq-q-txt">Quelle est la différence entre l'évocation vocale et le portrait animé avec message vocal ?</span><div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-a"><div class="faq-a-inner">L'évocation vocale seule est un fichier audio commémoratif de 30 à 60 secondes. Le portrait animé avec message vocal est une courte vidéo hommage de 10 à 20 secondes, où un portrait restauré est animé avec douceur et accompagné d'un message vocal. Dans les deux cas, il s'agit d'une création commémorative assistée par IA, clairement présentée comme telle.</div></div>
+      </div>
+      <div class="faq-item">
+        <span class="faq-line"></span>
+        <div class="faq-q"><span class="faq-q-txt">Est-ce que la voix est authentique ?</span><div class="faq-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="6" y1="1" x2="6" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div></div>
+        <div class="faq-a"><div class="faq-a-inner">Non. Lorsqu'une évocation vocale est créée, elle reste un contenu généré ou assisté par IA à partir des éléments transmis. Sans enregistrement exploitable, une voix de narration douce, clairement non authentique, peut être proposée.</div></div>
       </div>
     </div>
   </div>
@@ -1479,7 +1521,7 @@
   <div class="ft-logo">CAPSULE <b>MÉMOIRE</b></div>
   <p class="ft-tag">"Un souvenir qui dure toute une vie."</p>
   <div class="ft-div"></div>
-  <a href="mailto:contact.capsulememoire@gmail.com" class="ft-email">contact.capsulememoire@gmail.com</a>
+  <a href="/cdn-cgi/l/email-protection#a5c6cacbd1c4c6d18bc6c4d5d6d0c9c0c8c0c8caccd7c0e5c2c8c4ccc98bc6cac8" class="ft-email"><span class="__cf_email__" data-cfemail="36555958425755421855574645435a535b535b595f445376515b575f5a1855595b">[email&#160;protected]</span></a>
   <div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:center;">
     <a href="ethique.html" style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(196,164,107,.4);transition:color .2s;" onmouseover="this.style.color='#C4A46B'" onmouseout="this.style.color='rgba(196,164,107,.4)'">Engagement éthique</a>
     <a href="cgv.html" style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(196,164,107,.4);transition:color .2s;" onmouseover="this.style.color='#C4A46B'" onmouseout="this.style.color='rgba(196,164,107,.4)'">CGV</a>
@@ -1490,7 +1532,7 @@
   <p class="ft-legal">© 2025–2026 Capsule Mémoire · Traitement confidentiel · RGPD · Contenus créés avec assistance IA</p>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 
 
 /* LOADER */
