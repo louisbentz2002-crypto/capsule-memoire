@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "capsulememoire.fr" }],
+      "destination": "https://www.capsulememoire.fr/$1",
+      "permanent": true
+    }
+  ]
+}
