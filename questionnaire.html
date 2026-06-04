@@ -711,7 +711,7 @@
 <div class="page" id="p6">
   <div class="container">
     <div class="page-eyebrow">06 / 07</div>
-    <h2 class="page-title">Le livre de vie</h2>
+    <h2 class="page-title">Le livre de vie <span style="font-size:13px;font-family:'DM Sans',sans-serif;font-weight:400;color:var(--or);letter-spacing:.05em;vertical-align:middle;">— Capsule Héritage</span></h2>
     <p class="page-sub">Son histoire écrite — un héritage pour les générations futures.</p>
     <div class="gold-line"></div>
 
@@ -1079,6 +1079,11 @@
     if (optionVocale) optionVocale.classList.toggle('on', isPhoto);
     updateUI();
   }
+  function onVoixTexte() {
+    const v = document.querySelector('input[name="voix_texte_type"]:checked')?.value || '';
+    document.getElementById('voixTexteLibre').classList.toggle('on', v.includes('moi-même'));
+  }
+
   function onMsg() {
     const v = document.querySelector('input[name="type_msg"]:checked')?.value || '';
     document.getElementById('msgLibre').classList.toggle('on', v.includes('moi-même'));
@@ -1284,3 +1289,26 @@
 </script>
 </body>
 </html>
+    <div class="s-label">Le texte à dire <span style="font-weight:300;text-transform:none;letter-spacing:0;color:var(--muted);font-size:11px;">(voix reconstituée &amp; portrait animé)</span></div>
+
+    <div class="notice" id="voixTexteNotice">
+      Ce texte sera lu par la voix reconstituée de votre proche et/ou animé sur son portrait. Écrivez-le à la première personne, comme s'il/elle parlait directement. Quelques phrases suffisent — nous pouvons aussi vous aider à le rédiger.
+    </div>
+
+    <div class="q">
+      <label>Comment souhaitez-vous ce texte ? <span class="req">*</span></label>
+      <div class="radio-group" id="voixTexteGrp">
+        <label class="r-item" onclick="toggleR(this,'voixTexteGrp','voix_texte_type','Je l\'écris moi-même')"><input type="radio" name="voix_texte_type" value="Je l'écris moi-même" onchange="onVoixTexte()" required><div class="r-circle"></div><span>Je l'écris moi-même</span></label>
+        <label class="r-item" onclick="toggleR(this,'voixTexteGrp','voix_texte_type','Vous l\'écrivez pour moi')"><input type="radio" name="voix_texte_type" value="Vous l'écrivez pour moi" onchange="onVoixTexte()"><div class="r-circle"></div><span>Vous l'écrivez pour moi</span></label>
+      </div>
+    </div>
+
+    <div class="cond" id="voixTexteLibre">
+      <div class="q">
+        <label for="f-voix-texte">Le texte à dire <span class="req">*</span></label>
+        <textarea id="f-voix-texte" name="voix_texte" class="lg" placeholder="Exemple : Si tu lis ces mots un jour, sache que je t'ai aimé de tout mon cœur. Que les moments qu'on a partagés sont gravés en moi pour toujours…" autocapitalize="sentences" style="min-height:140px;"></textarea>
+        <div class="field-hint">Écrivez à la première personne. Entre 3 et 10 phrases est idéal pour un portrait animé de qualité.</div>
+      </div>
+    </div>
+
+
