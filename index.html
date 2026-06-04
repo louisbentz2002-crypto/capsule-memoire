@@ -142,7 +142,7 @@
     #processus .sec-ttl { color:var(--blanc); }
     #processus .sec-lbl { color:var(--or); }
     .proc-track { position:relative; display:grid; grid-template-columns:repeat(4,1fr); gap:40px; margin-top:72px; }
-    .proc-track::before { content:''; position:absolute; top:20px; left:calc(12.5%); right:calc(12.5%); height:1px; background:linear-gradient(to right,var(--or),rgba(196,164,107,.2)); }
+    .proc-track::before { content:''; position:absolute; top:20px; left:21px; right:21px; height:1px; background:linear-gradient(to right,var(--or),rgba(196,164,107,.2)); }
     .proc-step { position:relative; padding-top:0; }
     .proc-num-wrap { display:flex; align-items:center; margin-bottom:28px; }
     .proc-num { width:42px; height:42px; border:1px solid var(--or); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Cormorant Garamond',serif; font-weight:300; font-size:18px; color:var(--or); background:var(--navy-mid); position:relative; z-index:1; flex-shrink:0; }
@@ -796,7 +796,7 @@
 <!-- PROCESSUS -->
 <section id="processus">
   <div class="inner">
-    <div class="hdr">
+    <div class="hdr" style="text-align:center;">
       <div class="sec-lbl rv">Comment ça marche</div>
       <h2 class="sec-ttl rv d1">De la commande<br><em>à la livraison.</em></h2>
     </div>
