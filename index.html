@@ -560,9 +560,38 @@
     .option-note { font-size:11px; color:var(--muted); line-height:1.5; font-style:italic; }
     .option-ethical { font-size:11px; color:var(--muted); line-height:1.55; font-style:italic; border-top:1px solid rgba(196,164,107,.12); padding-top:10px; margin-top:8px; }
 
+
+    /* ── CURSEUR PERSONNALISÉ (desktop uniquement) ── */
+    @media (hover: hover) and (pointer: fine) {
+      body { cursor: none; }
+      a, button, .slider-wrap, .faq-q, .cm-play-btn, input, textarea, select, label { cursor: none; }
+      #cm-cursor-dot, #cm-cursor-ring {
+        position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
+        border-radius: 50%; transform: translate(-50%, -50%);
+        transition: opacity .2s ease;
+      }
+      #cm-cursor-dot {
+        width: 6px; height: 6px; background: var(--or);
+      }
+      #cm-cursor-ring {
+        width: 32px; height: 32px; border: 1px solid rgba(196,164,107,.5);
+        transition: width .2s ease, height .2s ease, border-color .2s ease, transform .05s linear;
+      }
+      #cm-cursor-ring.cm-hover {
+        width: 48px; height: 48px; border-color: var(--or);
+      }
+      body.cm-cursor-hidden #cm-cursor-dot,
+      body.cm-cursor-hidden #cm-cursor-ring { opacity: 0; }
+    }
+    @media (hover: none), (pointer: coarse) {
+      #cm-cursor-dot, #cm-cursor-ring { display: none; }
+    }
 </style>
 </head>
 <body>
+<div id="cm-cursor-ring"></div>
+<div id="cm-cursor-dot"></div>
+
 
 <div id="loader">
   <div class="ld-icon">
@@ -1686,6 +1715,42 @@ if(contactForm){
   }
   ['s1','s2','s3','s4','s5','s6','s7','s8'].forEach(initSlider);
 </script>
+  <script>
+  // ── CURSEUR PERSONNALISÉ ──
+  (function(){
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    var dot = document.getElementById('cm-cursor-dot');
+    var ring = document.getElementById('cm-cursor-ring');
+    if (!dot || !ring) return;
+
+    var mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', function(e){
+      mx = e.clientX; my = e.clientY;
+      dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+      document.body.classList.remove('cm-cursor-hidden');
+    });
+    document.addEventListener('mouseleave', function(){
+      document.body.classList.add('cm-cursor-hidden');
+    });
+
+    function loop(){
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    var hoverables = 'a, button, .slider-wrap, .faq-q, .cm-play-btn, input, textarea, select, label, [onclick]';
+    document.addEventListener('mouseover', function(e){
+      if (e.target.closest(hoverables)) ring.classList.add('cm-hover');
+    });
+    document.addEventListener('mouseout', function(e){
+      if (e.target.closest(hoverables)) ring.classList.remove('cm-hover');
+    });
+  })();
+  </script>
 </body>
 
   <script>
