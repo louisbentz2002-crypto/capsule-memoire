@@ -1768,9 +1768,34 @@ if(contactForm){
 </body>
 
   <script>
+  // ── AUDIO BOOST (Web Audio API - volume au-dela de 100%) ──
+  function attachVolumeBoost(audioEl, gainValue) {
+    try {
+      var Ctx = window.AudioContext || window.webkitAudioContext;
+      var ctx = new Ctx();
+      var source = ctx.createMediaElementSource(audioEl);
+      var gainNode = ctx.createGain();
+      gainNode.gain.value = gainValue;
+      source.connect(gainNode);
+      gainNode.connect(ctx.destination);
+      audioEl.addEventListener('play', function(){
+        if (ctx.state === 'suspended') ctx.resume();
+      });
+    } catch(e) {
+      console.warn('Audio boost non disponible:', e);
+    }
+  }
+
   // ── VOICE PLAYERS ──
   (function(){
     var N=36;
+    var boosted = {};
+    document.querySelectorAll('#vaudio-orig, #vaudio-clone').forEach(function(a){
+      if (!boosted[a.id]) {
+        attachVolumeBoost(a, 2.2);
+        boosted[a.id] = true;
+      }
+    });
     ['orig','clone'].forEach(function(id){
       var bars=document.getElementById('vbars-'+id);
       if(!bars) return;
