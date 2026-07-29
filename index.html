@@ -580,9 +580,58 @@
       .addons-grid { grid-template-columns: 1fr !important; }
     }
 
+    /* Curseur premium — amélioration progressive, desktop uniquement */
+    #cm-cursor-dot, #cm-cursor-ring { display: none; }
+    @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+      body.cm-cursor-ready,
+      body.cm-cursor-ready a,
+      body.cm-cursor-ready button { cursor: none; }
+      #cm-cursor-dot, #cm-cursor-ring {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9999;
+        pointer-events: none;
+        border-radius: 50%;
+        opacity: 0;
+        transform: translate3d(-50%, -50%, 0);
+        transition: opacity .18s ease, width .18s ease, height .18s ease, border-color .18s ease;
+      }
+      body.cm-cursor-ready #cm-cursor-dot,
+      body.cm-cursor-ready #cm-cursor-ring { opacity: 1; }
+      #cm-cursor-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--or);
+        box-shadow: 0 0 12px rgba(196,164,107,.45);
+      }
+      #cm-cursor-ring {
+        width: 30px;
+        height: 30px;
+        border: 1px solid rgba(196,164,107,.58);
+      }
+      #cm-cursor-ring.cm-hover {
+        width: 44px;
+        height: 44px;
+        border-color: var(--or);
+      }
+      body.cm-cursor-hidden #cm-cursor-dot,
+      body.cm-cursor-hidden #cm-cursor-ring { opacity: 0; }
+      body.cm-cursor-ready input,
+      body.cm-cursor-ready textarea,
+      body.cm-cursor-ready select,
+      body.cm-cursor-ready .slider-wrap,
+      body.cm-cursor-ready .voice-waveform,
+      body.cm-cursor-ready .cm-play-btn,
+      body.cm-cursor-ready video { cursor: auto; }
+    }
+
 </style>
 </head>
 <body>
+<div id="cm-cursor-ring" aria-hidden="true"></div>
+<div id="cm-cursor-dot" aria-hidden="true"></div>
 
 <!-- NAV -->
 <!-- MENU MOBILE -->
@@ -1697,6 +1746,54 @@ if(contactForm){
 
       vid.addEventListener('ended', function(){ reset(wrap); vid.currentTime = 0; });
     });
+  })();
+  </script>
+  <script>
+  // ── CURSEUR PREMIUM DESKTOP ──
+  (function(){
+    var supportsCursor = window.matchMedia(
+      '(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)'
+    ).matches;
+    if (!supportsCursor) return;
+
+    var dot = document.getElementById('cm-cursor-dot');
+    var ring = document.getElementById('cm-cursor-ring');
+    if (!dot || !ring) return;
+
+    var mouseX = -100, mouseY = -100;
+    var ringX = -100, ringY = -100;
+
+    function animateRing(){
+      ringX += (mouseX - ringX) * 0.2;
+      ringY += (mouseY - ringY) * 0.2;
+      ring.style.left = ringX + 'px';
+      ring.style.top = ringY + 'px';
+      window.requestAnimationFrame(animateRing);
+    }
+
+    document.addEventListener('pointermove', function(event){
+      mouseX = event.clientX;
+      mouseY = event.clientY;
+      dot.style.left = mouseX + 'px';
+      dot.style.top = mouseY + 'px';
+      document.body.classList.add('cm-cursor-ready');
+      document.body.classList.remove('cm-cursor-hidden');
+    }, { passive: true });
+
+    document.addEventListener('pointerover', function(event){
+      if (event.target.closest('a, button')) ring.classList.add('cm-hover');
+    });
+    document.addEventListener('pointerout', function(event){
+      if (event.target.closest('a, button')) ring.classList.remove('cm-hover');
+    });
+    document.documentElement.addEventListener('mouseleave', function(){
+      document.body.classList.add('cm-cursor-hidden');
+    });
+    document.documentElement.addEventListener('mouseenter', function(){
+      document.body.classList.remove('cm-cursor-hidden');
+    });
+
+    animateRing();
   })();
   </script>
 </body>
