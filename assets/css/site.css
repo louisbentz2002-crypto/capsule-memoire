@@ -237,7 +237,6 @@
       #nav .n-links,
       #nav .n-cta { display: none !important; }
       #nav .n-burger { display: flex !important; }
-      .sticky-cta { display: block; }
     }
 
     /* RESPONSIVE */
@@ -246,7 +245,6 @@
       #nav .n-links { display:none; }
       #nav .n-cta { display:none; }
       #nav .n-burger { display:flex; }
-      .sticky-cta { display:block; }
       #hero { padding:100px 20px 80px; }
       .h-title { font-size:clamp(42px,11vw,70px) !important; }
       .h-sub { font-size:clamp(15px,3.5vw,19px); max-width:100%; }
@@ -507,13 +505,23 @@
     body { font-size: 16px; cursor: auto; }
     .h-sub { max-width: 760px; font-size: clamp(18px, 2vw, 24px); }
     .h-tagline, .sec-lbl, .demo-tag, .t-badge, .cf-label { font-size: 12px; }
-    .btn-or, .btn-ghost, .sticky-cta a, .mob-menu-cta a {
+    .btn-or, .btn-ghost, .mob-menu-cta a {
       min-height: 44px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       font-size: 14px;
       line-height: 1.25;
+    }
+    .sticky-cta a {
+      display: flex;
+      width: 100%;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      line-height: 1.25;
+      white-space: normal;
     }
     .n-links a { font-size: 12px; }
     .card-desc, .proc-desc, .guar-desc, .video-card-desc, .faq-a-inner,
@@ -540,6 +548,10 @@
       .n-logo-txt { font-size: 13px; }
       .sticky-cta a { width: 100%; }
       .addons-grid { grid-template-columns: 1fr !important; }
+    }
+    /* Un bandeau mobile ne doit pas apparaître sur un PC, même avec du zoom. */
+    @media (max-width: 640px) and (hover: none) and (pointer: coarse) {
+      .sticky-cta { display: block; }
     }
 
     /* Curseur premium — amélioration progressive, desktop uniquement */

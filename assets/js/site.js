@@ -80,6 +80,7 @@ function openMobMenu(){
     background.set(el, !!el.inert); el.inert = true;
   }
   mobClose?.focus();
+  updateStickyCta();
 }
 function closeMobMenu(){
   if(mobMenu){ mobMenu.classList.remove('open'); mobMenu.setAttribute('aria-hidden','true'); mobMenu.inert=true; }
@@ -89,6 +90,7 @@ function closeMobMenu(){
   background.forEach((wasInert, el) => { el.inert = wasInert; }); background.clear();
   window.scrollTo(0, _scrollY);
   burgerBtn?.focus({ preventScroll: true });
+  updateStickyCta();
 }
 if(burgerBtn) burgerBtn.addEventListener('click', openMobMenu);
 if(mobClose) mobClose.addEventListener('click', closeMobMenu);
@@ -109,13 +111,21 @@ window.addEventListener('resize', () => { if (window.innerWidth > 1280 && mobMen
 /* STICKY CTA */
 const stickyCta = document.getElementById('stickyCta');
 const heroEl = document.getElementById('hero');
+const mobileCta = window.matchMedia('(max-width: 640px) and (hover: none) and (pointer: coarse)');
+const ctaTargets = [document.getElementById('tarifs'), document.getElementById('contact'), document.querySelector('footer')].filter(Boolean);
+function updateStickyCta(){
+  if (!stickyCta || !heroEl) return;
+  const hidden = !mobileCta.matches || mobMenu?.classList.contains('open') || window.scrollY < heroEl.offsetHeight - 100 || ctaTargets.some(el => {
+    const bounds = el.getBoundingClientRect();
+    return bounds.top < window.innerHeight && bounds.bottom > 0;
+  });
+  stickyCta.classList.toggle('hidden', !!hidden);
+}
 stickyCta?.querySelector('a')?.addEventListener('click', () => stickyCta.classList.add('hidden'));
-window.addEventListener('scroll',()=>{
-  if(stickyCta && heroEl){
-    const heroH = heroEl.offsetHeight;
-    stickyCta.classList.toggle('hidden', window.scrollY < heroH - 100);
-  }
-},{passive:true});
+window.addEventListener('scroll', updateStickyCta, {passive:true});
+window.addEventListener('resize', updateStickyCta, {passive:true});
+mobileCta.addEventListener?.('change', updateStickyCta);
+updateStickyCta();
 
 /* CONTACT FORM */
 const contactForm = document.getElementById('contactForm');

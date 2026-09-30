@@ -3,10 +3,15 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { JSDOM } from 'jsdom';
 const source = name => readFileSync(new URL('../' + name, import.meta.url), 'utf8');
-function homepage({ reduced = false, saveData = false } = {}) {
+function homepage({ reduced = false, saveData = false, width = 1363, touch = false } = {}) {
   const dom = new JSDOM(source('index.html'), { url: 'https://www.capsulememoire.fr/', runScripts: 'outside-only' });
   const w = dom.window; let loads = 0, plays = 0;
-  w.matchMedia = query => ({ matches: query === '(prefers-reduced-motion: reduce)' && reduced });
+  w.innerWidth = width;
+  Object.defineProperty(w.document.getElementById('hero'), 'offsetHeight', { value: 600, configurable: true });
+  w.matchMedia = query => ({ get matches() {
+    if (query.includes('max-width: 640px')) return w.innerWidth <= 640 && touch;
+    return query === '(prefers-reduced-motion: reduce)' && reduced;
+  } });
   w.scrollTo = () => {};
   w.HTMLMediaElement.prototype.load = () => { loads++; };
   w.HTMLMediaElement.prototype.play = async () => { plays++; };
@@ -34,6 +39,32 @@ test('un lien du menu ferme le dialogue sans gestionnaire inline', () => {
   const { d, dom } = homepage(); d.getElementById('burgerBtn').click();
   d.querySelector('#mobMenu a').click();
   assert.equal(d.getElementById('mobMenu').classList.contains('open'), false); dom.window.close();
+});
+test('le bandeau mobile reste masqué sur PC, quelle que soit la largeur de la fenêtre', () => {
+  for (const width of [1848, 1280, 960, 640, 390]) {
+    const { w, d, dom } = homepage({ width });
+    w.scrollY = 1200; w.dispatchEvent(new w.Event('scroll'));
+    assert.equal(d.getElementById('stickyCta').classList.contains('hidden'), true, 'PC largeur ' + width);
+    dom.window.close();
+  }
+});
+test('sur téléphone, le bandeau apparaît après le hero et laisse libres les tarifs, le contact et le menu', () => {
+  const { w, d, dom } = homepage({ width: 390, touch: true });
+  const bar = d.getElementById('stickyCta');
+  Object.defineProperty(d.getElementById('hero'), 'offsetHeight', { value: 600 });
+  assert.equal(bar.classList.contains('hidden'), true);
+  w.scrollY = 800; w.dispatchEvent(new w.Event('scroll'));
+  assert.equal(bar.classList.contains('hidden'), false);
+  for (const el of [d.getElementById('tarifs'), d.getElementById('contact'), d.querySelector('footer')]) {
+    el.getBoundingClientRect = () => ({ top: 100, bottom: 500 }); w.dispatchEvent(new w.Event('scroll'));
+    assert.equal(bar.classList.contains('hidden'), true);
+    el.getBoundingClientRect = () => ({ top: 2000, bottom: 2500 }); w.dispatchEvent(new w.Event('scroll'));
+    assert.equal(bar.classList.contains('hidden'), false);
+  }
+  d.getElementById('burgerBtn').click(); assert.equal(bar.classList.contains('hidden'), true);
+  d.getElementById('mobClose').click(); assert.equal(bar.classList.contains('hidden'), false);
+  w.innerWidth = 800; w.dispatchEvent(new w.Event('resize'));
+  assert.equal(bar.classList.contains('hidden'), true); dom.window.close();
 });
 test('mouvement réduit et économie de données : aucun chargement vidéo avant un clic', () => {
   for (const preferences of [{ reduced: true }, { saveData: true }]) {
