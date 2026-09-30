@@ -31,6 +31,10 @@
         {
           "key": "Permissions-Policy",
           "value": "camera=(), microphone=(), geolocation=()"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' https://js.stripe.com 'sha256-OGdU+Tqtg5RYqYlkDI+Xls/Xlc2ZOf/ZVlAElQRHJIM=' 'sha256-Q/baREFIrKVlxqVjrvNwteKmr9UtpHQ90D5dlU+Kr0g=' 'sha256-h1sh9qzG99xNBPq6v8GI6AZW3ny1VPXQrdkhGquiJnY=' 'sha256-qSMVHnEWwSfzUcI/tzscl+TmvvSzVLkS3LcHLGkwuRY=' 'sha256-sYAsfX6m66cvYnr9p2TcbFx4ezi3u8BFJ9BiPdCcxsA='; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self' https://api.stripe.com; frame-src https://js.stripe.com; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
         }
       ]
     },
@@ -57,6 +61,15 @@
         {
           "key": "Referrer-Policy",
           "value": "no-referrer"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, must-revalidate"
         }
       ]
     }

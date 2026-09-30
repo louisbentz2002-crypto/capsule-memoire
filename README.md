@@ -30,7 +30,7 @@ Dans **chaque Payment Link Stripe**, régler « After payment » sur :
 https://www.capsulememoire.fr/confirmation.html?session_id={CHECKOUT_SESSION_ID}
 ```
 
-Le composant Stripe utilise `client-reference-id` pour le rapprochement. L’ancien attribut `success-url` est supprimé : la redirection se configure dans Stripe. Activer la collecte de l’acceptation des CGV dans Stripe et y associer l’URL `/cgv.html`. Vérifier également prix, fiscalité, reçu et compte de destination. Les options demandées dans le questionnaire ne sont **pas** prélevées par le bouton de la formule de base : confirmation écrite et paiement séparé avant production.
+Le composant Stripe reçoit `client-reference-id` avant le chargement du script Stripe. Ce repère navigateur sert au rapprochement des brouillons ; le serveur attribue ensuite une référence stable propre à chaque Checkout Session. Un dossier automatiquement rapproché doit employer l’email du reçu Stripe. L’API publique de confirmation ne révèle pas cet email. En production Vercel, les paiements test sont refusés. L’ancien attribut `success-url` est supprimé : la redirection se configure dans Stripe. Activer la collecte de l’acceptation des CGV dans Stripe et y associer l’URL `/cgv.html`. Vérifier également prix, fiscalité, reçu et compte de destination. Les options demandées dans le questionnaire ne sont **pas** prélevées par le bouton de la formule de base : confirmation écrite et paiement séparé avant production.
 
 Héritage, Pack Duo et plaque additionnelle sont demandés sur devis. Ne pas lancer leur encaissement avant vérification du fournisseur, du coût complet et du délai. Une transaction qui ne correspond pas exactement aux formules Photo ou Souvenir standard est orientée vers un contrôle manuel ; le tarif d’essai existant n’est pas inventé ni modifié.
 
@@ -42,7 +42,17 @@ Héritage, Pack Duo et plaque additionnelle sont demandés sur devis. Ne pas lan
 4. Vérifier le PDF effectivement reçu via Make. Un HTTP 200 du scénario confirme sa réception, pas la remise du mail au destinataire.
 5. Reprendre un brouillon, vérifier son expiration et son effacement ; tester au clavier et sur mobile les comparateurs et lecteurs.
 
-Le serveur revalide les champs obligatoires, recalcule les montants, contrôle l’origine des requêtes navigateur, limite la taille du JSON et ignore les statuts de paiement fournis par le client. Ces contrôles ne remplacent pas une protection contre le spam au niveau Vercel/Formspree.
+Le serveur revalide les champs obligatoires, les choix autorisés et les dates, recalcule les montants, contrôle l’origine des requêtes navigateur, arrête la lecture du JSON à 64 Kio et ignore les statuts de paiement fournis par le client. Les transferts serveur exigent HTTPS et refusent les redirections. Le contact passe également par une route serveur avec validation, limite de taille et piège à robots. Ces contrôles ne remplacent pas une protection contre le spam au niveau Vercel/Formspree.
+
+## Sécurité et performances du site public
+
+`vercel.json` impose une Content Security Policy qui refuse les scripts inline et les gestionnaires HTML, les objets intégrés et l’affichage du site dans une frame. Les scripts autorisés proviennent du site et de Stripe ; les fontes Google restent autorisées. Les styles inline existants sont conservés pour maintenir le design, donc `style-src` autorise encore `unsafe-inline`. Les données structurées JSON-LD ont une empreinte autorisée ; `npm run check` détecte une empreinte manquante après modification. Ne pas ajouter `unsafe-inline` ou `unsafe-eval` aux scripts pour contourner un échec.
+
+Les médias restent différés. Avec mouvement réduit ou économie de données, les vidéos attendent un clic explicite. Le curseur arrête son animation lorsqu’il ne bouge plus, sort de la page ou que l’onglet est masqué. Les fichiers sous `/assets/` sont mis en cache une heure avec revalidation, sans cache immuable sur des noms réutilisés. Les contrastes et le clavier ont été améliorés sans changer l’identité visuelle. Le menu enferme le focus et désactive le fond pendant son ouverture.
+
+Après déploiement, vérifier les en-têtes HTTP réellement reçus, les trois boutons Stripe, les lecteurs, les formulaires et l’absence d’erreurs CSP sur ordinateur et téléphone. La configuration du dépôt seule ne prouve pas que Vercel a appliqué ces en-têtes. Les tests DOM n’évaluent pas le rendu ni les Core Web Vitals d’un navigateur réel.
+
+Dans Vercel, activer une protection WAF et une limite de débit adaptées aux routes `/api/contact`, `/api/guide`, `/api/dossier` et `/api/commande`, puis tester une demande légitime. Le dépôt ne possède pas de limite de débit distribuée ni de registre durable des paiements consommés. Jusqu’à cette évolution, regrouper les envois par référence et vérifier dans Stripe la prestation, le client et l’unicité du paiement avant production. Le simple rapprochement d’un montant avec une formule ne vérifie pas le produit Stripe : ce contrôle reste humain.
 
 ## Traitement des dossiers
 

@@ -26,7 +26,7 @@ test('une référence stable persiste entre paiement et questionnaire', () => {
 test('les personnes vivantes et les textes rédigés exigent leurs champs', () => {
   const d = validDossier(); assert.deepEqual(dossierErrors(d), []);
   d.statut_personne = 'vivante'; assert.ok(dossierErrors(d).includes('consent_vivant'));
-  d.consent_vivant = 'oui'; d.voix_texte_type = 'Je l’écris moi-même'; assert.ok(dossierErrors(d).includes('voix_texte'));
+  d.consent_vivant = 'oui'; d.voix_texte_type = "Je l'écris moi-même"; assert.ok(dossierErrors(d).includes('voix_texte'));
   d.voix_texte = 'Texte validé'; assert.deepEqual(dossierErrors(d), []);
   d.consent_ia = 'non'; assert.ok(dossierErrors(d).includes('consent_ia'));
 });

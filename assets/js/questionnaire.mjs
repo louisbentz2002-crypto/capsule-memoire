@@ -3,7 +3,7 @@ const form = document.getElementById('form');
 const local = (() => { try { return window.localStorage; } catch { return null; } })();
 const session = (() => { try { return window.sessionStorage; } catch { return null; } })();
 let DOSSIER_ID = reference(local);
-let cur = 0, isOffre2 = false, submitted = false, sessionId = '';
+let cur = 0, isOffre2 = false, submitted = false, sending = false, sessionId = '';
 const DRAFT_KEY = 'cm-draft';
 const persistent = document.getElementById('saveDraft');
 const status = document.getElementById('draftStatus');
@@ -133,6 +133,20 @@ function validate(n) {
 }
 Object.assign(window, { go, next: n => { if (validate(n)) go(n === 5 ? (isOffre2 ? 6 : 7) : n + 1); },
   goBack7: () => go(isOffre2 ? 6 : 5), onOffre, onVoix, onMsg, onVoixTexte });
+document.querySelectorAll('[data-go]').forEach(button => button.addEventListener('click', () => go(Number(button.dataset.go))));
+document.querySelectorAll('[data-next]').forEach(button => button.addEventListener('click', () => window.next(Number(button.dataset.next))));
+document.querySelector('[data-back]')?.addEventListener('click', () => window.goBack7());
+document.querySelectorAll('[data-transfer-toggle]').forEach((button, index) => {
+  const panel = button.nextElementSibling;
+  panel.id = 'transfer-panel-' + index;
+  button.setAttribute('aria-controls', panel.id);
+  const toggle = () => {
+    const open = button.getAttribute('aria-expanded') !== 'true';
+    button.setAttribute('aria-expanded', String(open)); panel.style.display = open ? 'block' : 'none';
+  };
+  button.addEventListener('click', toggle);
+  button.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggle(); } });
+});
 form.addEventListener('change', event => {
   if (event.target.name === 'option_voix_photo' && event.target.checked) form.querySelector('[name="option_portrait_photo"]').checked = false;
   onOffre(); onMsg(); onPerson(); syncLabels(); save();
@@ -167,16 +181,17 @@ const receipt = readStored(session, 'cm-receipt', 86400000);
 if (receipt?.reference === DOSSIER_ID) { submitted = true; go(8); }
 else go(saved && Number.isInteger(saved.page) && saved.page >= 0 && saved.page <= 7 ? saved.page : 0);
 form.addEventListener('submit', async event => {
-  event.preventDefault(); if (submitted) return;
+  event.preventDefault(); if (submitted || sending) return;
   for (const step of [1, 2, 3, 4, 5, ...(isOffre2 ? [6] : []), 7]) if (!validate(step)) return;
+  sending = true;
   const button = document.getElementById('submitBtn'); button.disabled = true; button.textContent = 'Envoi en cours…';
   document.getElementById('formError').textContent = '';
   try {
     const response = await postJson('/api/dossier', { ...data(), _dossier_id: DOSSIER_ID, _session_id: sessionId });
     if (!response.accepted || response.reference !== DOSSIER_ID) throw new Error('Réception non confirmée');
     submitted = true; removeDraft(); writeStored(session, 'cm-receipt', { reference: DOSSIER_ID }); writeStored(local, 'cm-complete', { reference: DOSSIER_ID }); go(8);
-  } catch {
-    document.getElementById('formError').textContent = 'Réception non confirmée. Vos réponses restent dans ce formulaire. Réessayez avec la même référence : ' + DOSSIER_ID + ', ou écrivez à contact.capsulememoire@gmail.com. En cas de délai réseau, une première copie a pu parvenir : nous regrouperons les envois portant cette référence.';
+  } catch (error) {
+    document.getElementById('formError').textContent = (error.message || 'Réception non confirmée.') + ' Vos réponses restent dans ce formulaire. Réessayez avec la même référence : ' + DOSSIER_ID + ', ou écrivez à contact.capsulememoire@gmail.com. En cas de délai réseau, une première copie a pu parvenir : nous regrouperons les envois portant cette référence.';
     button.disabled = false; button.textContent = 'Réessayer l’envoi →';
-  }
+  } finally { sending = false; }
 });

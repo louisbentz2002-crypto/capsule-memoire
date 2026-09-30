@@ -6,16 +6,35 @@ export async function handle(request, fetcher = globalThis.fetch, secret = proce
   try {
     const input = await payload(request);
     const data = {};
-    for (const [key, value] of Object.entries(input)) if (FIELDS.has(key) && typeof value === 'string') data[key] = value.trim().slice(0, 12000);
+    for (const [key, value] of Object.entries(input)) {
+      if (!FIELDS.has(key)) continue;
+      if (typeof value !== 'string' || value.length > 12000 || /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/.test(value)) return json({ error: 'Réponse invalide ou trop longue.', fields: [key] }, 400);
+      data[key] = value.trim();
+    }
     const errors = dossierErrors(data);
     if (errors.length) return json({ error: 'Merci de compléter les réponses et consentements requis.', fields: errors }, 400);
-    if (!REFERENCE_RE.test(input._dossier_id || '')) return json({ error: 'Référence de dossier invalide' }, 400);
+    if (typeof input._dossier_id !== 'string' || !REFERENCE_RE.test(input._dossier_id)) return json({ error: 'Référence de dossier invalide' }, 400);
     const offer = offerId(data.offre);
     const total = quote(offer, { voice: data.option_voix_photo === 'oui', portrait: data.option_portrait_photo === 'oui', duo: data.option_duo === 'oui', plaque: data.option_plaque === 'oui' });
     let payment = null;
-    if (input._session_id && secret) payment = await verifyPayment(input._session_id, fetcher, secret);
+    if (input._session_id) payment = await verifyPayment(input._session_id, fetcher, secret);
     if (payment && (payment.reference !== input._dossier_id || payment.offer !== offer)) return json({ error: 'Le paiement et le dossier ne correspondent pas. Contactez-nous avec votre référence.' }, 409);
+    if (payment && (!payment.buyerEmail || payment.buyerEmail !== data.client_email.toLowerCase())) return json({ error: 'Utilisez l’adresse email du reçu Stripe, ou contactez-nous pour rattacher votre dossier.', fields: ['client_email'] }, 409);
+    // Ne pas transmettre les anciennes réponses devenues inutiles après un changement de formule.
+    if (data.statut_personne !== 'vivante') delete data.consent_vivant;
+    else delete data.deces;
+    if (data.type_msg !== "Je l'écris moi-même") delete data.message_libre;
+    if (offer !== 'photo') { delete data.option_voix_photo; delete data.option_portrait_photo; }
+    if (offer !== 'heritage') for (const key of ['option_duo', 'option_plaque', 'description', 'histoire', 'moments', 'personnes_importantes', 'lieux_importants', 'valeurs', 'rituels', 'heritage', 'anecdote_drole_tendre', 'sujets_a_eviter', 'docs_description', 'dedicace']) delete data[key];
+    if (offer === 'photo' && data.option_voix_photo !== 'oui' && data.option_portrait_photo !== 'oui') {
+      for (const key of ['a_voix', 'type_enregistrement', 'qualite_enregistrement', 'desc_voix', 'accent', 'voix_texte_type', 'voix_texte']) delete data[key];
+    } else {
+      if (data.a_voix !== 'Oui') { delete data.type_enregistrement; delete data.qualite_enregistrement; }
+      else { delete data.desc_voix; delete data.accent; }
+      if (data.voix_texte_type !== "Je l'écris moi-même") delete data.voix_texte;
+    }
     data._dossier_id = payment?.reference || input._dossier_id;
+    if (payment) data._stripe_session_id = input._session_id;
     data._type = offer === 'heritage' ? 'demande_devis' : 'questionnaire';
     data._paiement = payment ? 'base vérifiée — options à confirmer et facturer séparément' : 'À VÉRIFIER MANUELLEMENT AVANT PRODUCTION';
     data._offre = offer;
