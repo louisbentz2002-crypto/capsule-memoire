@@ -228,11 +228,11 @@
       #nav .n-logo-txt { font-size: 14px; letter-spacing: .18em; }
       #nav .n-logo-txt b { letter-spacing: .23em; }
       #nav .n-links { gap: 20px; }
-      #nav .n-links a { font-size: 11px; letter-spacing: .08em; }
+      #nav .n-links a { font-size: 8.5px; letter-spacing: .12em; }
       #nav .n-cta .btn-or { padding: 12px 16px; font-size: 9px; letter-spacing: .14em; }
     }
 
-    @media(max-width:1280px){
+    @media(max-width:1180px){
       #nav { padding: 0 20px; height: 64px; }
       #nav .n-links,
       #nav .n-cta { display: none !important; }
@@ -402,7 +402,7 @@
     html, body { max-width: 100%; overflow-x: hidden; }
     .mob-menu { display: flex; flex-direction: column; }
     body.mob-open .sticky-cta { display: none !important; }
-    @media(max-width:1280px){
+    @media(max-width:1180px){
       #nav .n-links, #nav .n-cta { display: none !important; }
       #nav .n-burger { display: flex !important; }
       .mob-menu { width: 100vw; height: 100dvh; max-width: 100vw; overflow-x: hidden; }
