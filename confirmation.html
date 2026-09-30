@@ -33,6 +33,8 @@
     .back{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:rgba(196,164,107,.35);text-decoration:none;display:block;margin-top:24px;}
     .back:hover{color:#C4A46B;}
   </style>
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
 </head>
 <body>
 <div class="wrap">
@@ -45,26 +47,23 @@
     </svg>
   </div>
 
-  <div class="lbl">Paiement confirmé</div>
+  <div class="lbl">Votre prochaine étape</div>
   <h1>Merci pour<br><em>votre confiance.</em></h1>
   <div class="gold-bar"></div>
 
-  <p class="subtitle">Votre commande est bien enregistrée.<br><strong>Vous allez recevoir un email dans quelques minutes</strong> avec votre lien questionnaire et toutes les instructions pour nous envoyer vos souvenirs.</p>
+  <p class="subtitle" id="paymentStatus" role="status">Remplissez le questionnaire pour transmettre vos souvenirs. Le paiement est contrôlé avant toute production.</p>
 
-  <div class="email-badge">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C4A46B" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
-    Un email vous a été envoyé
-  </div>
+  <a class="email-badge" id="questionnaireLink" href="questionnaire.html">Remplir mon questionnaire →</a>
 
   <div class="card">
     <div class="card-label">Ce qui va se passer</div>
     <div class="step">
       <div class="step-num">1</div>
-      <div class="step-txt"><strong>Remplissez le questionnaire</strong> — le lien est dans votre email. Prenez le temps qu'il vous faut.</div>
+      <div class="step-txt"><strong>Remplissez le questionnaire</strong> — utilisez le bouton ci-dessus. Prenez le temps qu'il vous faut.</div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
-      <div class="step-txt"><strong>Envoyez vos photos et fichiers</strong> via WeTransfer à l'adresse indiquée dans l'email.</div>
+      <div class="step-txt"><strong>Envoyez vos photos et fichiers</strong> via WeTransfer à contact.capsulememoire@gmail.com avec la référence donnée à la fin du questionnaire.</div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
@@ -76,5 +75,6 @@
   <a href="/" class="back">← Retour au site</a>
 
 </div>
+<script type="module" src="assets/js/confirmation.mjs"></script>
 </body>
 </html>

@@ -11,18 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 
-  <!--
-  ═══════════════════════════════════════════════════════════
-  TODO INTÉGRATION EMAIL
-  ═══════════════════════════════════════════════════════════
-  1. Connecter le formulaire à Brevo / Mailchimp / webhook Make / n8n
-     → Remplir WEBHOOK_URL ci-dessous avec l'URL de votre endpoint
-  2. Configurer l'envoi automatique du PDF en pièce jointe ou lien
-  3. Ajouter un double opt-in si requis par votre ESP
-  4. Stocker le consentement (horodatage + IP) dans votre CRM
-  5. Ajouter le lien vers la politique de confidentialité dans le message de confirmation
-  ═══════════════════════════════════════════════════════════
-  -->
+
 
   <style>
     /* ════ TOKENS ════ */
@@ -401,12 +390,7 @@
       <h3 class="form-title">Où souhaitez-vous<br>le recevoir ?</h3>
       <p class="form-sub">Un seul email. Le guide PDF arrive directement. Aucune relance commerciale.</p>
 
-      <!--
-        WEBHOOK / API — connecter ici
-        // webhook défini ci-dessous
-        Pour Brevo : POST avec { "email": "...", "prenom": "...", "listIds": [X], "updateEnabled": true }
-        Pour Make/n8n : POST JSON avec les champs ci-dessous
-      -->
+
       <form id="guideForm" novalidate>
         <div class="f-group">
           <label class="f-label" for="f-prenom">Prénom</label>
@@ -424,12 +408,14 @@
         </label>
         <span class="f-error" id="err-consent">Veuillez cocher cette case pour continuer.</span>
         <button type="submit" class="btn-or f-submit">Recevoir le guide</button>
-        <p class="f-note">Vous pourrez vous désinscrire à tout moment.</p>
+        <p id="guideError" role="alert" style="color:#a32929;"></p>
+        <div hidden><input name="website" tabindex="-1" autocomplete="off" aria-label="Laisser vide"></div>
+        <p class="f-note">Votre demande autorise uniquement l’envoi du guide, sans relance commerciale.</p>
       </form>
 
       <div class="f-success" id="formSuccess">
-        <p>Merci. Le guide va vous être envoyé par email.</p>
-        <small>Vérifiez votre boîte de réception — et vos spams si besoin.</small>
+        <p>Votre demande de guide a été reçue.</p>
+        <small>L’envoi par email est pris en charge par notre service. Vérifiez votre boîte de réception et vos spams ; contactez-nous si le guide n’arrive pas.</small>
       </div>
     </div>
   </div>
@@ -459,106 +445,6 @@
   <p class="ft-legal">© 2025–2026 Capsule Mémoire · Tous droits réservés</p>
 </footer>
 
-<script>
-  /* ══ WEBHOOK — remplir ici pour connecter Make / n8n / Brevo ══ */
-  const WEBHOOK_URL = 'https://hook.eu1.make.com/szf1ewdw1pdj7a4zbgv391jvomje771x';
-
-  /* ══ REVEAL AU SCROLL ══ */
-  const obs = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-  }, { threshold: 0.08 }) : null;
-  document.querySelectorAll('.rv').forEach(el => obs ? obs.observe(el) : el.classList.add('in'));
-
-  /* ══ ACCORDÉON QUESTIONS ══ */
-  document.querySelectorAll('.q-header').forEach(h => {
-    h.addEventListener('click', () => {
-      const item = h.closest('.q-item');
-      const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.q-item').forEach(i => i.classList.remove('open'));
-      if (!isOpen) item.classList.add('open');
-    });
-    h.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); h.click(); }
-    });
-    h.setAttribute('role', 'button'); h.setAttribute('tabindex', '0');
-  });
-
-  /* ══ SCROLL FLUIDE vers ancre ══ */
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-    });
-  });
-
-  /* ══ FORMULAIRE ══ */
-  const form = document.getElementById('guideForm');
-  if (form) form.addEventListener('submit', async e => {
-    e.preventDefault();
-    let valid = true;
-
-    /* Validation prénom */
-    const prenom = document.getElementById('f-prenom');
-    const errPrenom = document.getElementById('err-prenom');
-    if (!prenom.value.trim()) {
-      prenom.classList.add('error'); errPrenom.classList.add('show'); valid = false;
-    } else { prenom.classList.remove('error'); errPrenom.classList.remove('show'); }
-
-    /* Validation email */
-    const email = document.getElementById('f-email');
-    const errEmail = document.getElementById('err-email');
-    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
-    if (!emailOk) {
-      email.classList.add('error'); errEmail.classList.add('show'); valid = false;
-    } else { email.classList.remove('error'); errEmail.classList.remove('show'); }
-
-    /* Validation consentement */
-    const consent = document.getElementById('f-consent');
-    const errConsent = document.getElementById('err-consent');
-    if (!consent.checked) {
-      errConsent.classList.add('show'); valid = false;
-    } else { errConsent.classList.remove('show'); }
-
-    if (!valid) return;
-
-    /* ══ ENVOI ══ */
-    const btn = form.querySelector('.f-submit');
-    btn.textContent = 'Envoi…'; btn.disabled = true;
-
-    const payload = {
-      prenom: prenom.value.trim(),
-      email: email.value.trim(),
-      consentement: "true",
-      source: 'guide-souvenirs',
-      date: new Date().toISOString()
-    };
-
-    try {
-      if (WEBHOOK_URL) {
-        /* Envoi vers webhook Make / n8n / Brevo */
-        fetch(WEBHOOK_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        }).catch(() => {});
-      }
-      /* Succès */
-      form.style.display = 'none';
-      document.getElementById('formSuccess').classList.add('show');
-    } catch {
-      btn.textContent = 'Recevoir le guide'; btn.disabled = false;
-      alert('Une erreur est survenue. Écrivez directement à contact.capsulememoire@gmail.com');
-    }
-  });
-
-  /* Suppression erreur au remplissage */
-  document.querySelectorAll('.f-input').forEach(inp => {
-    inp.addEventListener('input', () => {
-      inp.classList.remove('error');
-      const errId = 'err-' + inp.id.replace('f-','');
-      document.getElementById(errId)?.classList.remove('show');
-    });
-  });
-</script>
+<script src="assets/js/guide.js" defer></script>
 </body>
 </html>

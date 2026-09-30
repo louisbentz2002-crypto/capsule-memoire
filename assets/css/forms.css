@@ -1,0 +1,8 @@
+.draft-panel{max-width:720px;margin:90px auto 16px;padding:18px 22px;background:#faf8f5;border:1px solid #c4a46b;border-radius:6px;font-size:13px;line-height:1.6;color:#1a2b4a}
+.draft-panel input{width:auto;height:auto;opacity:1;position:static;margin-right:8px}
+.draft-panel button{margin-top:8px;background:transparent;border:1px solid #1a2b4a;border-radius:4px;padding:8px 12px;color:#1a2b4a;cursor:pointer}
+.form-error{max-width:720px;margin:12px auto;padding:0 20px;color:#a32929;font-size:14px;line-height:1.5}
+.r-item:focus-within,.c-item:focus-within{outline:2px solid #1a2b4a;outline-offset:3px}
+.r-item input,.c-item input{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important}
+.field-error-group{outline:1px solid #a32929}
+@media(max-width:760px){.draft-panel{margin:85px 16px 12px}.form-error{margin:10px 16px}}
