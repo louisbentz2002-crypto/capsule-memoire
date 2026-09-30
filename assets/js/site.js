@@ -106,7 +106,7 @@ document.addEventListener('keydown', e => {
 });
 if(mobMenu) mobMenu.addEventListener('click', e => { if(e.target === mobMenu) closeMobMenu(); });
 mobMenu?.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMobMenu));
-window.addEventListener('resize', () => { if (window.innerWidth > 1280 && mobMenu?.classList.contains('open')) closeMobMenu(); }, { passive: true });
+window.addEventListener('resize', () => { if (window.innerWidth > 1180 && mobMenu?.classList.contains('open')) closeMobMenu(); }, { passive: true });
 
 /* STICKY CTA */
 const stickyCta = document.getElementById('stickyCta');
@@ -204,15 +204,13 @@ if(contactForm){
 
     var mouseX = -100, mouseY = -100;
     var ringX = -100, ringY = -100;
-    var frame = null;
 
     function animateRing(){
       ringX += (mouseX - ringX) * 0.2;
       ringY += (mouseY - ringY) * 0.2;
       ring.style.left = ringX + 'px';
       ring.style.top = ringY + 'px';
-      frame = null;
-      if (!document.hidden && Math.abs(mouseX-ringX) + Math.abs(mouseY-ringY) > .2) frame = window.requestAnimationFrame(animateRing);
+      window.requestAnimationFrame(animateRing);
     }
 
     document.addEventListener('pointermove', function(event){
@@ -222,7 +220,6 @@ if(contactForm){
       dot.style.top = mouseY + 'px';
       document.body.classList.add('cm-cursor-ready');
       document.body.classList.remove('cm-cursor-hidden');
-      if (frame === null && !document.hidden) frame = window.requestAnimationFrame(animateRing);
     }, { passive: true });
 
     document.addEventListener('pointerover', function(event){
@@ -233,13 +230,10 @@ if(contactForm){
     });
     document.documentElement.addEventListener('mouseleave', function(){
       document.body.classList.add('cm-cursor-hidden');
-      window.cancelAnimationFrame(frame); frame = null;
     });
     document.documentElement.addEventListener('mouseenter', function(){
       document.body.classList.remove('cm-cursor-hidden');
     });
 
-    document.addEventListener('visibilitychange', function(){
-      if (document.hidden) { window.cancelAnimationFrame(frame); frame = null; }
-    });
+    animateRing();
   })();
