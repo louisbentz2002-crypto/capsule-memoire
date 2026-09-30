@@ -36,6 +36,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/site.css?v=027c71d304a2">
+  <link rel="stylesheet" href="assets/css/restauration-motion.css?v=fe6e1afda825">
   <noscript><style>.rv{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 <body>
@@ -125,6 +126,49 @@
     <svg width="1" height="28" viewBox="0 0 1 28"><line x1=".5" y1="0" x2=".5" y2="28" stroke="#C4A46B" stroke-width="1"/></svg>
     Défiler
   </div>
+</section>
+
+<!-- ANIMATION RESTAURATION -->
+<section class="cmr" id="restauration-motion" aria-labelledby="restauration-motion-title">
+<div class="cmr-in">
+<div>
+<div class="cmr-eye">Restauration photo</div>
+<h2 class="cmr-ttl" id="restauration-motion-title">Chaque visage<br><em>retrouve son éclat.</em></h2>
+<p class="cmr-sub">Nettoyées, équilibrées et recolorisées avec retenue, dans le respect des visages et de l'époque.</p>
+<a class="cmr-btn" href="#essai-photo">Offre découverte · 39 €</a>
+<div class="cmr-meta"><span class="cmr-n">01 / 04</span><span class="cmr-bar" aria-hidden="true"><i></i></span><span class="cmr-state">Photo restaurée</span><button class="cmr-pause" type="button" aria-label="Mettre l’animation en pause" aria-pressed="false" hidden>Pause</button></div>
+</div>
+<div class="cmr-stage" aria-label="Quatre exemples de restauration photo">
+  <div class="cmr-card sweep done" data-p="0" aria-hidden="false">
+    <div class="cmr-ph">
+      <img class="o" src="assets/images/restauration-04-apres.webp" alt="Portrait de femme : photo originale" loading="lazy" decoding="async" width="1122" height="1402">
+      <img class="r" src="assets/images/restauration-04-avant.webp" alt="Portrait de femme : photo restaurée" loading="lazy" decoding="async" width="1122" height="1402">
+      <div class="gl" aria-hidden="true"></div><div class="ln" aria-hidden="true"></div>
+    </div>
+  </div>
+  <div class="cmr-card" data-p="1" aria-hidden="true">
+    <div class="cmr-ph">
+      <img class="o" src="assets/images/restauration-08-apres.webp" alt="Portrait d’enfance : photo originale" loading="lazy" decoding="async" width="1122" height="1402">
+      <img class="r" src="assets/images/restauration-08-avant.webp" alt="Portrait d’enfance : photo restaurée" loading="lazy" decoding="async" width="1122" height="1402">
+      <div class="gl" aria-hidden="true"></div><div class="ln" aria-hidden="true"></div>
+    </div>
+  </div>
+  <div class="cmr-card" data-p="2" aria-hidden="true">
+    <div class="cmr-ph">
+      <img class="o" src="assets/images/restauration-07-apres.webp" alt="Portrait de Suzanne : photo originale" loading="lazy" decoding="async" width="1086" height="1448">
+      <img class="r" src="assets/images/restauration-07-avant.webp" alt="Portrait de Suzanne : photo restaurée" loading="lazy" decoding="async" width="1086" height="1448">
+      <div class="gl" aria-hidden="true"></div><div class="ln" aria-hidden="true"></div>
+    </div>
+  </div>
+  <div class="cmr-card" data-p="3" aria-hidden="true">
+    <div class="cmr-ph">
+      <img class="o" src="assets/images/restauration-01-apres.webp" alt="Photo de mariage : photo originale" loading="lazy" decoding="async" width="1122" height="1402">
+      <img class="r" src="assets/images/restauration-01-avant.webp" alt="Photo de mariage : photo restaurée" loading="lazy" decoding="async" width="1122" height="1402">
+      <div class="gl" aria-hidden="true"></div><div class="ln" aria-hidden="true"></div>
+    </div>
+  </div>
+</div>
+</div>
 </section>
 
 <!-- RÉSULTATS -->
@@ -815,6 +859,7 @@
 
 <p id="mediaStatus" role="status" aria-live="polite" style="text-align:center;"></p>
 <script src="assets/js/site.js?v=8fc6258c4568" defer></script>
+<script src="assets/js/restauration-motion.js?v=fa1f45fbc0ea" defer></script>
 <script src="assets/js/media.js" defer></script>
 <script type="module" src="assets/js/checkout.mjs"></script>
 </body>

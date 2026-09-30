@@ -52,6 +52,8 @@ Les médias restent différés. Avec mouvement réduit ou économie de données,
 
 Après déploiement, vérifier les en-têtes HTTP réellement reçus, les trois boutons Stripe, les lecteurs, les formulaires et l’absence d’erreurs CSP sur ordinateur et téléphone. La configuration du dépôt seule ne prouve pas que Vercel a appliqué ces en-têtes. Les tests DOM n’évaluent pas le rendu ni les Core Web Vitals d’un navigateur réel.
 
+La section animée de restauration sous le hero utilise `assets/css/restauration-motion.css` et `assets/js/restauration-motion.js`, sans script inline. Elle propose une pause, attend les images et suspend la lecture hors écran ou lorsque l’onglet est masqué. Avec mouvement réduit ou économie de données, elle affiche une photo restaurée fixe ; les photos restent visibles sans JavaScript. Le bouton mène à l’offre découverte existante. Attention au nom des fichiers hérités : pour les exemples 04, 08, 07 et 01, `apres.webp` contient la photo originale et `avant.webp` la photo restaurée, vérifiées visuellement. Ne pas inverser leur rôle sur la seule base du nom.
+
 Dans Vercel, activer une protection WAF et une limite de débit adaptées aux routes `/api/contact`, `/api/guide`, `/api/dossier` et `/api/commande`, puis tester une demande légitime. Le dépôt ne possède pas de limite de débit distribuée ni de registre durable des paiements consommés. Jusqu’à cette évolution, regrouper les envois par référence et vérifier dans Stripe la prestation, le client et l’unicité du paiement avant production. Le simple rapprochement d’un montant avec une formule ne vérifie pas le produit Stripe : ce contrôle reste humain.
 
 ## Traitement des dossiers
