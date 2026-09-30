@@ -329,6 +329,8 @@
 
     .confirm { padding-bottom: calc(40px + var(--sab)); }
   </style>
+<meta name="referrer" content="no-referrer">
+<link rel="stylesheet" href="assets/css/forms.css">
 </head>
 <body>
 
@@ -357,11 +359,15 @@
   </div>
 </header>
 
-<div class="progress-wrap" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+<div class="progress-wrap" role="progressbar" aria-label="Progression du questionnaire" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
   <div class="progress-fill" id="pBar" style="width:0%"></div>
 </div>
 
+<aside class="draft-panel" aria-label="Sauvegarde du questionnaire"><label><input type="checkbox" id="saveDraft"> Sauvegarder mes réponses sur cet appareil pendant 7 jours</label><p>À activer uniquement sur un appareil personnel. Les consentements devront être confirmés lors de la reprise.</p><p id="draftStatus" role="status" aria-live="polite"></p><button type="button" id="restartDraft">Effacer le brouillon et recommencer</button></aside>
+<p id="formError" class="form-error" role="alert" aria-live="assertive"></p>
+<noscript><p class="notice">Activez JavaScript pour ce questionnaire ou contactez contact.capsulememoire@gmail.com pour un questionnaire par email.</p></noscript>
 <form id="form" novalidate>
+<div hidden aria-hidden="true"><label for="website">Laisser vide</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
 
 <!-- ═══ PAGE 0 — BIENVENUE ═══ -->
 <div class="page active" id="p0">
@@ -401,20 +407,20 @@
     <div class="q">
       <label>Offre choisie <span class="req">*</span></label>
       <div class="radio-group" id="offreGrp">
-        <label class="r-item" onclick="toggleR(this,'offreGrp','offre','Capsule Photo — 290€')">
+        <label class="r-item">
           <input type="radio" name="offre" value="Capsule Photo — 290€" onchange="onOffre()" required>
           <div class="r-circle"></div>
           <span><strong>Capsule Photo — 290 €</strong><br><span style="font-size:13px;color:var(--muted);">3 photos restaurées, 1 portrait souvenir animé, page hommage PDF — livraison numérique, sans voix, sans écrin</span></span>
         </label>
-        <label class="r-item" onclick="toggleR(this,'offreGrp','offre','Capsule Souvenir — 690€')">
+        <label class="r-item">
           <input type="radio" name="offre" value="Capsule Souvenir — 690€" onchange="onOffre()">
           <div class="r-circle"></div>
-          <span><strong>Capsule Souvenir — 690 €</strong><br><span style="font-size:13px;color:var(--muted);">5 portraits souvenir animés, évocation vocale commémorative*, vidéo hommage, PDF souvenir — numérique uniquement</span></span>
+          <span><strong>Capsule Souvenir — 690 €</strong><br><span style="font-size:13px;color:var(--muted);">Jusqu’à 5 photos restaurées et portraits souvenir animés, évocation vocale commémorative*, vidéo hommage, PDF souvenir — numérique uniquement</span></span>
         </label>
-        <label class="r-item" onclick="toggleR(this,'offreGrp','offre','Capsule Héritage — 990€')">
+        <label class="r-item">
           <input type="radio" name="offre" value="Capsule Héritage — 990€" onchange="onOffre()">
           <div class="r-circle"></div>
-          <span><strong>Capsule Héritage — 990 €</strong><br><span style="font-size:13px;color:var(--muted);">10 portraits animés, évocation vocale commémorative*, vidéo hommage, Livre de Vie, écrin noir premium, plaque QR mémorielle, clé USB</span></span>
+          <span><strong>Capsule Héritage — dès 990 €, sur devis</strong><br><span style="font-size:13px;color:var(--muted);">Jusqu’à 10 photos restaurées et portraits animés, évocation vocale commémorative*, vidéo hommage, Livre de Vie, écrin noir premium, plaque QR mémorielle, clé USB</span></span>
         </label>
       </div>
       <p style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6;">* Si enregistrement vocal exploitable disponible. Sans enregistrement, voix de narration douce clairement présentée comme non authentique.</p>
@@ -423,18 +429,21 @@
     <!-- Option vocale conditionnelle (Capsule Photo uniquement) -->
     <div class="cond" id="optionVocaleBlock">
       <div class="q">
-        <label>Option évocation vocale — Capsule Photo <span class="opt">(+190 €)</span></label>
-        <div class="notice" style="font-size:13px;margin-bottom:10px;">Uniquement si vous disposez d'un enregistrement vocal exploitable. Sans enregistrement, cette option ne peut pas être proposée.</div>
+        <label>Option évocation vocale — Capsule Photo <span class="opt">(+140 €)</span></label>
+        <div class="notice" style="font-size:13px;margin-bottom:10px;">Une évocation de la voix nécessite un enregistrement exploitable. À défaut, une narration non authentique peut être proposée et sera validée avec vous.</div>
         <div class="check-group">
-          <label class="c-item" onclick="toggleC(this, event)">
-            <input type="checkbox" name="option_voix_photo" value="Option évocation vocale commémorative — +190€">
+          <label class="c-item">
+            <input type="checkbox" name="option_voix_photo" value="oui">
             <div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <span>Ajouter l'évocation vocale commémorative (+190 €)</span>
+            <span>Ajouter l'évocation vocale commémorative (+140 €)</span>
           </label>
+          <label class="c-item"><input type="checkbox" name="option_portrait_photo" value="oui"><span>Portrait avec message vocal (+290 €, comprend le message vocal ; ne se cumule pas avec l’option à 140 €)</span></label>
         </div>
       </div>
     </div>
 
+    <div class="cond" id="heritageOptions"><div class="q"><p>Compléments Héritage, sous réserve du devis :</p><label class="c-item"><input type="checkbox" name="option_duo" value="oui"><span>Pack Duo : second écrin, +240 €</span></label><label class="c-item"><input type="checkbox" name="option_plaque" value="oui"><span>Plaque QR additionnelle, +79 €</span></label></div></div>
+    <p class="notice" id="orderSummary" role="status"></p>
     <div class="q">
       <label for="f-nom">Votre prénom et nom <span class="req">*</span></label>
       <input id="f-nom" type="text" name="client_nom" autocomplete="name" autocapitalize="words" required>
@@ -465,7 +474,8 @@
     <div class="page-eyebrow">02 / 07</div>
     <h2 class="page-title">Votre proche</h2>
     <div class="gold-line"></div>
-
+    <div class="q"><label for="personStatus">La personne concernée est… <span class="req">*</span></label><select id="personStatus" name="statut_personne" required><option value="">Choisissez…</option><option value="vivante">Vivante</option><option value="decedee">Décédée</option></select></div>
+    <div class="cond" id="livingConsent"><label class="c-item"><input type="checkbox" name="consent_vivant" value="oui" data-required="true"><span>Je dispose de son accord explicite écrit pour cette création, y compris pour l’utilisation de sa voix et de son image. Cet accord sera vérifié avant production.</span></label></div>
     <div class="q">
       <label for="f-prenom">Son prénom <span class="req">*</span></label>
       <input id="f-prenom" type="text" name="prenom" placeholder="Tel qu'il/elle sera appelé(e) dans la capsule" autocapitalize="words" required>
@@ -496,22 +506,22 @@
     <div class="q">
       <label>Son caractère <span class="opt">(plusieurs choix)</span></label>
       <div class="check-group row">
-        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Chaleureux"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Chaleureux</span></label>
-        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Drôle"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Drôle</span></label>
-        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Doux"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Doux</span></label>
-        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Fort"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Fort</span></label>
-        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Généreux"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Généreux</span></label>
-        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Sage"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Sage</span></label>
-        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Passionné"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Passionné</span></label>
-        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Protecteur"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Protecteur</span></label>
-        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Courageux"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Courageux</span></label>
-        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Travailleur"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Travailleur</span></label>
-        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Créatif"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Créatif</span></label>
-        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Bienveillant"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Bienveillant</span></label>
-        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Joyeux"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Joyeux</span></label>
-        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Discret"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Discret</span></label>
-        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Fidèle"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Fidèle</span></label>
-        <label class="c-item" onclick="toggleC(this, event)"><input type="checkbox" name="caractere" value="Curieux"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Curieux</span></label>
+        <label class="c-item"><input type="checkbox" name="caractere" value="Chaleureux"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Chaleureux</span></label>
+        <label class="c-item"><input type="checkbox" name="caractere" value="Drôle"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Drôle</span></label>
+        <label class="c-item"><input type="checkbox" name="caractere" value="Doux"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Doux</span></label>
+        <label class="c-item"><input type="checkbox" name="caractere" value="Fort"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Fort</span></label>
+        <label class="c-item"><input type="checkbox" name="caractere" value="Généreux"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Généreux</span></label>
+        <label class="c-item"><input type="checkbox" name="caractere" value="Sage"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Sage</span></label>
+        <label class="c-item"><input type="checkbox" name="caractere" value="Passionné"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Passionné</span></label>
+        <label class="c-item"><input type="checkbox" name="caractere" value="Protecteur"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Protecteur</span></label>
+        <label class="c-item"><input type="checkbox" name="caractere" value="Courageux"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Courageux</span></label>
+        <label class="c-item"><input type="checkbox" name="caractere" value="Travailleur"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Travailleur</span></label>
+        <label class="c-item"><input type="checkbox" name="caractere" value="Créatif"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Créatif</span></label>
+        <label class="c-item"><input type="checkbox" name="caractere" value="Bienveillant"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Bienveillant</span></label>
+        <label class="c-item"><input type="checkbox" name="caractere" value="Joyeux"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Joyeux</span></label>
+        <label class="c-item"><input type="checkbox" name="caractere" value="Discret"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Discret</span></label>
+        <label class="c-item"><input type="checkbox" name="caractere" value="Fidèle"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Fidèle</span></label>
+        <label class="c-item"><input type="checkbox" name="caractere" value="Curieux"><div class="c-square"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Curieux</span></label>
       </div>
       <div class="q" style="margin-top:12px;">
         <label for="f-carac-autre">Autre mot pour le décrire <span class="opt">(libre)</span></label>
@@ -570,16 +580,16 @@
     <div class="q">
       <label>Comment souhaitez-vous le message ? <span class="req">*</span></label>
       <div class="radio-group" id="msgGrp">
-        <label class="r-item" onclick="toggleR(this,'msgGrp','type_msg','Je l\'écris moi-même')"><input type="radio" name="type_msg" value="Je l'écris moi-même" onchange="onMsg()" required><div class="r-circle"></div><span>Je l'écris moi-même</span></label>
-        <label class="r-item" onclick="toggleR(this,'msgGrp','type_msg','Vous l\'écrivez à partir de mes réponses')"><input type="radio" name="type_msg" value="Vous l'écrivez à partir de mes réponses" onchange="onMsg()"><div class="r-circle"></div><span>Vous l'écrivez à partir de mes réponses</span></label>
-        <label class="r-item" onclick="toggleR(this,'msgGrp','type_msg','Une histoire de vie racontée')"><input type="radio" name="type_msg" value="Une histoire de vie racontée" onchange="onMsg()"><div class="r-circle"></div><span>Une histoire de vie racontée</span></label>
+        <label class="r-item"><input type="radio" name="type_msg" value="Je l'écris moi-même" onchange="onMsg()" required><div class="r-circle"></div><span>Je l'écris moi-même</span></label>
+        <label class="r-item"><input type="radio" name="type_msg" value="Vous l'écrivez à partir de mes réponses" onchange="onMsg()"><div class="r-circle"></div><span>Vous l'écrivez à partir de mes réponses</span></label>
+        <label class="r-item"><input type="radio" name="type_msg" value="Une histoire de vie racontée" onchange="onMsg()"><div class="r-circle"></div><span>Une histoire de vie racontée</span></label>
       </div>
     </div>
 
     <div class="cond" id="msgLibre">
       <div class="q">
         <label for="f-msg">Texte commémoratif <span class="opt">inspiré de ses mots, de ses valeurs ou de vos souvenirs</span></label>
-        <textarea id="f-msg" name="message_libre" class="lg" placeholder="Exemple : À travers cette capsule, nous souhaitons transmettre son amour, ses valeurs et les souvenirs qui nous relient à lui/elle…" autocapitalize="sentences"></textarea>
+        <textarea id="f-msg" name="message_libre" class="lg" data-required="true" placeholder="Exemple : À travers cette capsule, nous souhaitons transmettre son amour, ses valeurs et les souvenirs qui nous relient à lui/elle…" autocapitalize="sentences"></textarea>
       </div>
     </div>
 
@@ -591,20 +601,21 @@
     <div class="q">
       <label>Ton du message <span class="req">*</span></label>
       <div class="radio-group row" id="tonGrp">
-        <label class="r-item" onclick="toggleR(this,'tonGrp','ton','Apaisant')"><input type="radio" name="ton" value="Apaisant" required><div class="r-circle"></div><span>Apaisant</span></label>
-        <label class="r-item" onclick="toggleR(this,'tonGrp','ton','Joyeux')"><input type="radio" name="ton" value="Joyeux"><div class="r-circle"></div><span>Joyeux</span></label>
-        <label class="r-item" onclick="toggleR(this,'tonGrp','ton','Solennel')"><input type="radio" name="ton" value="Solennel"><div class="r-circle"></div><span>Solennel</span></label>
-        <label class="r-item" onclick="toggleR(this,'tonGrp','ton','Mélange')"><input type="radio" name="ton" value="Mélange"><div class="r-circle"></div><span>Mélange</span></label>
+        <label class="r-item"><input type="radio" name="ton" value="Apaisant" required><div class="r-circle"></div><span>Apaisant</span></label>
+        <label class="r-item"><input type="radio" name="ton" value="Joyeux"><div class="r-circle"></div><span>Joyeux</span></label>
+        <label class="r-item"><input type="radio" name="ton" value="Solennel"><div class="r-circle"></div><span>Solennel</span></label>
+        <label class="r-item"><input type="radio" name="ton" value="Mélange"><div class="r-circle"></div><span>Mélange</span></label>
       </div>
     </div>
 
+    <div class="cond" id="voiceFields">
     <div class="s-label">La voix</div>
 
     <div class="q">
       <label>Avez-vous un enregistrement vocal ? <span class="req">*</span></label>
       <div class="radio-group row" id="voixGrp">
-        <label class="r-item" onclick="toggleR(this,'voixGrp','a_voix','Oui')"><input type="radio" name="a_voix" value="Oui" onchange="onVoix()" required><div class="r-circle"></div><span>Oui</span></label>
-        <label class="r-item" onclick="toggleR(this,'voixGrp','a_voix','Non')"><input type="radio" name="a_voix" value="Non" onchange="onVoix()"><div class="r-circle"></div><span>Non</span></label>
+        <label class="r-item"><input type="radio" name="a_voix" value="Oui" onchange="onVoix()" required><div class="r-circle"></div><span>Oui</span></label>
+        <label class="r-item"><input type="radio" name="a_voix" value="Non" onchange="onVoix()"><div class="r-circle"></div><span>Non</span></label>
       </div>
     </div>
 
@@ -633,16 +644,39 @@
       <div class="q">
         <label>Sa voix était… <span class="opt">(pour orienter le choix de la voix de narration)</span></label>
         <div class="radio-group row" id="descVoixGrp">
-          <label class="r-item" onclick="toggleR(this,'descVoixGrp','desc_voix','Grave')"><input type="radio" name="desc_voix" value="Grave"><div class="r-circle"></div><span>Grave</span></label>
-          <label class="r-item" onclick="toggleR(this,'descVoixGrp','desc_voix','Douce')"><input type="radio" name="desc_voix" value="Douce"><div class="r-circle"></div><span>Douce</span></label>
-          <label class="r-item" onclick="toggleR(this,'descVoixGrp','desc_voix','Énergique')"><input type="radio" name="desc_voix" value="Énergique"><div class="r-circle"></div><span>Énergique</span></label>
-          <label class="r-item" onclick="toggleR(this,'descVoixGrp','desc_voix','Posée')"><input type="radio" name="desc_voix" value="Posée"><div class="r-circle"></div><span>Posée</span></label>
+          <label class="r-item"><input type="radio" name="desc_voix" value="Grave"><div class="r-circle"></div><span>Grave</span></label>
+          <label class="r-item"><input type="radio" name="desc_voix" value="Douce"><div class="r-circle"></div><span>Douce</span></label>
+          <label class="r-item"><input type="radio" name="desc_voix" value="Énergique"><div class="r-circle"></div><span>Énergique</span></label>
+          <label class="r-item"><input type="radio" name="desc_voix" value="Posée"><div class="r-circle"></div><span>Posée</span></label>
         </div>
       </div>
       <div class="q">
         <label for="f-accent">Accent particulier ? <span class="opt">(optionnel)</span></label>
         <input id="f-accent" type="text" name="accent" placeholder="Accent du Sud, Breton, Alsacien…" autocapitalize="sentences">
       </div>
+    </div>
+
+<div class="s-label">Le texte à dire <span style="font-weight:300;text-transform:none;letter-spacing:0;color:var(--muted);font-size:11px;">(création commémorative assistée par IA)</span></div>
+
+    <div class="notice" id="voixTexteNotice">
+      Ce texte sera composé avec vous et validé avant production. Il sera présenté comme une création commémorative assistée par IA, jamais comme des paroles authentiques du proche.
+    </div>
+
+    <div class="q">
+      <label>Comment souhaitez-vous ce texte ? <span class="req">*</span></label>
+      <div class="radio-group" id="voixTexteGrp">
+        <label class="r-item" onclick="toggleR(this,'voixTexteGrp','voix_texte_type','Je l\'écris moi-même')"><input type="radio" name="voix_texte_type" value="Je l'écris moi-même" onchange="onVoixTexte()" required><div class="r-circle"></div><span>Je l'écris moi-même</span></label>
+        <label class="r-item" onclick="toggleR(this,'voixTexteGrp','voix_texte_type','Vous l\'écrivez pour moi')"><input type="radio" name="voix_texte_type" value="Vous l'écrivez pour moi" onchange="onVoixTexte()"><div class="r-circle"></div><span>Vous l'écrivez pour moi</span></label>
+      </div>
+    </div>
+
+    <div class="cond" id="voixTexteLibre">
+      <div class="q">
+        <label for="f-voix-texte">Le texte à dire <span class="req">*</span></label>
+        <textarea id="f-voix-texte" name="voix_texte" class="lg" data-required="true" placeholder="Exemple : Si tu lis ces mots un jour, sache que je t'ai aimé de tout mon cœur. Que les moments qu'on a partagés sont gravés en moi pour toujours…" autocapitalize="sentences" style="min-height:140px;"></textarea>
+        <div class="field-hint">Quelques phrases suffisent. Pour un portrait vocal de 10 à 20 secondes, nous adaptons la longueur avec vous.</div>
+      </div>
+    </div>
     </div>
 
     <div class="btn-nav">
@@ -689,9 +723,9 @@
     <div class="q">
       <label>Ambiance souhaitée pour la vidéo hommage <span class="req">*</span></label>
       <div class="radio-group" id="ambianceGrp">
-        <label class="r-item" onclick="toggleR(this,'ambianceGrp','ambiance','Douce et apaisante')"><input type="radio" name="ambiance" value="Douce et apaisante" required><div class="r-circle"></div><span>Douce et apaisante — lumière tamisée, musique calme</span></label>
-        <label class="r-item" onclick="toggleR(this,'ambianceGrp','ambiance','Joyeuse et lumineuse')"><input type="radio" name="ambiance" value="Joyeuse et lumineuse"><div class="r-circle"></div><span>Joyeuse et lumineuse — couleurs claires, musique vive</span></label>
-        <label class="r-item" onclick="toggleR(this,'ambianceGrp','ambiance','Sobre et recueillie')"><input type="radio" name="ambiance" value="Sobre et recueillie"><div class="r-circle"></div><span>Sobre et recueillie — noir et blanc, silence</span></label>
+        <label class="r-item"><input type="radio" name="ambiance" value="Douce et apaisante" required><div class="r-circle"></div><span>Douce et apaisante — lumière tamisée, musique calme</span></label>
+        <label class="r-item"><input type="radio" name="ambiance" value="Joyeuse et lumineuse"><div class="r-circle"></div><span>Joyeuse et lumineuse — couleurs claires, musique vive</span></label>
+        <label class="r-item"><input type="radio" name="ambiance" value="Sobre et recueillie"><div class="r-circle"></div><span>Sobre et recueillie — noir et blanc, silence</span></label>
       </div>
     </div>
 
@@ -793,37 +827,39 @@
       <textarea id="f-rem" name="remarques" placeholder="Tout ce qui pourrait nous aider à créer la capsule la plus fidèle possible…" autocapitalize="sentences"></textarea>
     </div>
 
-    <div class="notice" style="margin-top:24px;"><strong>Confidentialité totale.</strong> Vos informations et fichiers sont traités de façon strictement confidentielle et supprimés dans les 30 jours suivant la livraison.</div>
+    <div class="notice" style="margin-top:24px;"><strong>Vos souvenirs restent privés.</strong> Les fichiers sources de production sont supprimés dans les 30 jours après livraison. Les livrables finaux, les justificatifs et les données de facturation ont des durées distinctes, décrites dans notre <a href="confidentialite.html">politique de confidentialité</a>. Téléchargez votre copie des livrables.</div>
 
     <div style="margin-top:28px;border:1px solid rgba(196,164,107,.22);border-radius:6px;padding:22px 20px;background:rgba(240,234,224,.3);">
-      <div style="font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--or);margin-bottom:16px;">Déclaration obligatoire — 5 cases à cocher</div>
+      <div style="font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--or);margin-bottom:16px;">Déclarations obligatoires</div>
       <div style="display:flex;flex-direction:column;gap:12px;">
-        <label class="c-item" onclick="toggleC(this, event)" style="min-height:auto;padding:12px 14px;align-items:flex-start;">
+        <label class="c-item" style="min-height:auto;padding:12px 14px;align-items:flex-start;">
           <input type="checkbox" name="consent_proche" value="oui" required>
           <div class="c-square" style="margin-top:2px;flex-shrink:0;"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <span style="font-size:13px;line-height:1.55;">Je certifie être un proche légitime ou agir avec l'accord de la famille proche. <span style="color:var(--or);">*</span></span>
         </label>
-        <label class="c-item" onclick="toggleC(this, event)" style="min-height:auto;padding:12px 14px;align-items:flex-start;">
+        <label class="c-item" style="min-height:auto;padding:12px 14px;align-items:flex-start;">
           <input type="checkbox" name="consent_fichiers" value="oui" required>
           <div class="c-square" style="margin-top:2px;flex-shrink:0;"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <span style="font-size:13px;line-height:1.55;">Je suis autorisé(e) à transmettre les photos, enregistrements et documents fournis. <span style="color:var(--or);">*</span></span>
         </label>
-        <label class="c-item" onclick="toggleC(this, event)" style="min-height:auto;padding:12px 14px;align-items:flex-start;">
+        <label class="c-item" style="min-height:auto;padding:12px 14px;align-items:flex-start;">
           <input type="checkbox" name="consent_ia" value="oui" required>
           <div class="c-square" style="margin-top:2px;flex-shrink:0;"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <span style="font-size:13px;line-height:1.55;">Je comprends que les contenus livrés sont des créations commémoratives assistées par IA, et non des documents réels ou des prises de parole authentiques. <span style="color:var(--or);">*</span></span>
         </label>
-        <label class="c-item" onclick="toggleC(this, event)" style="min-height:auto;padding:12px 14px;align-items:flex-start;">
+        <label class="c-item" style="min-height:auto;padding:12px 14px;align-items:flex-start;">
           <input type="checkbox" name="consent_usage" value="oui" required>
           <div class="c-square" style="margin-top:2px;flex-shrink:0;"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <span style="font-size:13px;line-height:1.55;">Je m'engage à ne pas utiliser ces contenus pour tromper, usurper une identité ou faire croire à une communication réelle avec la personne disparue. <span style="color:var(--or);">*</span></span>
         </label>
-        <label class="c-item" onclick="toggleC(this, event)" style="min-height:auto;padding:12px 14px;align-items:flex-start;">
+        <label class="c-item" style="min-height:auto;padding:12px 14px;align-items:flex-start;">
           <input type="checkbox" name="consent_qualite" value="oui" required>
           <div class="c-square" style="margin-top:2px;flex-shrink:0;"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4.5l3 3 6-6" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <span style="font-size:13px;line-height:1.55;">Je comprends que la qualité finale dépend des éléments fournis et qu'une prévisualisation sera soumise à ma validation avant livraison. <span style="color:var(--or);">*</span></span>
         </label>
       </div>
+      <label class="c-item"><input type="checkbox" name="consent_cgv" value="oui" required><span>J’ai lu les <a href="cgv.html" target="_blank" rel="noopener">conditions générales de vente</a> et la <a href="confidentialite.html" target="_blank" rel="noopener">politique de confidentialité</a>. Les options et toute demande Héritage nécessitent une confirmation écrite avant production.</span></label>
+      <label class="c-item"><input type="checkbox" name="demarrage_anticipe" value="oui"><span>Je demande expressément que la prestation commence avant la fin du délai de rétractation de 14 jours. Je reconnais que je perdrai ce droit lorsque la prestation de service sera entièrement exécutée. Cette demande est facultative ; sans elle, la production attend la fin du délai.</span></label>
       <p class="error-msg" id="consent-error" style="margin-top:12px;">Veuillez cocher toutes les cases obligatoires pour continuer.</p>
     </div>
 
@@ -985,330 +1021,6 @@
 
 </form>
 
-<script>
-  /* ═══════════════════════════════════════════
-     IDENTIFIANT DOSSIER UNIQUE
-  ═══════════════════════════════════════════ */
-  const DOSSIER_ID = (function() {
-    const now = new Date();
-    const d = now.toISOString().slice(0, 10).replace(/-/g, '');
-    const rand = Math.floor(1000 + Math.random() * 9000);
-    return 'CM-' + d + '-' + rand;
-  })();
-
-  let cur = 0, isOffre2 = false;
-  const TOTAL = 7;
-
-  /* ─── NAVIGATION ─── */
-  function go(n) {
-    document.querySelector('.page.active')?.classList.remove('active');
-    document.getElementById('p' + n)?.classList.add('active');
-    cur = n;
-    updateUI();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    if (n === 8) showConfirmDetails();
-  }
-
-  function next(from) {
-    if (!validate(from)) return;
-    if (from === 5 && isOffre2)  { go(6); return; }
-    if (from === 5 && !isOffre2) { go(7); return; }
-    if (from === 6) { go(7); return; }
-    go(from + 1);
-  }
-
-  function goBack7() { go(isOffre2 ? 6 : 5); }
-
-  /* ─── CONFIRMATION DETAILS ─── */
-  function showConfirmDetails() {
-    ['confirmDossierId','wtDossierId','wtDossierIdDrive','wtDossierIdMail'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.textContent = DOSSIER_ID;
-    });
-  }
-
-  /* ─── UI UPDATE ─── */
-  function updateUI() {
-    if (cur === 0 || cur === 8) {
-      document.getElementById('hStep').textContent = 'Questionnaire';
-      document.getElementById('hDots').innerHTML = '';
-      document.getElementById('pBar').style.width = cur === 8 ? '100%' : '0%';
-      return;
-    }
-    const labels = ['', 'Commande', 'Votre proche', 'Son histoire', 'Message & voix', 'Photos', 'Livre de vie', 'Pour finir'];
-    document.getElementById('hStep').textContent = labels[cur] || '';
-    const pct = Math.round((cur / TOTAL) * 100);
-    document.getElementById('pBar').style.width = pct + '%';
-    document.getElementById('pBar').setAttribute('aria-valuenow', pct);
-    const dotsEl = document.getElementById('hDots');
-    const total = isOffre2 ? 7 : 6;
-    dotsEl.innerHTML = '';
-    for (let i = 1; i <= total; i++) {
-      const real = (!isOffre2 && i >= 6) ? i + 1 : i;
-      const d = document.createElement('div');
-      d.className = 'dot' + (real < cur ? ' done' : real === cur ? ' active' : '');
-      dotsEl.appendChild(d);
-    }
-  }
-
-  /* ─── CUSTOM RADIO TOGGLE ─── */
-  function toggleR(el, grpId, name, val) {
-    document.getElementById(grpId)?.querySelectorAll('.r-item').forEach(i => i.classList.remove('sel'));
-    el.classList.add('sel');
-    const inp = el.querySelector('input[type="radio"]');
-    if (inp) { inp.checked = true; inp.dispatchEvent(new Event('change')); }
-  }
-
-  /* ─── CUSTOM CHECKBOX TOGGLE ─── */
-  function toggleC(el, ev) {
-    if (ev) ev.preventDefault();
-    el.classList.toggle('sel');
-    const inp = el.querySelector('input[type="checkbox"]');
-    if (inp) inp.checked = el.classList.contains('sel');
-    el.style.borderColor = '';
-  }
-
-  /* ─── CONDITIONAL LOGIC ─── */
-  function onOffre() {
-    const v = document.querySelector('input[name="offre"]:checked')?.value || '';
-    isOffre2 = v.includes('990') || v.toLowerCase().includes('héritage');
-    const isPhoto = v.includes('290') || v.toLowerCase().includes('photo');
-    const isSouvenir = v.includes('690') || v.toLowerCase().includes('souvenir');
-    document.getElementById('maxPhotos').textContent = isOffre2 ? '10 photos' : isSouvenir ? '5 photos' : '3 photos';
-    const optionVocale = document.getElementById('optionVocaleBlock');
-    if (optionVocale) optionVocale.classList.toggle('on', isPhoto);
-    updateUI();
-  }
-  function onVoixTexte() {
-    const v = document.querySelector('input[name="voix_texte_type"]:checked')?.value || '';
-    document.getElementById('voixTexteLibre').classList.toggle('on', v.includes('moi-même'));
-  }
-
-  function onMsg() {
-    const v = document.querySelector('input[name="type_msg"]:checked')?.value || '';
-    document.getElementById('msgLibre').classList.toggle('on', v.includes('moi-même'));
-  }
-  function onVoix() {
-    const v = document.querySelector('input[name="a_voix"]:checked')?.value;
-    document.getElementById('voixOui').classList.toggle('on', v === 'Oui');
-    document.getElementById('voixNon').classList.toggle('on', v === 'Non');
-  }
-
-  /* ─── FILE HANDLERS ─── */
-  function onAudio(input) {
-    const names = Array.from(input.files).map(f => f.name);
-    document.getElementById('enregistrement_nom_hidden').value = names.join(', ') || '(non sélectionné)';
-  }
-
-  function onPhotos(input) {
-    const list = document.getElementById('photosList');
-    list.innerHTML = '';
-    const names = Array.from(input.files).map(f => f.name);
-    document.getElementById('photos_noms_hidden').value = names.join(', ') || '(non sélectionnées)';
-    Array.from(input.files).forEach(f => {
-      const el = document.createElement('div');
-      el.className = 'upload-item';
-      el.innerHTML = '<span>🖼</span><span class="upload-item-name">' + f.name + '</span><span class="upload-item-size">' + (f.size / 1048576).toFixed(1) + ' Mo</span>';
-      list.appendChild(el);
-    });
-  }
-
-  function onDocs(input) {
-    const list = document.getElementById('docsList');
-    list.innerHTML = '';
-    const names = Array.from(input.files).map(f => f.name);
-    document.getElementById('docs_noms_hidden').value = names.join(', ') || '(non sélectionnés)';
-    Array.from(input.files).forEach(f => {
-      const el = document.createElement('div');
-      el.className = 'upload-item';
-      el.innerHTML = '<span>📄</span><span class="upload-item-name">' + f.name + '</span>';
-      list.appendChild(el);
-    });
-  }
-
-  /* ─── SCROLL TO ELEMENT (sans scrollIntoView) ─── */
-  function scrollToEl(el) {
-    const rect = el.getBoundingClientRect();
-    const top = window.pageYOffset + rect.top - 130;
-    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
-  }
-
-  /* ─── VALIDATION PAR PAGE ─── */
-  function validate(n) {
-    const page = document.getElementById('p' + n);
-    let ok = true;
-    let firstError = null;
-
-    /* 1 — Champs texte / email / select / textarea obligatoires */
-    page.querySelectorAll('input:not([type="radio"]):not([type="checkbox"]):not([type="file"]):not([type="hidden"])[required], textarea[required], select[required]').forEach(f => {
-      if (!f.value.trim()) {
-        f.classList.add('field-error');
-        ok = false;
-        if (!firstError) firstError = f;
-        f.addEventListener('input', () => f.classList.remove('field-error'), { once: true });
-      }
-    });
-
-    /* 2 — Groupes radio obligatoires */
-    page.querySelectorAll('.radio-group').forEach(g => {
-      const radios = [...g.querySelectorAll('input[type="radio"]')];
-      if (radios.some(r => r.required) && !radios.some(r => r.checked)) {
-        g.classList.add('field-error-group');
-        ok = false;
-        if (!firstError) firstError = g;
-        const remove = () => { g.classList.remove('field-error-group'); g.removeEventListener('click', remove); };
-        g.addEventListener('click', remove);
-      }
-    });
-
-    /* 3 — Cases à cocher obligatoires (consentements) */
-    page.querySelectorAll('input[type="checkbox"][required]').forEach(cb => {
-      if (!cb.checked) {
-        const item = cb.closest('.c-item');
-        if (item) {
-          item.style.borderColor = '#c0392b';
-          ok = false;
-          if (!firstError) firstError = item;
-        }
-      }
-    });
-    if (n === 7 && !ok) {
-      const errEl = document.getElementById('consent-error');
-      if (errEl) errEl.classList.add('show');
-    }
-
-    /* 4 — Validation cohérence des dates (page 2) */
-    if (n === 2) {
-      const naiss = document.getElementById('f-naiss').value;
-      const deces = document.getElementById('f-deces').value;
-      if (naiss && deces && naiss >= deces) {
-        document.getElementById('f-naiss').classList.add('field-error');
-        document.getElementById('f-deces').classList.add('field-error');
-        const errDate = document.getElementById('date-error');
-        if (errDate) errDate.classList.add('show');
-        ok = false;
-        if (!firstError) firstError = document.getElementById('f-naiss');
-        [document.getElementById('f-naiss'), document.getElementById('f-deces')].forEach(f => {
-          f.addEventListener('change', () => {
-            f.classList.remove('field-error');
-            const e = document.getElementById('date-error');
-            if (e) e.classList.remove('show');
-          }, { once: true });
-        });
-      }
-    }
-
-    /* 5 — Email valide (page 1) */
-    if (n === 1) {
-      const em = document.getElementById('f-email');
-      if (em && em.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value.trim())) {
-        em.classList.add('field-error');
-        ok = false;
-        if (!firstError) firstError = em;
-        em.addEventListener('input', () => em.classList.remove('field-error'), { once: true });
-      }
-    }
-
-    if (!ok && firstError) scrollToEl(firstError);
-    return ok;
-  }
-
-  /* ─── COLLECTE COMPLÈTE DES DONNÉES ─── */
-  function collectAllData() {
-    const data = {};
-    const form = document.getElementById('form');
-
-    /* Champs texte / textarea / select / hidden */
-    form.querySelectorAll('input:not([type="radio"]):not([type="checkbox"]):not([type="file"]), textarea, select').forEach(el => {
-      if (!el.name) return;
-      data[el.name] = el.value.trim() !== '' ? el.value.trim() : '(non renseigné)';
-    });
-
-    /* Boutons radio — un seul par groupe */
-    const radioNames = new Set([...form.querySelectorAll('input[type="radio"]')].map(r => r.name));
-    radioNames.forEach(name => {
-      const checked = form.querySelector('input[type="radio"][name="' + name + '"]:checked');
-      data[name] = checked ? checked.value : '(non renseigné)';
-    });
-
-    /* Cases à cocher — regroupées, noms nettoyés */
-    const checkGroups = {};
-    form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-      const cleanName = cb.name.replace(/\[\]$/, '');
-      if (!checkGroups[cleanName]) checkGroups[cleanName] = [];
-      if (cb.checked) checkGroups[cleanName].push(cb.value);
-      else if (!checkGroups[cleanName]._seen) checkGroups[cleanName]._seen = true;
-    });
-    Object.entries(checkGroups).forEach(([name, vals]) => {
-      const checked = vals.filter(v => typeof v === 'string');
-      data[name] = checked.length > 0 ? checked.join(', ') : '(non renseigné)';
-    });
-
-    /* Métadonnées */
-    const now = new Date();
-    data['_dossier_id']  = DOSSIER_ID;
-    data['_offre']       = document.querySelector('input[name="offre"]:checked')?.value || '(non renseigné)';
-    data['_date_envoi']  = now.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }) +
-                           ' à ' + now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-    data['_url']         = window.location.href;
-    data['_client']      = document.getElementById('f-nom')?.value || '';
-
-    return data;
-  }
-
-  /* ─── SOUMISSION DU FORMULAIRE ─── */
-  document.getElementById('form').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    if (!validate(7)) return;
-
-    const btn = document.getElementById('submitBtn');
-    btn.textContent = 'Envoi en cours…';
-    btn.disabled = true;
-
-    const data = collectAllData();
-
-    try {
-      const res = await fetch('https://formspree.io/f/mykowvda', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      if (res.ok) {
-        go(8);
-      } else {
-        throw new Error('Formspree error ' + res.status);
-      }
-    } catch (err) {
-      btn.textContent = 'Envoyer ma capsule →';
-      btn.disabled = false;
-      alert('Une erreur est survenue. Merci d\'écrire directement à contact.capsulememoire@gmail.com en indiquant votre dossier ' + DOSSIER_ID);
-    }
-  });
-
-  updateUI();
-</script>
+<script type="module" src="assets/js/questionnaire.mjs"></script>
 </body>
 </html>
-    <div class="s-label">Le texte à dire <span style="font-weight:300;text-transform:none;letter-spacing:0;color:var(--muted);font-size:11px;">(voix reconstituée &amp; portrait animé)</span></div>
-
-    <div class="notice" id="voixTexteNotice">
-      Ce texte sera lu par la voix reconstituée de votre proche et/ou animé sur son portrait. Écrivez-le à la première personne, comme s'il/elle parlait directement. Quelques phrases suffisent — nous pouvons aussi vous aider à le rédiger.
-    </div>
-
-    <div class="q">
-      <label>Comment souhaitez-vous ce texte ? <span class="req">*</span></label>
-      <div class="radio-group" id="voixTexteGrp">
-        <label class="r-item" onclick="toggleR(this,'voixTexteGrp','voix_texte_type','Je l\'écris moi-même')"><input type="radio" name="voix_texte_type" value="Je l'écris moi-même" onchange="onVoixTexte()" required><div class="r-circle"></div><span>Je l'écris moi-même</span></label>
-        <label class="r-item" onclick="toggleR(this,'voixTexteGrp','voix_texte_type','Vous l\'écrivez pour moi')"><input type="radio" name="voix_texte_type" value="Vous l'écrivez pour moi" onchange="onVoixTexte()"><div class="r-circle"></div><span>Vous l'écrivez pour moi</span></label>
-      </div>
-    </div>
-
-    <div class="cond" id="voixTexteLibre">
-      <div class="q">
-        <label for="f-voix-texte">Le texte à dire <span class="req">*</span></label>
-        <textarea id="f-voix-texte" name="voix_texte" class="lg" placeholder="Exemple : Si tu lis ces mots un jour, sache que je t'ai aimé de tout mon cœur. Que les moments qu'on a partagés sont gravés en moi pour toujours…" autocapitalize="sentences" style="min-height:140px;"></textarea>
-        <div class="field-hint">Écrivez à la première personne. Entre 3 et 10 phrases est idéal pour un portrait animé de qualité.</div>
-      </div>
-    </div>
-
-

@@ -1,0 +1,3 @@
+export function validDossier() {
+  return { offre: 'Capsule Souvenir — 690€', client_nom: 'Client test', client_email: 'client@example.com', lien: 'Enfant', prenom: 'Test', statut_personne: 'decedee', trois_mots: 'calme, doux, drôle', passions: 'jardin', expressions: 'Bonjour', souvenir: 'Un dimanche', type_msg: 'Vous l’écrivez', destinataire: 'Famille', ton: 'Apaisant', ambiance: 'Douce', a_voix: 'Oui', voix_texte_type: 'Vous l’écrivez pour moi', consent_proche: 'oui', consent_fichiers: 'oui', consent_ia: 'oui', consent_usage: 'oui', consent_qualite: 'oui', consent_cgv: 'oui', _dossier_id: 'CM-12345678-1234-1234-1234-123456789abc' };
+}
