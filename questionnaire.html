@@ -393,7 +393,7 @@
       <div class="welcome-step"><div class="welcome-step-num">2</div><div>Toutes vos réponses restent strictement confidentielles</div></div>
       <div class="welcome-step"><div class="welcome-step-num">3</div><div>Vous pourrez envoyer vos photos et fichiers à la fin via WeTransfer</div></div>
     </div>
-    <button type="button" class="btn-start" onclick="go(1)">Commencer →</button>
+    <button type="button" class="btn-start" data-go="1">Commencer →</button>
   </div>
 </div>
 
@@ -408,17 +408,17 @@
       <label>Offre choisie <span class="req">*</span></label>
       <div class="radio-group" id="offreGrp">
         <label class="r-item">
-          <input type="radio" name="offre" value="Capsule Photo — 290€" onchange="onOffre()" required>
+          <input type="radio" name="offre" value="Capsule Photo — 290€" required>
           <div class="r-circle"></div>
           <span><strong>Capsule Photo — 290 €</strong><br><span style="font-size:13px;color:var(--muted);">3 photos restaurées, 1 portrait souvenir animé, page hommage PDF — livraison numérique, sans voix, sans écrin</span></span>
         </label>
         <label class="r-item">
-          <input type="radio" name="offre" value="Capsule Souvenir — 690€" onchange="onOffre()">
+          <input type="radio" name="offre" value="Capsule Souvenir — 690€">
           <div class="r-circle"></div>
           <span><strong>Capsule Souvenir — 690 €</strong><br><span style="font-size:13px;color:var(--muted);">Jusqu’à 5 photos restaurées et portraits souvenir animés, évocation vocale commémorative*, vidéo hommage, PDF souvenir — numérique uniquement</span></span>
         </label>
         <label class="r-item">
-          <input type="radio" name="offre" value="Capsule Héritage — 990€" onchange="onOffre()">
+          <input type="radio" name="offre" value="Capsule Héritage — 990€">
           <div class="r-circle"></div>
           <span><strong>Capsule Héritage — dès 990 €, sur devis</strong><br><span style="font-size:13px;color:var(--muted);">Jusqu’à 10 photos restaurées et portraits animés, évocation vocale commémorative*, vidéo hommage, Livre de Vie, écrin noir premium, plaque QR mémorielle, clé USB</span></span>
         </label>
@@ -450,8 +450,9 @@
     </div>
     <div class="q">
       <label for="f-email">Votre email <span class="req">*</span></label>
-      <input id="f-email" type="email" name="client_email" autocomplete="email" inputmode="email" required>
-    </div>
+      <input id="f-email" type="email" maxlength="254" name="client_email" autocomplete="email" inputmode="email" required>
+    <p class="hint">Si vous avez payé en ligne, utilisez l’adresse email de votre reçu Stripe.</p>
+</div>
     <div class="q">
       <label for="f-lien">Votre lien avec la personne concernée <span class="req">*</span></label>
       <select id="f-lien" name="lien" required>
@@ -462,8 +463,8 @@
     </div>
 
     <div class="btn-nav">
-      <button type="button" class="btn btn-secondary" onclick="go(0)">← Retour</button>
-      <button type="button" class="btn btn-primary" onclick="next(1)">Continuer →</button>
+      <button type="button" class="btn btn-secondary" data-go="0">← Retour</button>
+      <button type="button" class="btn btn-primary" data-next="1">Continuer →</button>
     </div>
   </div>
 </div>
@@ -530,8 +531,8 @@
     </div>
 
     <div class="btn-nav">
-      <button type="button" class="btn btn-secondary" onclick="go(1)">← Retour</button>
-      <button type="button" class="btn btn-primary" onclick="next(2)">Continuer →</button>
+      <button type="button" class="btn btn-secondary" data-go="1">← Retour</button>
+      <button type="button" class="btn btn-primary" data-next="2">Continuer →</button>
     </div>
   </div>
 </div>
@@ -562,8 +563,8 @@
     </div>
 
     <div class="btn-nav">
-      <button type="button" class="btn btn-secondary" onclick="go(2)">← Retour</button>
-      <button type="button" class="btn btn-primary" onclick="next(3)">Continuer →</button>
+      <button type="button" class="btn btn-secondary" data-go="2">← Retour</button>
+      <button type="button" class="btn btn-primary" data-next="3">Continuer →</button>
     </div>
   </div>
 </div>
@@ -580,9 +581,9 @@
     <div class="q">
       <label>Comment souhaitez-vous le message ? <span class="req">*</span></label>
       <div class="radio-group" id="msgGrp">
-        <label class="r-item"><input type="radio" name="type_msg" value="Je l'écris moi-même" onchange="onMsg()" required><div class="r-circle"></div><span>Je l'écris moi-même</span></label>
-        <label class="r-item"><input type="radio" name="type_msg" value="Vous l'écrivez à partir de mes réponses" onchange="onMsg()"><div class="r-circle"></div><span>Vous l'écrivez à partir de mes réponses</span></label>
-        <label class="r-item"><input type="radio" name="type_msg" value="Une histoire de vie racontée" onchange="onMsg()"><div class="r-circle"></div><span>Une histoire de vie racontée</span></label>
+        <label class="r-item"><input type="radio" name="type_msg" value="Je l'écris moi-même" required><div class="r-circle"></div><span>Je l'écris moi-même</span></label>
+        <label class="r-item"><input type="radio" name="type_msg" value="Vous l'écrivez à partir de mes réponses"><div class="r-circle"></div><span>Vous l'écrivez à partir de mes réponses</span></label>
+        <label class="r-item"><input type="radio" name="type_msg" value="Une histoire de vie racontée"><div class="r-circle"></div><span>Une histoire de vie racontée</span></label>
       </div>
     </div>
 
@@ -614,8 +615,8 @@
     <div class="q">
       <label>Avez-vous un enregistrement vocal ? <span class="req">*</span></label>
       <div class="radio-group row" id="voixGrp">
-        <label class="r-item"><input type="radio" name="a_voix" value="Oui" onchange="onVoix()" required><div class="r-circle"></div><span>Oui</span></label>
-        <label class="r-item"><input type="radio" name="a_voix" value="Non" onchange="onVoix()"><div class="r-circle"></div><span>Non</span></label>
+        <label class="r-item"><input type="radio" name="a_voix" value="Oui" required><div class="r-circle"></div><span>Oui</span></label>
+        <label class="r-item"><input type="radio" name="a_voix" value="Non"><div class="r-circle"></div><span>Non</span></label>
       </div>
     </div>
 
@@ -665,8 +666,8 @@
     <div class="q">
       <label>Comment souhaitez-vous ce texte ? <span class="req">*</span></label>
       <div class="radio-group" id="voixTexteGrp">
-        <label class="r-item" onclick="toggleR(this,'voixTexteGrp','voix_texte_type','Je l\'écris moi-même')"><input type="radio" name="voix_texte_type" value="Je l'écris moi-même" onchange="onVoixTexte()" required><div class="r-circle"></div><span>Je l'écris moi-même</span></label>
-        <label class="r-item" onclick="toggleR(this,'voixTexteGrp','voix_texte_type','Vous l\'écrivez pour moi')"><input type="radio" name="voix_texte_type" value="Vous l'écrivez pour moi" onchange="onVoixTexte()"><div class="r-circle"></div><span>Vous l'écrivez pour moi</span></label>
+        <label class="r-item"><input type="radio" name="voix_texte_type" value="Je l'écris moi-même" required><div class="r-circle"></div><span>Je l'écris moi-même</span></label>
+        <label class="r-item"><input type="radio" name="voix_texte_type" value="Vous l'écrivez pour moi"><div class="r-circle"></div><span>Vous l'écrivez pour moi</span></label>
       </div>
     </div>
 
@@ -680,8 +681,8 @@
     </div>
 
     <div class="btn-nav">
-      <button type="button" class="btn btn-secondary" onclick="go(3)">← Retour</button>
-      <button type="button" class="btn btn-primary" onclick="next(4)">Continuer →</button>
+      <button type="button" class="btn btn-secondary" data-go="3">← Retour</button>
+      <button type="button" class="btn btn-primary" data-next="4">Continuer →</button>
     </div>
   </div>
 </div>
@@ -735,8 +736,8 @@
     </div>
 
     <div class="btn-nav">
-      <button type="button" class="btn btn-secondary" onclick="go(4)">← Retour</button>
-      <button type="button" class="btn btn-primary" onclick="next(5)">Continuer →</button>
+      <button type="button" class="btn btn-secondary" data-go="4">← Retour</button>
+      <button type="button" class="btn btn-primary" data-next="5">Continuer →</button>
     </div>
   </div>
 </div>
@@ -801,8 +802,8 @@
     </div>
 
     <div class="btn-nav">
-      <button type="button" class="btn btn-secondary" onclick="go(5)">← Retour</button>
-      <button type="button" class="btn btn-primary" onclick="next(6)">Continuer →</button>
+      <button type="button" class="btn btn-secondary" data-go="5">← Retour</button>
+      <button type="button" class="btn btn-primary" data-next="6">Continuer →</button>
     </div>
   </div>
 </div>
@@ -864,7 +865,7 @@
     </div>
 
     <div class="btn-nav">
-      <button type="button" class="btn btn-secondary" onclick="goBack7()">← Retour</button>
+      <button type="button" class="btn btn-secondary" data-back="true">← Retour</button>
       <button type="submit" class="btn btn-submit" id="submitBtn">Envoyer ma capsule →</button>
     </div>
   </div>
@@ -901,7 +902,7 @@
 
         <!-- Méthode 1 : WeTransfer -->
         <div style="border:1px solid var(--bord);border-radius:6px;margin-bottom:12px;overflow:hidden;">
-          <div style="background:rgba(196,164,107,.08);padding:12px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+          <div style="background:rgba(196,164,107,.08);padding:12px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;" data-transfer-toggle role="button" tabindex="0" aria-expanded="false">
             <span style="font-size:18px;">🔗</span>
             <div style="flex:1;"><div style="font-size:14px;font-weight:500;color:var(--navy);">WeTransfer</div><div style="font-size:12px;color:var(--muted);">Recommandé — jusqu'à 2 Go, gratuit</div></div>
             <span style="font-size:11px;color:var(--or);">Voir les étapes ▾</span>
@@ -918,7 +919,7 @@
 
         <!-- Méthode 2 : Google Drive -->
         <div style="border:1px solid var(--bord);border-radius:6px;margin-bottom:12px;overflow:hidden;">
-          <div style="background:rgba(196,164,107,.08);padding:12px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+          <div style="background:rgba(196,164,107,.08);padding:12px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;" data-transfer-toggle role="button" tabindex="0" aria-expanded="false">
             <span style="font-size:18px;">📁</span>
             <div style="flex:1;"><div style="font-size:14px;font-weight:500;color:var(--navy);">Google Drive</div><div style="font-size:12px;color:var(--muted);">Si vous utilisez déjà Google — partage de lien</div></div>
             <span style="font-size:11px;color:var(--or);">Voir les étapes ▾</span>
@@ -934,7 +935,7 @@
 
         <!-- Méthode 3 : Email direct -->
         <div style="border:1px solid var(--bord);border-radius:6px;overflow:hidden;">
-          <div style="background:rgba(196,164,107,.08);padding:12px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+          <div style="background:rgba(196,164,107,.08);padding:12px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;" data-transfer-toggle role="button" tabindex="0" aria-expanded="false">
             <span style="font-size:18px;">✉️</span>
             <div style="flex:1;"><div style="font-size:14px;font-weight:500;color:var(--navy);">Email direct</div><div style="font-size:12px;color:var(--muted);">Si total de fichiers &lt; 20 Mo</div></div>
             <span style="font-size:11px;color:var(--or);">Voir les étapes ▾</span>

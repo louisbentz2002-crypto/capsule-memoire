@@ -27,7 +27,7 @@
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       const target = document.querySelector(a.getAttribute('href'));
-      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' }); }
     });
   });
 
@@ -35,6 +35,7 @@
   const form = document.getElementById('guideForm');
   if (form) form.addEventListener('submit', async e => {
     e.preventDefault();
+    if (form.querySelector('.f-submit').disabled) return;
     let valid = true;
 
     /* Validation prénom */

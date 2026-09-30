@@ -93,7 +93,7 @@ test('le contact refuse un email invalide avant tout appel réseau', async () =>
   const w = dom.window; let calls = 0;
   w.matchMedia = () => ({ matches: false }); w.HTMLMediaElement.prototype.load = () => {};
   w.HTMLMediaElement.prototype.play = async () => {}; w.HTMLMediaElement.prototype.pause = () => {};
-  w.AbortSignal = AbortSignal; w.fetch = async () => { calls++; return new Response('{}'); };
+  w.AbortSignal = AbortSignal; w.fetch = async () => { calls++; return new Response('{"accepted":true}'); };
   w.eval(readFileSync(new URL('assets/js/site.js', root), 'utf8'));
   const form = w.document.getElementById('contactForm');
   form.dispatchEvent(new w.Event('submit', { cancelable: true })); await tick(); assert.equal(calls, 0);
@@ -131,4 +131,22 @@ test('la confirmation distingue accès direct, paiement vérifié et réponse in
     else assert.doesNotMatch(status, /Paiement de la formule confirmé/);
     assert.equal(w.location.search, ''); dom.window.close();
   }
+});
+test('les boutons d’étape et les instructions de transfert fonctionnent sans JavaScript inline', async () => {
+  const { w, d, dom } = await questionnaire();
+  d.querySelector('[data-go="1"]').click(); assert.equal(d.querySelector('.page.active').id, 'p1');
+  complete(w); d.querySelector('[data-next="1"]').click(); assert.equal(d.querySelector('.page.active').id, 'p2');
+  const toggle = d.querySelector('[data-transfer-toggle]');
+  toggle.dispatchEvent(new w.KeyboardEvent('keydown', { key: 'Enter', cancelable: true }));
+  assert.equal(toggle.getAttribute('aria-expanded'), 'true'); assert.equal(toggle.nextElementSibling.style.display, 'block');
+  dom.window.close();
+});
+test('un double envoi pendant la requête ne transmet qu’un dossier', async () => {
+  let resolve, body, calls = 0;
+  const { w, form, dom } = await questionnaire(null, async (url, options) => {
+    calls++; body = JSON.parse(options.body); return new Promise(done => { resolve = done; });
+  });
+  complete(w); form.dispatchEvent(new w.Event('submit', { cancelable: true })); form.dispatchEvent(new w.Event('submit', { cancelable: true }));
+  assert.equal(calls, 1); resolve(new Response(JSON.stringify({ accepted: true, reference: body._dossier_id })));
+  await tick(); dom.window.close();
 });

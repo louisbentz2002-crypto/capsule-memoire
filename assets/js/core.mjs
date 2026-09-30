@@ -5,14 +5,15 @@ export const OFFERS = Object.freeze({
 });
 export const REFERENCE_RE = /^CM-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 export function offerId(value = '') {
-  if (OFFERS[value]) return value;
-  if (value.includes('Photo')) return 'photo';
-  if (value.includes('Souvenir')) return 'souvenir';
-  if (value.includes('Héritage')) return 'heritage';
+  if (typeof value !== 'string') return '';
+  if (Object.hasOwn(OFFERS, value)) return value;
+  if (value === 'Capsule Photo — 290€') return 'photo';
+  if (value === 'Capsule Souvenir — 690€') return 'souvenir';
+  if (value === 'Capsule Héritage — 990€' || value === OFFERS.heritage.label) return 'heritage';
   return '';
 }
 export function quote(offer, { voice = false, portrait = false, duo = false, plaque = false } = {}) {
-  if (!OFFERS[offer]) throw new Error('Offre inconnue');
+  if (!Object.hasOwn(OFFERS, offer)) throw new Error('Offre inconnue');
   const options = [];
   if (offer === 'photo' && portrait) options.push(['Portrait avec message vocal', 290]);
   else if (offer === 'photo' && voice) options.push(['Évocation vocale', 140]);
@@ -48,12 +49,30 @@ export async function postJson(url, payload, fetcher = globalThis.fetch) {
       method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify(payload), signal: controller.signal
     });
-    if (!response.ok) throw new Error('Envoi non confirmé');
-    return await response.json();
+    const result = await response.json();
+    if (!response.ok) throw new Error(typeof result.error === 'string' ? result.error : 'Envoi non confirmé');
+    return result;
   } finally { clearTimeout(timer); }
 }
 export function hasVoice(data) {
   return offerId(data.offre) !== 'photo' || data.option_voix_photo === 'oui' || data.option_portrait_photo === 'oui';
+}
+export const ENUMS = Object.freeze({
+  lien: ['Enfant', 'Conjoint / Conjointe', 'Parent', 'Frère / Sœur', 'Petit-enfant', 'Ami(e) proche', 'Autre'],
+  statut_personne: ['vivante', 'decedee'],
+  type_msg: ["Je l'écris moi-même", "Vous l'écrivez à partir de mes réponses", 'Une histoire de vie racontée'],
+  ton: ['Apaisant', 'Joyeux', 'Solennel', 'Mélange'],
+  ambiance: ['Douce et apaisante', 'Joyeuse et lumineuse', 'Sobre et recueillie'],
+  a_voix: ['Oui', 'Non'],
+  desc_voix: ['Grave', 'Douce', 'Énergique', 'Posée'],
+  voix_texte_type: ["Je l'écris moi-même", "Vous l'écrivez pour moi"],
+  qualite_enregistrement: ['Bonne — voix claire et audible', 'Correcte — quelques bruits de fond', 'Faible — bruyant ou lointain', 'Je ne sais pas encore'],
+  nombre_photos: ['1 à 3 photos', '4 à 10 photos', 'Plus de 10 photos', 'Je ne sais pas encore']
+});
+export function validDate(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value || '')) return false;
+  const date = new Date(value + 'T00:00:00Z');
+  return Number.isFinite(date.getTime()) && date.getUTCFullYear() > 0 && date.toISOString().slice(0, 10) === value;
 }
 export function dossierErrors(data) {
   const required = ['offre', 'client_nom', 'client_email', 'lien', 'prenom', 'statut_personne', 'trois_mots',
@@ -62,7 +81,12 @@ export function dossierErrors(data) {
   const errors = required.filter(key => !data[key]?.trim());
   for (const key of required.filter(key => key.startsWith('consent_'))) if (data[key] !== 'oui') errors.push(key);
   if (!offerId(data.offre)) errors.push('offre');
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.client_email || '')) errors.push('client_email');
+  if ((data.client_email || '').length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.client_email || '')) errors.push('client_email');
+  for (const [key, allowed] of Object.entries(ENUMS)) if (data[key] && !allowed.includes(data[key])) errors.push(key);
+  for (const key of Object.keys(data).filter(key => key.startsWith('consent_') || key.startsWith('option_') || key === 'demarrage_anticipe')) {
+    if (data[key] && data[key] !== 'oui') errors.push(key);
+  }
+  for (const key of ['naissance', 'deces', 'date_souhaitee']) if (data[key] && !validDate(data[key])) errors.push(key);
   if (!['vivante', 'decedee'].includes(data.statut_personne)) errors.push('statut_personne');
   if (data.statut_personne === 'vivante' && data.consent_vivant !== 'oui') errors.push('consent_vivant');
   if (data.naissance && data.deces && data.naissance > data.deces) errors.push('deces');

@@ -65,3 +65,6 @@ window.portraitToggle = async i => {
   if (!video.getAttribute('src')) { video.src = `assets/videos/portrait-parle-${i + 1}.mp4`; video.load(); }
   try { await video.play(); } catch { mediaError(); }
 };
+document.querySelectorAll('[data-voice]').forEach(button => button.addEventListener('click', () => window.voiceToggle(button.dataset.voice)));
+document.querySelectorAll('[data-voice-seek]').forEach(bar => bar.addEventListener('click', event => window.voiceSeek(bar.dataset.voiceSeek, event)));
+document.querySelectorAll('[data-portrait]').forEach(button => button.addEventListener('click', () => window.portraitToggle(Number(button.dataset.portrait))));

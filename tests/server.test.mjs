@@ -7,7 +7,7 @@ import { verifyPayment } from '../lib/payment.mjs';
 import { validDossier } from './fixtures.mjs';
 const request = data => new Request('https://www.capsulememoire.fr/api/dossier', { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: 'https://www.capsulememoire.fr' }, body: JSON.stringify(data) });
 const session = 'cs_test_123456789abcdefghijk';
-const paid = () => new Response(JSON.stringify({ status: 'complete', payment_status: 'paid', currency: 'eur', amount_total: 69000, client_reference_id: validDossier()._dossier_id }));
+const paid = () => new Response(JSON.stringify({ id: session, livemode: false, customer_details: { email: 'client@example.com' }, status: 'complete', payment_status: 'paid', currency: 'eur', amount_total: 69000, client_reference_id: validDossier()._dossier_id }));
 test('un dossier sans accord IA, CGV ou consentement vivant ne sort pas du serveur', async () => {
   for (const key of ['consent_ia', 'consent_cgv', 'consent_proche']) {
     const data = validDossier(); delete data[key];
@@ -35,7 +35,7 @@ test('paiement absent ou en attente : pas de confirmation', async () => {
 test('Stripe vérifie le montant et la référence, jamais le navigateur', async () => {
   const result = await verifyPayment(session, async (url, opts) => { assert.equal(opts.headers.Authorization, 'Bearer test-secret'); return paid(); }, 'test-secret');
   assert.equal(result.paid, true); assert.equal(result.offer, 'souvenir');
-  const data = { ...validDossier(), _session_id: session }; let forwarded = false;
+  const data = { ...validDossier(), _session_id: session, _dossier_id: result.reference }; let forwarded = false;
   const res = await dossier(request(data), async url => {
     if (url.startsWith('https://api.stripe.com/')) return paid(); forwarded = true; return new Response('{}');
   }, 'test-secret');

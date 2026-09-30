@@ -11,7 +11,11 @@ if (sessionId) {
     if (result.paid !== true || !REFERENCE_RE.test(result.reference || '')) throw new Error('Paiement non vérifiable');
     try {
       const previous = JSON.parse(sessionStorage.getItem('cm-draft'));
-      if (previous?.value?.reference !== result.reference) { sessionStorage.removeItem('cm-draft'); localStorage.removeItem('cm-draft'); }
+      if (previous?.value?.reference === result.checkoutReference && REFERENCE_RE.test(result.checkoutReference || '')) {
+        const migrated = { ...previous.value, reference: result.reference };
+        writeStored(sessionStorage, 'cm-draft', migrated);
+        if (migrated.persistent) writeStored(localStorage, 'cm-draft', migrated);
+      } else if (previous?.value?.reference !== result.reference) { sessionStorage.removeItem('cm-draft'); localStorage.removeItem('cm-draft'); }
       writeStored(localStorage, 'cm-reference', result.reference);
       writeStored(sessionStorage, 'cm-payment', { sessionId, reference: result.reference, offer: result.offer });
     } catch { /* Le contrôle manuel reste possible si le stockage est bloqué. */ }
