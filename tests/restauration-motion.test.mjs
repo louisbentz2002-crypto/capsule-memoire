@@ -48,6 +48,7 @@ test('les sept paires fournies existent et le premier exemple est visible sans J
 test('la lecture attend les images et garde un seul RAF au fil des sept exemples', () => {
   const m = motion({ loaded: false });
   m.intersect(true); assert.equal(m.pending.size, 0);
+  assert.ok([...m.root.querySelectorAll('img')].every(img => img.loading === 'eager'));
   m.load(); assert.equal(m.pending.size, 1);
   m.frame(); m.frame(2400);
   assert.equal(m.root.querySelector('input').value, '100');
