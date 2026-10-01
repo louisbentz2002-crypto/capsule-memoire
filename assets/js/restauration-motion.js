@@ -16,7 +16,7 @@
   const connection = window.navigator.connection;
   const HOLD = 700, SWEEP = 1700, TOTAL = 4300;
   let index = 0, elapsed = 0, frame = null, last = null;
-  let visible = false, userPaused = false, hovered = false, focused = false, dragging = false;
+  let visible = false, userPaused = false, hovered = false, dragging = false;
   let staticMode = reduced.matches || !!connection?.saveData;
   const ease = x => x < .5 ? 4 * x ** 3 : 1 - (-2 * x + 2) ** 3 / 2;
   const ready = () => [original, restored].every(img => img.complete && img.naturalWidth > 0);
@@ -45,7 +45,7 @@
     pause.setAttribute('aria-pressed', String(userPaused));
     pause.setAttribute('aria-label', userPaused ? 'Reprendre l’animation' : 'Mettre l’animation en pause');
     root.classList.toggle('cmd-static', staticMode);
-    if (staticMode || !visible || document.hidden || userPaused || hovered || focused || dragging || !ready()) { stop(); return; }
+    if (staticMode || !visible || document.hidden || userPaused || hovered || dragging || !ready()) { stop(); return; }
     if (frame === null) frame = window.requestAnimationFrame(tick);
   }
   function select(i, manual = false) {
@@ -74,8 +74,8 @@
     root.querySelector('.cmd-cap .k').textContent = tab.querySelector('.t').textContent;
     card.style.setProperty('--rot', `${index % 2 ? 1.2 : -1.2}deg`);
     wipe(staticMode ? 1 : 0);
-    if (manual) userPaused = true;
-    if (visible && !staticMode && !manual && !userPaused && !hovered && !focused) card.animate?.([
+    if (manual) userPaused = false;
+    if (visible && !staticMode && !userPaused && !hovered) card.animate?.([
       { transform: 'translateX(28px) rotate(4deg) scale(.96)' },
       { transform: `rotate(${index % 2 ? 1.2 : -1.2}deg)` }
     ], { duration: 420, easing: 'cubic-bezier(.2,.8,.2,1)' });
@@ -123,8 +123,6 @@
   ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(name => ph.addEventListener(name, () => { dragging = false; update(); }));
   stage.addEventListener('mouseenter', () => { hovered = true; update(); });
   stage.addEventListener('mouseleave', () => { hovered = false; update(); });
-  root.addEventListener('focusin', () => { focused = true; update(); });
-  root.addEventListener('focusout', event => { focused = !!event.relatedTarget && root.contains(event.relatedTarget); update(); });
   [original, restored].forEach(img => {
     img.addEventListener('load', () => { if (ready()) status.textContent = ''; update(); });
     img.addEventListener('error', () => { status.textContent = 'Cet exemple ne se charge pas. Vous pouvez en sélectionner un autre.'; stop(); });
