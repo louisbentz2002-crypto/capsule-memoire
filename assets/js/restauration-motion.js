@@ -37,7 +37,7 @@
     if (frame !== null) window.cancelAnimationFrame(frame);
     frame = null;
     last = null;
-    card.getAnimations?.().forEach(animation => animation.pause());
+    card.getAnimations?.().forEach(animation => animation.cancel());
   }
   function update() {
     pause.hidden = staticMode;
@@ -46,7 +46,6 @@
     pause.setAttribute('aria-label', userPaused ? 'Reprendre l’animation' : 'Mettre l’animation en pause');
     root.classList.toggle('cmd-static', staticMode);
     if (staticMode || !visible || document.hidden || userPaused || hovered || focused || dragging || !ready()) { stop(); return; }
-    card.getAnimations?.().forEach(animation => animation.play());
     if (frame === null) frame = window.requestAnimationFrame(tick);
   }
   function select(i, manual = false) {
@@ -64,6 +63,8 @@
     stage.setAttribute('aria-labelledby', tab.id);
     ph.style.aspectRatio = `${tab.dataset.width} / ${tab.dataset.height}`;
     [original, restored].forEach((img, k) => {
+      // Seule la paire active est chargée : le résultat masqué doit aussi être prêt.
+      img.loading = 'eager';
       img.width = Number(tab.dataset.width); img.height = Number(tab.dataset.height);
       img.alt = `${tab.dataset.alt} : photo ${k ? 'restaurée' : 'originale abîmée'}`;
       img.src = k ? tab.dataset.restored : tab.dataset.original;
@@ -74,9 +75,9 @@
     card.style.setProperty('--rot', `${index % 2 ? 1.2 : -1.2}deg`);
     wipe(staticMode ? 1 : 0);
     if (manual) userPaused = true;
-    if (visible && !staticMode) card.animate?.([
-      { opacity: 0, transform: 'translateX(28px) rotate(4deg) scale(.96)' },
-      { opacity: 1, transform: `rotate(${index % 2 ? 1.2 : -1.2}deg)` }
+    if (visible && !staticMode && !manual && !userPaused && !hovered && !focused) card.animate?.([
+      { transform: 'translateX(28px) rotate(4deg) scale(.96)' },
+      { transform: `rotate(${index % 2 ? 1.2 : -1.2}deg)` }
     ], { duration: 420, easing: 'cubic-bezier(.2,.8,.2,1)' });
     update();
   }
