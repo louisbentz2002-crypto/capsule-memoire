@@ -36,7 +36,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/site.css?v=027c71d304a2">
-  <link rel="stylesheet" href="assets/css/restauration-motion.css?v=fe6e1afda825">
+  <link rel="stylesheet" href="assets/css/restauration-motion.css?v=c7a796839b5f">
   <noscript><style>.rv{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 <body>
@@ -128,45 +128,34 @@
   </div>
 </section>
 
-<!-- ANIMATION RESTAURATION -->
-<section class="cmr" id="restauration-motion" aria-labelledby="restauration-motion-title">
-<div class="cmr-in">
+<!-- ANIMATION RESTAURATION : DOMMAGES -->
+<section class="cmd" id="restauration-dommages" aria-labelledby="cmd-title">
+<div class="cmd-in">
 <div>
-<div class="cmr-eye">Restauration photo</div>
-<h2 class="cmr-ttl" id="restauration-motion-title">Chaque visage<br><em>retrouve son éclat.</em></h2>
-<p class="cmr-sub">Nettoyées, équilibrées et recolorisées avec retenue, dans le respect des visages et de l'époque.</p>
-<a class="cmr-btn" href="#essai-photo">Offre découverte · 39 €</a>
-<div class="cmr-meta"><span class="cmr-n">01 / 04</span><span class="cmr-bar" aria-hidden="true"><i></i></span><span class="cmr-state">Photo restaurée</span><button class="cmr-pause" type="button" aria-label="Mettre l’animation en pause" aria-pressed="false" hidden>Pause</button></div>
+<p class="cmd-eye">Restauration photo</p>
+<h2 class="cmd-ttl" id="cmd-title">Le temps abîme.<br><em>Nous réparons.</em></h2>
+<p class="cmd-sub">Déchirures, taches, couleurs passées : chaque photographie est reprise avec soin, dans le respect des visages et de l'époque.</p>
+<ul class="cmd-list" role="tablist" aria-label="Types de dommages" aria-orientation="vertical">
+  <li role="presentation"><button class="cmd-it on" id="cmd-tab-1" role="tab" type="button" aria-selected="true" aria-controls="cmd-panel" tabindex="0" data-original="assets/images/rg-famille-original.webp" data-restored="assets/images/rg-famille-restauree.webp" data-width="1120" data-height="1400" data-alt="Photo de famille" data-fade="false"><span class="n">01</span><span class="t">Déchirures et manques</span><span class="d">Les parties arrachées sont reconstituées, les plis effacés.</span><span class="p" aria-hidden="true"></span></button></li>
+  <li role="presentation"><button class="cmd-it" id="cmd-tab-2" role="tab" type="button" aria-selected="false" aria-controls="cmd-panel" tabindex="-1" data-original="assets/images/rg-lac-original.webp" data-restored="assets/images/rg-lac-restaure.webp" data-width="1400" data-height="933" data-alt="Souvenir de vacances au lac" data-fade="false"><span class="n">02</span><span class="t">Couleurs délavées</span><span class="d">Le ciel, le lac et les visages retrouvent leurs teintes.</span><span class="p" aria-hidden="true"></span></button></li>
+  <li role="presentation"><button class="cmd-it" id="cmd-tab-3" role="tab" type="button" aria-selected="false" aria-controls="cmd-panel" tabindex="-1" data-original="assets/images/rg-homme-teinte-original.webp" data-restored="assets/images/rg-homme-restaure.webp" data-width="1120" data-height="1400" data-alt="Portrait ancien d’un homme" data-fade="false"><span class="n">03</span><span class="t">Dominante de couleur</span><span class="d">Le voile vert des vieux tirages est corrigé avec justesse.</span><span class="p" aria-hidden="true"></span></button></li>
+  <li role="presentation"><button class="cmd-it" id="cmd-tab-4" role="tab" type="button" aria-selected="false" aria-controls="cmd-panel" tabindex="-1" data-original="assets/images/rg-pere-fille-original.webp" data-restored="assets/images/rg-pere-fille-restauree.webp" data-width="1400" data-height="1050" data-alt="Père et fille au jardin" data-fade="false"><span class="n">04</span><span class="t">Pliures et coins abîmés</span><span class="d">Les cassures du papier disparaissent, le grain d’époque reste.</span><span class="p" aria-hidden="true"></span></button></li>
+  <li role="presentation"><button class="cmd-it" id="cmd-tab-5" role="tab" type="button" aria-selected="false" aria-controls="cmd-panel" tabindex="-1" data-original="assets/images/rg-mariage-original.webp" data-restored="assets/images/rg-mariage-restaure.webp" data-width="1120" data-height="1400" data-alt="Photo de mariage" data-fade="false"><span class="n">05</span><span class="t">Taches et moisissures</span><span class="d">Les traces d’humidité s’effacent dans le respect des visages.</span><span class="p" aria-hidden="true"></span></button></li>
+  <li role="presentation"><button class="cmd-it" id="cmd-tab-6" role="tab" type="button" aria-selected="false" aria-controls="cmd-panel" tabindex="-1" data-original="assets/images/rg-chien-original.webp" data-restored="assets/images/rg-chien-restaure.webp" data-width="1400" data-height="1050" data-alt="Chien dans une cour" data-fade="false"><span class="n">06</span><span class="t">Flou et photo bougée</span><span class="d">Une image floue retrouve de la netteté et de la lumière.</span><span class="p" aria-hidden="true"></span></button></li>
+  <li role="presentation"><button class="cmd-it" id="cmd-tab-7" role="tab" type="button" aria-selected="false" aria-controls="cmd-panel" tabindex="-1" data-original="assets/images/rg-cuisine-original.webp" data-restored="assets/images/rg-cuisine-restauree.webp" data-width="1400" data-height="1050" data-alt="Repas de famille" data-fade="true"><span class="n">07</span><span class="t">Reflets et photo de photo</span><span class="d">Un tirage photographié au téléphone redevient une image propre.</span><span class="p" aria-hidden="true"></span></button></li>
+</ul>
 </div>
-<div class="cmr-stage" aria-label="Quatre exemples de restauration photo">
-  <div class="cmr-card sweep done" data-p="0" aria-hidden="false">
-    <div class="cmr-ph">
-      <img class="o" src="assets/images/restauration-04-apres.webp" alt="Portrait de femme : photo originale" loading="lazy" decoding="async" width="1122" height="1402">
-      <img class="r" src="assets/images/restauration-04-avant.webp" alt="Portrait de femme : photo restaurée" loading="lazy" decoding="async" width="1122" height="1402">
-      <div class="gl" aria-hidden="true"></div><div class="ln" aria-hidden="true"></div>
-    </div>
-  </div>
-  <div class="cmr-card" data-p="1" aria-hidden="true">
-    <div class="cmr-ph">
-      <img class="o" src="assets/images/restauration-08-apres.webp" alt="Portrait d’enfance : photo originale" loading="lazy" decoding="async" width="1122" height="1402">
-      <img class="r" src="assets/images/restauration-08-avant.webp" alt="Portrait d’enfance : photo restaurée" loading="lazy" decoding="async" width="1122" height="1402">
-      <div class="gl" aria-hidden="true"></div><div class="ln" aria-hidden="true"></div>
-    </div>
-  </div>
-  <div class="cmr-card" data-p="2" aria-hidden="true">
-    <div class="cmr-ph">
-      <img class="o" src="assets/images/restauration-07-apres.webp" alt="Portrait de Suzanne : photo originale" loading="lazy" decoding="async" width="1086" height="1448">
-      <img class="r" src="assets/images/restauration-07-avant.webp" alt="Portrait de Suzanne : photo restaurée" loading="lazy" decoding="async" width="1086" height="1448">
-      <div class="gl" aria-hidden="true"></div><div class="ln" aria-hidden="true"></div>
-    </div>
-  </div>
-  <div class="cmr-card" data-p="3" aria-hidden="true">
-    <div class="cmr-ph">
-      <img class="o" src="assets/images/restauration-01-apres.webp" alt="Photo de mariage : photo originale" loading="lazy" decoding="async" width="1122" height="1402">
-      <img class="r" src="assets/images/restauration-01-avant.webp" alt="Photo de mariage : photo restaurée" loading="lazy" decoding="async" width="1122" height="1402">
-      <div class="gl" aria-hidden="true"></div><div class="ln" aria-hidden="true"></div>
-    </div>
-  </div>
+<div class="cmd-stage" id="cmd-panel" role="tabpanel" aria-labelledby="cmd-tab-1" tabindex="0">
+<div class="cmd-lbl"><span>Photo originale</span><span class="r">Photo restaurée</span></div>
+<div class="cmd-card"><div class="cmd-ph">
+<img class="o" src="assets/images/rg-famille-original.webp" alt="Photo de famille : photo originale abîmée" width="1120" height="1400" loading="lazy" decoding="async">
+<img class="r" src="assets/images/rg-famille-restauree.webp" alt="Photo de famille : photo restaurée" width="1120" height="1400" loading="lazy" decoding="async">
+<div class="gl" aria-hidden="true"></div><div class="ln" aria-hidden="true"></div><div class="fl" aria-hidden="true"></div>
+</div></div>
+<div class="cmd-cap"><span class="c">01 / 07</span><b class="k">Déchirures et manques</b></div>
+<div class="cmd-controls" hidden><label class="cmd-compare" for="cmd-comparison">Comparer<input id="cmd-comparison" type="range" min="0" max="100" value="0" aria-label="Part de la photo restaurée" aria-valuetext="Photo originale"></label><button class="cmd-pause" type="button" aria-pressed="false" aria-label="Mettre l’animation en pause">Pause</button></div>
+<p class="cmd-status" role="status"></p>
+<p class="cmd-note">Exemples illustratifs générés avec l’IA.</p>
 </div>
 </div>
 </section>
@@ -859,7 +848,7 @@
 
 <p id="mediaStatus" role="status" aria-live="polite" style="text-align:center;"></p>
 <script src="assets/js/site.js?v=8fc6258c4568" defer></script>
-<script src="assets/js/restauration-motion.js?v=fa1f45fbc0ea" defer></script>
+<script src="assets/js/restauration-motion.js?v=503391b839e1" defer></script>
 <script src="assets/js/media.js" defer></script>
 <script type="module" src="assets/js/checkout.mjs"></script>
 </body>
