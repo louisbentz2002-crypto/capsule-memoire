@@ -44,7 +44,5 @@
 .cmd-pause{background:none;border:1px solid rgba(196,164,107,.45);border-radius:2px;color:#C4A46B;font:inherit;letter-spacing:.12em;text-transform:uppercase;min-height:44px;padding:8px 12px;cursor:pointer}
 .cmd-status{color:rgba(240,234,224,.75);font-size:12px;margin:12px 0 0}
 .cmd-status:empty{display:none}
-.cmd-note{font-size:11px;line-height:1.5;color:rgba(240,234,224,.6);margin:14px 2px 0}
 @media(max-width:860px){.cmd-stage{width:min(100%,440px)}.cmd-ph{max-height:none}}
 @media(max-width:420px){.cmd-cap{font-size:10px;letter-spacing:.12em}.cmd-controls{gap:10px}.cmd-compare{gap:8px}}
-

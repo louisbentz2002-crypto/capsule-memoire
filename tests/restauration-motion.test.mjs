@@ -41,7 +41,7 @@ test('les sept paires fournies existent et le premier exemple est visible sans J
   for (const asset of assets) assert.ok(existsSync(new URL('../' + asset, import.meta.url)), asset);
   assert.equal(root.querySelector('.o').getAttribute('src'), tabs[0].dataset.original);
   assert.equal(root.querySelector('.cmd-controls').hidden, true);
-  assert.match(root.querySelector('.cmd-note').textContent, /IA/);
+  assert.equal(root.querySelector('.cmd-note'), null);
   dom.window.close();
 });
 
@@ -71,13 +71,32 @@ test('sortir de l’écran ou masquer l’onglet suspend la lecture sans perdre 
   m.dom.window.close();
 });
 
-test('choix au clavier et comparaison manuelle restent en pause après changements de visibilité', () => {
+test('changer de photo relance le balayage et le défilement même si le bouton garde le focus', () => {
+  const m = motion(); m.intersect(true); m.frame(); m.frame(1600);
+  const tabs = m.root.querySelectorAll('[role="tab"]');
+  const pause = m.root.querySelector('.cmd-pause');
+  pause.click(); assert.equal(m.pending.size, 0);
+  tabs[1].focus(); tabs[1].click();
+  assert.equal(m.dom.window.document.activeElement, tabs[1]);
+  assert.equal(pause.getAttribute('aria-pressed'), 'false');
+  assert.equal(m.root.querySelector('input').value, '0');
+  assert.equal(m.pending.size, 1);
+  m.frame(); m.frame(1300);
+  assert.ok(Number(m.root.querySelector('input').value) > 0);
+  m.frame(3100);
+  assert.equal(m.root.querySelector('.cmd-cap .c').textContent, '03 / 07');
+  assert.equal(m.pending.size, 1);
+  m.dom.window.close();
+});
+
+test('choix au clavier relance la lecture, comparaison manuelle reste en pause après changements de visibilité', () => {
   const m = motion(); m.intersect(true);
   const tabs = m.root.querySelectorAll('[role="tab"]');
   tabs[0].dispatchEvent(new m.dom.window.KeyboardEvent('keydown', { key: 'End', bubbles: true }));
   assert.equal(m.root.querySelector('.cmd-stage').getAttribute('aria-labelledby'), 'cmd-tab-7');
   assert.equal(m.dom.window.document.activeElement, tabs[6]);
   assert.equal(tabs[6].tabIndex, 0);
+  assert.equal(m.pending.size, 1);
   const range = m.root.querySelector('input'); range.value = '40'; range.dispatchEvent(new m.dom.window.Event('input'));
   assert.equal(m.root.querySelector('.cmd-ph .r').style.clipPath, 'none');
   assert.equal(m.root.querySelector('.cmd-ph .r').style.opacity, '0.4');
@@ -92,7 +111,7 @@ test('choix au clavier et comparaison manuelle restent en pause après changemen
 
 test('pause explicite, survol et erreur de chargement arrêtent la lecture', () => {
   const m = motion(); m.intersect(true);
-  const pause = m.root.querySelector('.cmd-pause'); pause.click();
+  const pause = m.root.querySelector('.cmd-pause'); pause.focus(); pause.click();
   assert.equal(m.pending.size, 0); pause.click(); assert.equal(m.pending.size, 1);
   const stage = m.root.querySelector('.cmd-stage');
   stage.dispatchEvent(new m.dom.window.Event('mouseenter')); assert.equal(m.pending.size, 0);
