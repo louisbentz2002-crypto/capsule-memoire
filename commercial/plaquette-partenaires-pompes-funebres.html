@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plaquette partenaires pompes funèbres — Capsule Mémoire</title>
+  <meta name="description" content="Plaquette professionnelle Capsule Mémoire destinée aux pompes funèbres et partenaires funéraires.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0D1829;
+      --navy-mid: #1A2B4A;
+      --gold: #C4A46B;
+      --gold-light: #D4B98A;
+      --beige: #F0EAE0;
+      --ivory: #FAF8F5;
+      --text: #2D3748;
+      --muted: #7A8BAA;
+      --border: #E0D8CC;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { background: #d8d8d8; }
+    body {
+      font-family: "DM Sans", sans-serif;
+      color: var(--text);
+      font-weight: 300;
+      line-height: 1.55;
+    }
+    .sheet {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 12mm auto;
+      background: var(--ivory);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(13,24,41,.16);
+      page-break-after: always;
+    }
+    .sheet:last-child { page-break-after: auto; }
+    .eyebrow {
+      color: var(--gold);
+      font-size: 8.5pt;
+      font-weight: 500;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3 { font-family: "Cormorant Garamond", serif; }
+    h1 {
+      color: var(--ivory);
+      font-size: 35pt;
+      line-height: 1.06;
+      font-weight: 300;
+      margin: 9mm 0 5mm;
+    }
+    h1 em, h2 em { color: var(--gold); font-weight: 300; }
+    h2 {
+      color: var(--navy);
+      font-size: 25pt;
+      line-height: 1.12;
+      font-weight: 400;
+    }
+    h3 {
+      color: var(--navy-mid);
+      font-size: 15pt;
+      font-weight: 500;
+      line-height: 1.15;
+    }
+    p { font-size: 9.3pt; }
+    .cover {
+      min-height: 134mm;
+      padding: 18mm 18mm 14mm;
+      color: var(--ivory);
+      background:
+        radial-gradient(circle at 82% 18%, rgba(196,164,107,.15), transparent 30%),
+        linear-gradient(150deg, var(--navy-mid), var(--navy) 62%, #08111f);
+      position: relative;
+    }
+    .cover::after {
+      content: "";
+      position: absolute;
+      right: -25mm;
+      bottom: -50mm;
+      width: 115mm;
+      height: 115mm;
+      border: 1px solid rgba(196,164,107,.15);
+      border-radius: 50%;
+      box-shadow: 0 0 0 18mm rgba(196,164,107,.025), 0 0 0 36mm rgba(196,164,107,.02);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 4mm;
+      color: var(--ivory);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 12pt;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+    .brand b { color: var(--gold); font-weight: 500; }
+    .lead {
+      max-width: 128mm;
+      color: rgba(240,234,224,.73);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 15pt;
+      font-style: italic;
+      line-height: 1.45;
+    }
+    .rule { width: 17mm; height: 1px; background: var(--gold); margin: 6mm 0; }
+    .promise {
+      padding: 13mm 18mm 10mm;
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 13mm;
+    }
+    .promise-copy p { margin-top: 4mm; color: #596579; }
+    .quote {
+      background: var(--beige);
+      border-left: 2px solid var(--gold);
+      padding: 7mm;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 14pt;
+      font-style: italic;
+      color: var(--navy-mid);
+    }
+    .benefits {
+      padding: 0 18mm 14mm;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5mm;
+    }
+    .benefit {
+      border-top: 1px solid var(--gold);
+      padding-top: 4mm;
+    }
+    .benefit .num {
+      color: var(--gold);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 21pt;
+      line-height: 1;
+      margin-bottom: 2mm;
+    }
+    .benefit p { color: var(--muted); font-size: 8.2pt; margin-top: 2mm; }
+    .page-title {
+      background: var(--navy);
+      color: var(--ivory);
+      padding: 13mm 18mm 11mm;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 10mm;
+    }
+    .page-title h2 { color: var(--ivory); font-size: 27pt; }
+    .page-title p { color: rgba(240,234,224,.55); max-width: 76mm; text-align: right; }
+    .offers { padding: 10mm 18mm 7mm; }
+    .offers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4mm;
+      margin-top: 6mm;
+    }
+    .offer {
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 5mm;
+      min-height: 71mm;
+      position: relative;
+    }
+    .offer.featured { border-color: var(--gold); }
+    .offer.featured::before {
+      content: "L’hommage complet";
+      position: absolute;
+      top: -3mm;
+      right: 4mm;
+      background: var(--gold);
+      color: var(--navy);
+      padding: 1.3mm 3mm;
+      font-size: 6.5pt;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .price {
+      color: var(--gold);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 23pt;
+      margin: 2mm 0 3mm;
+    }
+    .offer ul { list-style: none; }
+    .offer li {
+      color: #68758a;
+      font-size: 7.6pt;
+      margin: 1.4mm 0;
+      padding-left: 3.5mm;
+      position: relative;
+    }
+    .offer li::before { content: "•"; color: var(--gold); position: absolute; left: 0; }
+    .workflow {
+      padding: 6mm 18mm;
+      display: grid;
+      grid-template-columns: .75fr 1.25fr;
+      gap: 10mm;
+      background: var(--beige);
+    }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; }
+    .step {
+      background: rgba(255,255,255,.55);
+      padding: 4mm;
+      border-top: 1px solid rgba(196,164,107,.5);
+    }
+    .step b {
+      display: block;
+      color: var(--gold);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 17pt;
+      font-weight: 400;
+    }
+    .step p { font-size: 7.5pt; color: #657287; margin-top: 1mm; }
+    .ethics-contact {
+      padding: 8mm 18mm 10mm;
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 7mm;
+    }
+    .ethics { border: 1px solid var(--border); padding: 5mm; }
+    .ethics ul { margin-top: 3mm; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 2mm 5mm; }
+    .ethics li { color: #667287; font-size: 7.6pt; padding-left: 4mm; position: relative; }
+    .ethics li::before { content: "✓"; color: var(--gold); position: absolute; left: 0; font-weight: 500; }
+    .contact {
+      color: var(--ivory);
+      background: var(--navy-mid);
+      padding: 5mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .contact h3 { color: var(--ivory); font-size: 17pt; }
+    .contact p { color: rgba(240,234,224,.65); font-size: 8pt; margin-top: 2mm; }
+    .contact a { color: var(--gold-light); text-decoration: none; }
+    .partner-note {
+      font-size: 7.3pt;
+      color: var(--muted);
+      text-align: center;
+      padding: 0 18mm 6mm;
+    }
+    .footer {
+      position: absolute;
+      left: 18mm;
+      right: 18mm;
+      bottom: 6mm;
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 6.8pt;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    @media screen and (max-width: 850px) {
+      html { background: var(--ivory); }
+      .sheet { width: 100%; min-height: auto; margin: 0; box-shadow: none; }
+      .promise, .workflow, .ethics-contact { grid-template-columns: 1fr; }
+      .benefits, .offers-grid, .steps { grid-template-columns: 1fr; }
+      .offer { min-height: auto; }
+      .page-title { align-items: start; flex-direction: column; }
+      .page-title p { text-align: left; }
+      .footer { position: static; padding: 6mm 18mm; }
+    }
+    @page { size: A4 portrait; margin: 0; }
+    @media print {
+      html, body { background: white; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .sheet { margin: 0; box-shadow: none; width: 210mm; height: 297mm; }
+    }
+  </style>
+</head>
+<body>
+  <section class="sheet">
+    <header class="cover">
+      <div class="brand">
+        <svg width="39" height="22" viewBox="0 0 96 50" fill="none" aria-hidden="true">
+          <ellipse cx="48" cy="25" rx="46" ry="22" stroke="#FAF8F5" stroke-width="1.8"/>
+          <ellipse cx="48" cy="25" rx="28" ry="13" stroke="#C4A46B" stroke-width=".9" stroke-dasharray="2 4"/>
+          <circle cx="48" cy="25" r="2.5" fill="#C4A46B"/>
+        </svg>
+        <span>Capsule <b>Mémoire</b></span>
+      </div>
+      <div style="margin-top:24mm" class="eyebrow">Partenaires funéraires</div>
+      <h1>Prolonger l’hommage.<br><em>Transmettre une histoire.</em></h1>
+      <div class="rule"></div>
+      <p class="lead">Une offre mémorielle complémentaire, conçue avec les familles et réalisée pour vous par Capsule Mémoire.</p>
+    </header>
+
+    <div class="promise">
+      <div class="promise-copy">
+        <div class="eyebrow">Une nouvelle attention pour les familles</div>
+        <h2 style="margin-top:3mm">Les souvenirs méritent<br><em>plus qu’un dossier refermé.</em></h2>
+        <p>À partir des photos, récits et enregistrements confiés par les proches, Capsule Mémoire compose un hommage personnel et durable : archives restaurées, vidéo, Livre de Vie, page privée et plaque QR mémorielle.</p>
+        <p>Vous enrichissez votre accompagnement. Nous prenons en charge les échanges créatifs, la production et les validations.</p>
+      </div>
+      <div class="quote">« Un souvenir qui dure toute une vie. »</div>
+    </div>
+
+    <div class="benefits">
+      <article class="benefit">
+        <div class="num">01</div>
+        <h3>Complémentaire</h3>
+        <p>Une proposition distincte des prestations funéraires, présentée uniquement lorsqu’elle correspond au besoin de la famille.</p>
+      </article>
+      <article class="benefit">
+        <div class="num">02</div>
+        <h3>Clé en main</h3>
+        <p>Capsule Mémoire recueille les éléments, crée l’hommage, organise les corrections et livre la famille.</p>
+      </article>
+      <article class="benefit">
+        <div class="num">03</div>
+        <h3>Respectueux</h3>
+        <p>Consentement, transparence, sobriété du rendu et validation humaine encadrent chaque création.</p>
+      </article>
+    </div>
+    <div class="footer">
+      <span>Capsule Mémoire · Partenaires</span>
+      <span>www.capsulememoire.fr</span>
+    </div>
+  </section>
+
+  <section class="sheet">
+    <header class="page-title">
+      <div>
+        <div class="eyebrow">Trois niveaux d’accompagnement</div>
+        <h2>Une offre adaptée<br><em>à chaque famille.</em></h2>
+      </div>
+      <p>Tarifs publics TTC. Franchise en base de TVA, article 293 B du CGI.</p>
+    </header>
+
+    <div class="offers">
+      <div class="offers-grid">
+        <article class="offer">
+          <h3>Capsule Photo</h3>
+          <div class="price">290 €</div>
+          <ul>
+            <li>3 photos restaurées</li>
+            <li>1 portrait souvenir animé</li>
+            <li>Page hommage PDF</li>
+            <li>Livraison numérique sous 72 h*</li>
+            <li>Option évocation vocale : +190 €</li>
+          </ul>
+        </article>
+        <article class="offer">
+          <h3>Capsule Souvenir</h3>
+          <div class="price">690 €</div>
+          <ul>
+            <li>Jusqu’à 5 portraits animés</li>
+            <li>Évocation vocale commémorative**</li>
+            <li>Vidéo hommage</li>
+            <li>Page privée de consultation</li>
+            <li>PDF souvenir enrichi</li>
+            <li>Livraison numérique sous 5 jours*</li>
+          </ul>
+        </article>
+        <article class="offer featured">
+          <h3>Capsule Héritage</h3>
+          <div class="price">990 €</div>
+          <ul>
+            <li>Jusqu’à 10 portraits animés</li>
+            <li>Évocation vocale et vidéo hommage**</li>
+            <li>Livre de Vie rédigé et imprimé</li>
+            <li>Plaque QR en aluminium</li>
+            <li>Clé USB, carte d’accès et lettre</li>
+            <li>Écrin noir premium</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+
+    <div class="workflow">
+      <div>
+        <div class="eyebrow">Un fonctionnement simple</div>
+        <h2 style="font-size:21pt;margin-top:2mm">Vous accompagnez.<br><em>Nous réalisons.</em></h2>
+      </div>
+      <div class="steps">
+        <div class="step"><b>1</b><h3>Présenter</h3><p>Vous remettez la plaquette aux familles susceptibles d’être intéressées.</p></div>
+        <div class="step"><b>2</b><h3>Transmettre</h3><p>Avec leur accord, vous nous mettez en relation. Nous expliquons chaque possibilité.</p></div>
+        <div class="step"><b>3</b><h3>Créer</h3><p>Nous produisons, faisons valider puis livrons l’hommage final.</p></div>
+      </div>
+    </div>
+
+    <div class="ethics-contact">
+      <div class="ethics">
+        <div class="eyebrow">Notre cadre éthique</div>
+        <h3 style="margin-top:2mm">La technologie au service du souvenir,<br>jamais de l’illusion.</h3>
+        <ul>
+          <li>Consentement explicite d’un proche légitime</li>
+          <li>Usage de l’IA clairement indiqué</li>
+          <li>Validation avant toute livraison finale</li>
+          <li>Deux cycles de corrections inclus</li>
+          <li>Fichiers sources supprimés sous 30 jours</li>
+          <li>Aucune utilisation pour entraîner un modèle</li>
+        </ul>
+      </div>
+      <aside class="contact">
+        <div>
+          <div class="eyebrow">Devenir partenaire</div>
+          <h3 style="margin-top:2mm">Échangeons 20 minutes.</h3>
+          <p>Présentation du service, supports pour votre équipe et conditions partenaires sur demande.</p>
+        </div>
+        <p>
+          Louis Bentz · Capsule Mémoire<br>
+          <a href="mailto:contact.capsulememoire@gmail.com">contact.capsulememoire@gmail.com</a><br>
+          <a href="https://www.capsulememoire.fr">www.capsulememoire.fr</a>
+        </p>
+      </aside>
+    </div>
+
+    <p class="partner-note">* Délais à compter de la réception complète des éléments. ** Sous réserve d’un enregistrement vocal exploitable ; à défaut, une narration non authentique peut être proposée et clairement identifiée. Conditions partenaires à définir par écrit.</p>
+    <div class="footer">
+      <span>Capsule Mémoire · France</span>
+      <span>Document professionnel · 2026</span>
+    </div>
+  </section>
+</body>
+</html>
